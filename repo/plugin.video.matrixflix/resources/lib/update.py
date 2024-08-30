@@ -20,7 +20,7 @@ class cUpdate:
         time_service = self.__strptime(setting_time)
         time_sleep = datetime.timedelta(hours = 1)
         if time_now - time_service > time_sleep:
-            sUrl = 'https://raw.githubusercontent.com/MatrixFlix/Repo/master/repo/plugin.video.matrixflix/resources/sites.json'
+            sUrl = 'https://raw.githubusercontent.com/MatrixFlix/Dist/master/repo/plugin.video.matrixflix/resources/sites.json'
             oRequestHandler = cRequestHandler(sUrl)
             properties = oRequestHandler.request(jsonDecode=True)
             if properties == "":
