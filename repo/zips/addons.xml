@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8'?>
+<addons><addon id="MatrixFlix.Repo" name="MatrixFlix Repository" version="1.01" provider-name="MatrixFlix Media">
+    <extension point="xbmc.addon.repository" name="MatrixFlix XBMC Addon Repository">
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/MatrixFlix/Dist/master/repo/zips/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/MatrixFlix/Dist/master/repo/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/MatrixFlix/Dist/master/repo/zips/</datadir>
+        </dir>
+        <dir>
+            <info compressed="false">https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml</info>
+            <checksum>https://raw.githubusercontent.com/Gujal00/smrzips/master/addons.xml.md5</checksum>
+            <datadir zip="true">https://raw.githubusercontent.com/Gujal00/smrzips/master/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>MatrixFlix Repository</summary>
+        <description>MatrixFlix Installer</description>
+        <disclaimer />
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2024.08.30" provider-name="MatrixFlix Media">
+    <requires>
+
+        <trycatch>
+            <try>
+                <import addon="xbmc.python" version="3.0.0" />
+            </try>
+
+            <catch>
+                <import addon="xbmc.python" version="2.24.0" />
+            </catch>
+        </trycatch>
+        <import addon="MatrixFlix.Repo" />
+        <import addon="script.module.pyqrcode" />
+        <import addon="script.kodi.loguploader" />
+        <import addon="script.module.requests" />
+        <import addon="plugin.video.youtube" version="2.0.0" />
+        <import addon="script.module.resolveurl" version="5.1.0" />
+        <import addon="script.module.requests-cache" version="0.5.2" />
+        <import addon="script.module.dnspython" optional="true" />
+        <import addon="plugin.video.torrest" optional="true" />
+        <import addon="repository.github" optional="true" />
+        <import addon="script.module.pycryptodome" version="3.4.3" />
+        
+    </requires>
+
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+ 
+    <extension point="kodi.context.item">
+        <menu id="kodi.core.main">
+            <item library="resources/lib/gui/menuInformation.py">
+		        <label>[COLOR lightcoral]$ADDON[plugin.video.matrixflix 30208][/COLOR]</label>
+				<visible>Window.IsVisible(home) + ListItem.Property(sMeta)</visible>
+            </item>
+            <item library="resources/lib/gui/menuAddBookmark.py">
+		        <label>[COLOR lightcoral]$ADDON[plugin.video.matrixflix 30210][/COLOR]</label>
+				<visible>Window.IsVisible(home) + !ListItem.Property(isBookmark) + ListItem.Property(sMeta)</visible>
+            </item>
+            <item library="resources/lib/gui/menuSimil.py">
+		        <label>[COLOR lightcoral]$ADDON[plugin.video.matrixflix 30213][/COLOR]</label>
+				<visible>Window.IsVisible(home) + ListItem.Property(sMeta)</visible>
+            </item>
+            <item library="resources/lib/gui/menuParents.py">
+		        <label>[COLOR lightcoral]$ADDON[plugin.video.matrixflix 33213][/COLOR]</label>
+				<visible>Window.IsVisible(home) + ListItem.Property(sMeta)</visible>
+            </item>
+            <item library="resources/lib/gui/menuDelBookmark.py">
+		        <label>$ADDON[plugin.video.matrixflix 30412]</label>
+				<visible>Window.IsVisible(home) + ListItem.Property(isBookmark)</visible>
+            </item>
+            <item library="resources/lib/gui/menuDelViewing.py">
+		        <label>$ADDON[plugin.video.matrixflix 30412]</label>
+				<visible>Window.IsVisible(home) + ListItem.Property(isViewing)</visible>
+            </item>
+		</menu>
+    </extension>
+
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="ar_SA">MatrixFlix هو إضافة عربية لـ Kodi</summary>
+        <description lang="ar_SA">يوفر MatrixFlix وصولاً سلسًا وجذابًا إلى مواقع الفيديو العربية.</description>
+        <disclaimer lang="ar_SA">هذه الإضافة لا تستضيف أي محتوى. إنها تعرض فقط المحتوى من المواقع المتاحة للجمهور. من خلال إجراء طلبات HTTP بسيطة، تسترجع وتعرض المحتوى تمامًا مثل أي متصفح ويب عادي.</disclaimer>
+        <summary lang="en_US">MatrixFlix is an Arabic Kodi add-on</summary>
+        <description lang="en_US">MatrixFlix provides seamless and visually appealing access to Arabic video websites.</description>
+        <disclaimer lang="en_US">This add-on does not host any content. It simply displays content from publicly available websites. By making straightforward HTTP requests, it retrieves and presents content just like a standard web browser.</disclaimer>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE</license>
+        <forum>https://github.com/zombiB/zombi-addons/issues</forum>
+        <source>https://github.com/zombiB/zombi-addons/issues</source>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>screenshot-01.jpg</screenshot>
+            <screenshot>screenshot-02.jpg</screenshot>
+            <screenshot>screenshot-03.jpg</screenshot>
+            <screenshot>screenshot-04.jpg</screenshot>
+        </assets>
+    </extension>
+</addon><addon id="repository.github" name="GitHub Add-on repository" provider-name="i96751414" version="0.0.8">
+    <requires>
+        
+    </requires>
+    <extension point="xbmc.addon.repository">
+        <dir>
+            <info>http://127.0.0.1:61234/addons.xml</info>
+            <checksum>http://127.0.0.1:61234/addons.xml.md5</checksum>
+            <datadir>http://127.0.0.1:61234/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="service.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <license>See https://github.com/i96751414/repository.github/blob/master/LICENSE</license>
+        <source>https://github.com/i96751414/repository.github</source>
+        <summary lang="en">GitHub virtual Add-on repository</summary>
+        <description lang="en">Customizable repository which acts as a proxy for defined GitHub users' add-ons updates.</description>
+        <news>
+- Improve HTTP server
+- Add spanish translation
+- Allow extracting information about running platform
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon></addons>

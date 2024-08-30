@@ -1,0 +1,459 @@
+{
+    "sites": {
+        "aflamfree": {
+            "label": "Aflamfree",
+            "active": "True",
+            "url": "https://aflamfree.one/"
+        },
+        "akoam": {
+            "label": "Akoam",
+            "active": "True",
+            "url": "https://ak.sv/old/"
+        },
+        "akwam": {
+            "label": "Akwam",
+            "active": "True",
+            "url": "https://ak.sv/"
+        },
+        "alarabiya": {
+            "label": "Alarabiya",
+            "active": "True",
+            "url": "https://www.alarabiya.net/"
+        },
+        "alfajertv": {
+            "label": "Alfajertv",
+            "active": "True",
+            "url": "https://show.alfajertv.com/"
+        },
+        "aljazeera": {
+            "label": "Aljazeera",
+            "active": "True",
+            "url": "https://www.aljazeera.net/"
+        },
+        "alwanfilm": {
+            "label": "Alwanfilm",
+            "active": "True",
+            "url": "https://alwanfilm.com/"
+        },
+        "animeblkom": {
+            "label": "Animeblkom",
+            "active": "True",
+            "cloudflare": "True",
+            "url": "https://animeblkom.net/"
+        },
+        "animeup": {
+            "label": "Anime4up",
+            "active": "True",
+            "url": "https://anime4up.lol/"
+        },
+        "animezid": {
+            "label": "Animezid",
+            "active": "True",
+            "url": "https://animezid.show/"
+        },
+        "arabsciences": {
+            "label": "Arabsciences",
+            "active": "True",
+            "url": "https://arabsciences.com/"
+        },
+        "arabseed": {
+            "label": "Arabseed",
+            "active": "True",
+            "url": "https://f1.arabseed.ink/"
+        },
+        "aracinema_co": {
+            "label": "Aramosalsal",
+            "active": "True",
+            "url": "https://aradrmtv.com/"
+        },
+        "arbcinema": {
+            "label": "Arbcinema",
+            "active": "True",
+            "url": "https://movi.arbcinema.com/"
+        },
+        "arblionz": {
+            "label": "Arblionz",
+            "active": "True",
+            "url": "https://arablionztv.com/"
+        },
+        "asia2tv": {
+            "label": "Asia2TV",
+            "active": "True",
+            "url": "https://ww1.asia2tv.pw/"
+        },
+        "asiaarabs": {
+            "label": "Asia4arabs",
+            "active": "True",
+            "url": "https://www.asia4arabs.com/"
+        },
+        "asiadtv": {
+            "label": "AsiaDramaTV",
+            "active": "True",
+            "url": "https://asiatv.one/"
+        },
+        "asharq": {
+            "label": "asharq",
+            "active": "True",
+            "url": "https://now.asharq.com"
+        },
+        "awaan": {
+            "label": "Awaan",
+            "active": "True",
+            "url": "https://www.awaan.ae/"
+        },
+        "bahyfilm": {
+            "label": "BahyFilm",
+            "active": "True",
+            "url": "https://bahyfilm.com/"
+        },
+        "bazplay": {
+            "label": "BazPlay",
+            "active": "True",
+            "url": "https://bazplay.cc/"
+        },
+        "beinmatch": {
+            "label": "Beinmatch",
+            "active": "True",
+            "url": "https://beinmatch.fit/"
+        },
+        "beinsports_net": {
+            "label": "Beinsports",
+            "active": "True",
+            "url": "https://www.beinsports.com/"
+        },
+        "brstej": {
+            "label": "Brstej",
+            "active": "True",
+            "url": "https://ser.brstej.com/"
+        },
+        "btolat": {
+            "label": "Btolat",
+            "active": "True",
+            "url": "https://www.btolat.com/"
+        },
+        "cartoonrbi": {
+            "label": "CartoonArbi",
+            "active": "True",
+            "url": "https://www.arteenz.com/"
+        },
+        "cdrama": {
+            "label": "Cdrama",
+            "active": "True",
+            "url": "https://cdrama.in/"
+        },
+        "cinemabest": {
+            "label": "CinemaBest",
+            "active": "True",
+            "url": "https://cinma.best/"
+        },
+        "cimacity": {
+            "label": "CimaCity",
+            "active": "True",
+            "url": "https://vip.cima-city.xyz/"
+        },
+        "cimalina": {
+            "label": "CimaLina",
+            "active": "True",
+            "url": "https://cimalina.live/"
+        },
+        "cimanow": {
+            "label": "CimaNow",
+            "active": "True",
+            "url": "https://cimanow.cc/"
+        },
+        "cinematy": {
+            "label": "Cinematy",
+            "active": "True",
+            "cloudflare": "False",
+            "url": "https://nimaty.store/"
+        },
+        "coolcima": {
+            "label": "CoolCima",
+            "active": "True",
+            "cloudflare": "False",
+            "url": "https://coolmaan.store/"
+        },
+        "daily": {
+            "label": "Daily IPTV List",
+            "active": "True",
+            "url": "https://github.com/Free-TV/IPTV?tab=readme-ov-file"
+        },
+        "daktna": {
+            "label": "Daktna",
+            "active": "True",
+            "url": "https://u.daktna.cam/"
+        },
+        "detectiveconanar": {
+            "label": "Detectiveconanar",
+            "active": "True",
+            "url": "https://detectiveconanar.com/"
+        },
+        "docarabic": {
+            "label": "Docarabic",
+            "active": "True",
+            "url": "https://docarabic.wordpress.com/"
+        },
+        "dramacafe": {
+            "label": "Dramacafe",
+            "active": "True",
+            "url": "https://w26.dramacafe-tv.com/"
+        },
+        "egyclub": {
+            "label": "Egyclub",
+            "active": "True",
+            "url": "https://my.egy-club.com/"
+        },
+        "egydead": {
+            "label": "Egydead",
+            "active": "True",
+            "url": "https://egydead.space/"
+        },
+        "ehna": {
+            "label": "Ehna",
+            "active": "True",
+            "url": "https://aflam.top/"
+        },
+        "esseq": {
+            "label": "Esseq",
+            "active": "True",
+            "url": "https://3sktr.tv/",
+            "url2": "https://eshqee.net/"
+        },
+        "faselhd": {
+            "label": "Faselhd",
+            "active": "True",
+            "url": "https://www.faselhds.care/"
+        },
+        "fushaar": {
+            "label": "Fushaar",
+            "active": "True",
+            "url": "https://www.fushaar.com/"
+        },
+        "freebox": {
+            "label": "Freebox",
+            "active": "True",
+            "url": "https://iptv-org.github.io/"
+        },
+        "gateanime": {
+            "label": "GateAnime",
+            "active": "True",
+            "url": "https://e.gateanime.com/"
+        },
+        "geoarabic": {
+            "label": "Geoarabic",
+            "active": "True",
+            "url": "https://www.geoarabic.com/"
+        },
+        "halacima": {
+            "label": "Halacima",
+            "active": "True",
+            "url": "https://halacima.media/"
+        },
+        "hidaya": {
+            "label": "Hidaya",
+            "active": "True",
+            "url": "https://hidaya.tn/"
+        },
+        "hkyturk": {
+            "label": "HkyahTurkiya",
+            "active": "True",
+            "url": "https://hkyturk.com/"
+        },
+        "hwnaturkya": {
+            "label": "HwnaTurkya",
+            "active": "True",
+            "url": "https://hwnaturkya.com/"
+        },
+        "honadrama": {
+            "label": "Honadrama",
+            "active": "True",
+            "url": "https://tn.honadrama.vip/"
+        },
+        "ifushaar": {
+            "label": "iFushaar",
+            "active": "True",
+            "url": "https://r.ifushaar.com/"
+        },
+        "iptv": {
+            "label": "IPTV",
+            "active": "True",
+            "url": "http://ugeen.live/"
+        },
+        "karbala": {
+            "label": "KarbalaTV",
+            "active": "True",
+            "url": "https://karbala-tv.iq/video.php"
+        },
+        "koralive": {
+            "label": "Koralive",
+            "active": "True",
+            "url": "https://www.live-kora.io/"
+        },
+        "linkbox": {
+            "label": "Telebox",
+            "active": "True",
+            "url": "https://www.linkbox.to"
+        },
+        "livetv": {
+            "label": "Live TV",
+            "active": "True",
+            "url": "https://livetv.sx/"
+        },
+        "lodynet": {
+            "label": "Lodynet",
+            "active": "True",
+            "url": "https://llodynet.site/"
+        },
+        "matam": {
+            "label": "MatamLive",
+            "active": "True",
+            "url": "https://matam.live/"
+        },
+        "movizhome": {
+            "label": "MovizHome",
+            "active": "True",
+            "url": "https://movizhome.one/"
+        },
+        "moviztime": {
+            "label": "MovizTime",
+            "active": "True",
+            "url": "https://movtime94.homes/"
+        },
+        "nabdhlb": {
+            "label": "Nabd8lb",
+            "active": "True",
+            "url": "https://nabd8lb.net/"
+        },
+        "naqoos": {
+            "label": "Naqoos",
+            "active": "True",
+            "url": "https://naqoos.com/"
+        },
+        "qfilm": {
+            "label": "QFilm",
+            "active": "True",
+            "url": "https://www.qfilm.tv/"
+        },
+        "sflix": {
+            "label": "sFlix",
+            "active": "True",
+            "url": "https://sflix.to"
+        },
+        "shahidu": {
+            "label": "Shahid4u",
+            "active": "True",
+            "cloudflare": "False",
+            "url": "https://shed4u1.com/"
+        },
+        "shoffree": {
+            "label": "Shoffree",
+            "active": "True",
+            "url": "https://shoffree.net/"
+        },
+        "shoofmax": {
+            "label": "ShoofMAX",
+            "active": "True",
+            "url": "https://shoofmax.com/"
+        },
+        "shoofvod": {
+            "label": "Shoofvod",
+            "active": "True",
+            "url": "http://shoofvod.com/"
+        },
+        "showb": {
+            "label": "ShowB",
+            "active": "True",
+            "cloudflare": "True",
+            "url": "L2FpZGVtLnhvYndvaHMud3d3Ly86c3B0dGg="
+        },
+        "spacepowerfan": {
+            "label": "Spacepowerfan",
+            "active": "True",
+            "url": "https://spacepowerfan.com/"
+        },
+        "stardima": {
+            "label": "Stardima",
+            "active": "True",
+            "url": "https://stardima.vip/watch/"
+        },
+        "taxielcima": {
+            "label": "TaxiElCima",
+            "active": "True",
+            "url": "https://txcima.com/"
+        },
+        "tma": {
+            "label": "tma",
+            "active": "True",
+            "url": "https://api.themoviedb.org/"
+        },
+        "themoviedb_org": {
+            "label": "The Movie Database",
+            "active": "True",
+            "url": "https://www.themoviedb.org/"
+        },
+        "topcinema": {
+            "label": "TopCinema",
+            "active": "True",
+            "url": "https://web3.topcinema.top/"
+        },
+        "topimdb": {
+            "label": "Top IMDB",
+            "active": "True",
+            "url": "https://www.imdb.com/"
+        },
+        "tuktukcinema": {
+            "label": "Tuktukcinema",
+            "active": "True",
+            "url": "https://www.tuktukcima.com/"
+        },
+        "tvfun": {
+            "label": "Tvfun",
+            "active": "True",
+            "url": "https://olk.tvfhd.com/"
+        },
+        "tvnine": {
+            "label": "Tv96",
+            "active": "True",
+            "url": "https://www.s96.net/"
+        },
+        "vidplay": {
+            "label": "VidPlay",
+            "active": "True",
+            "url": "https://vidplay.org"
+        },
+        "watanflix": {
+            "label": "Watanflix",
+            "active": "True",
+            "url": "https://watanflix.com/"
+        },
+        "wecima": {
+            "label": "Wecima",
+            "active": "True",
+            "cloudflare": "False",
+            "url": "https://wecima.media/",
+            "url2": "https://wecima.show/"
+        },
+        "witanime": {
+            "label": "WitAnime",
+            "active": "True",
+            "url": "https://witanime.cyou/",
+            "url2": "https://witanime.quest/"
+        },
+        "xsanime": {
+            "label": "Xsanime",
+            "active": "True",
+            "url": "https://xsaniime.net/",
+            "url2": "https://cdn3.xsanime.live/"
+        },
+        "yallalive": {
+            "label": "Yallalive",
+            "active": "True",
+            "url": "https://yalla-live.sbs/"
+        },
+        "ytxmx": {
+            "label": "YTXMS",
+            "active": "True",
+            "url": "https://yts.mx/"
+        }
+    }
+}
