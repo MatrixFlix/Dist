@@ -58,7 +58,7 @@ class cClear:
 
         elif (env == 'changelog'):
 
-            sUrl = 'https://api.github.com/repos/MatrixFlix/repo/commits'
+            sUrl = 'https://api.github.com/repos/MatrixFlix/Dist/commits'
             try:
                 oRequest = urllib2.Request(sUrl)
                 oResponse = urllib2.urlopen(oRequest)
