@@ -406,7 +406,7 @@ def showLinks():
 
         if 'mp4' in sHosterUrl:
             sHosterUrl = f'{sLink}|User-Agent={UA}&Referer={sUrl}'
-            oHoster = cHosterGui().getHoster('lien_direct')
+            oHoster = cHosterGui().getHoster('direct_link')
         else:
             oHoster = cHosterGui().checkHoster(sHosterUrl)
         if oHoster:

@@ -22,7 +22,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2024.09.01" provider-name="MatrixFlix Media">
+</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2024.09.01.01" provider-name="MatrixFlix Media">
     <requires>
 
         <trycatch>
@@ -98,8 +98,6 @@
             <fanart>fanart.jpg</fanart>
             <screenshot>screenshot-01.jpg</screenshot>
             <screenshot>screenshot-02.jpg</screenshot>
-            <screenshot>screenshot-03.jpg</screenshot>
-            <screenshot>screenshot-04.jpg</screenshot>
         </assets>
     </extension>
 </addon><addon id="repository.github" name="GitHub Add-on repository" provider-name="i96751414" version="0.0.8">

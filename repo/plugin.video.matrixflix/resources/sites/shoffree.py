@@ -595,7 +595,7 @@ def showHosters():
                                 sQual = aEntry[1]
 
                                 sHosterUrl = f'{pUrl}|Referer={url}'
-                                oHoster = cHosterGui().getHoster('lien_direct')
+                                oHoster = cHosterGui().getHoster('direct_link')
                                 if oHoster:
                                     oHoster.setDisplayName(f'{sMovieTitle} ({sQual})')
                                     oHoster.setFileName(sMovieTitle)

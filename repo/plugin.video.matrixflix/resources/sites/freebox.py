@@ -268,7 +268,7 @@ def showWeb():
             oOutputParameterHandler.addParameter('sMovieTitle', track.title)
             oOutputParameterHandler.addParameter('sThumbnail', thumb)
 
-            oHoster = cHosterGui().getHoster('lien_direct')
+            oHoster = cHosterGui().getHoster('direct_link')
         
             if oHoster:
                 oHoster.setDisplayName(track.title)
@@ -331,7 +331,7 @@ def showTV(oInputParameterHandler = False):
             oOutputParameterHandler.addParameter('sMovieTitle', aEntry[0])
             oOutputParameterHandler.addParameter('sThumbnail', 'tv.png')
 
-            oHoster = cHosterGui().getHoster('lien_direct')
+            oHoster = cHosterGui().getHoster('direct_link')
         
             if oHoster:
                 oHoster.setDisplayName(track.title)

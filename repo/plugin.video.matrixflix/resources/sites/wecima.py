@@ -697,7 +697,7 @@ def showHosters():
             if 'userload' in sHosterUrl or '.shop' in sHosterUrl:
                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
 
-            oHoster = cHosterGui().getHoster('lien_direct')
+            oHoster = cHosterGui().getHoster('direct_link')
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)

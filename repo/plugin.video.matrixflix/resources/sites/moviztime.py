@@ -350,7 +350,7 @@ def showHosters2():
                 for aEntry in aResult[1]:               
                     sHosterUrl = aEntry.replace(',','')
                     if 'movietime' in sHosterUrl:
-                        oHoster = cHosterGui().getHoster('lien_direct')
+                        oHoster = cHosterGui().getHoster('direct_link')
                         if oHoster:
                             oHoster.setDisplayName(sMovieTitle)
                             oHoster.setFileName(sMovieTitle)

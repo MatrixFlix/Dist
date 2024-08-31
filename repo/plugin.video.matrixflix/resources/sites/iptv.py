@@ -220,7 +220,7 @@ def play__():
             cHosterGui().showHoster(oGui, oHoster, sUrl, sThumbnail)
 
     else:
-        oHoster = cHosterGui().getHoster('lien_direct')
+        oHoster = cHosterGui().getHoster('direct_link')
         if oHoster:
             oHoster.setDisplayName(sTitle)
             oHoster.setFileName(sTitle)

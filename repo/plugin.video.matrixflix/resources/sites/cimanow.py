@@ -396,7 +396,7 @@ def showServer():
                 url = f'http:{url}'
 				           
             sHosterUrl = f'{url}|Referer={URL_MAIN}'
-            oHoster = cHosterGui().getHoster('lien_direct')
+            oHoster = cHosterGui().getHoster('direct_link')
             if oHoster:
                 oHoster.setDisplayName(sTitle)
                 oHoster.setFileName(sMovieTitle)

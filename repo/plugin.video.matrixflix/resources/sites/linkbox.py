@@ -181,7 +181,7 @@ def showContent():
                          icon = icon.split('&x-image-process',1)[0]
                     sHosterUrl = link.replace('<nil>','')
                     sDisplayTitle = sTitle + '  [COLOR yellow]('+str(size) + 'MB)[/COLOR]'
-                    oHoster = cHosterGui().getHoster('lien_direct')        
+                    oHoster = cHosterGui().getHoster('direct_link')        
                     if oHoster:
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sTitle)
@@ -310,7 +310,7 @@ def showGroupSearch(sSearchText = ''):
 
                     sHosterUrl = url.replace('<nil>','')
                     sDisplayTitle = f'{sTitle} [COLOR yellow]({str(size)}MB)[/COLOR]'
-                    oHoster = cHosterGui().getHoster('lien_direct')        
+                    oHoster = cHosterGui().getHoster('direct_link')        
                     if oHoster:
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sTitle)
@@ -379,7 +379,7 @@ def showGroupSearchNext(sSearchText = ''):
 
                     sHosterUrl = url.replace('<nil>','')
                     sDisplayTitle = sTitle + '  [COLOR yellow]('+str(size) + 'MB)[/COLOR]'
-                    oHoster = cHosterGui().getHoster('lien_direct')        
+                    oHoster = cHosterGui().getHoster('direct_link')        
                     if oHoster:
                         oHoster.setDisplayName(sDisplayTitle)
                         oHoster.setFileName(sTitle)

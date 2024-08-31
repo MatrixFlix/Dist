@@ -536,7 +536,7 @@ def showSeasons2():
                     if sHosterUrl.startswith('//'):
                         sHosterUrl = 'http:' + sHosterUrl
             
-                    oHoster = cHosterGui().getHoster('lien_direct')
+                    oHoster = cHosterGui().getHoster('direct_link')
                     if oHoster:
                         oHoster.setDisplayName(sMovieTitle)
                         oHoster.setFileName(sMovieTitle)
