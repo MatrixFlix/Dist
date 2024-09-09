@@ -61,7 +61,12 @@ class cHoster(iHoster):
         self._url = url
 
     def _getMediaLinkForGuest(self, autoPlay = False):
+        VSlog(self._url)
         api_call = False
+
+        headers4 = {'user-agent': UA,
+                    'Referer': self._url
+                    }
 
         sPattern = 'iframe id="iframe" src="([^"]+)"'
         oParser = cParser()
@@ -86,7 +91,15 @@ class cHoster(iHoster):
                 break
 
             url2 = aResult[1][0]
-                  
+
+        sPattern = "var urlPlay = '([^']+)'"
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        
+        api_call = aResult[1][0]
+        if api_call:
+            return True, api_call + '|' + urlEncode(headers4)
+
+
         sPattern = '<input type="hidden" value="([^"]+)" id="js" \/><input type="hidden" value="([^"]+)" id="code" \/><input type="hidden" value="([^"]+)"'
         aResult = oParser.parse(sHtmlContent, sPattern)
 
@@ -113,9 +126,6 @@ class cHoster(iHoster):
         api_call = aResult[1][0]
 
         if api_call:
-            headers4 = {'user-agent': UA,
-                        'Referer': self._url
-                        }
             return True, api_call + '|' + urlEncode(headers4)
 
         return False, False

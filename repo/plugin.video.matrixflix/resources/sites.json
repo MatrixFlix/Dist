@@ -103,7 +103,7 @@
         },
         "bahyfilm": {
             "label": "BahyFilm",
-            "active": "True",
+            "active": "False",
             "url": "https://bahyfilm.com/"
         },
         "bazplay": {
@@ -144,7 +144,7 @@
         "cinemabest": {
             "label": "CinemaBest",
             "active": "True",
-            "url": "https://cinma.best/"
+            "url": "https://a.cinma.best/"
         },
         "cimacity": {
             "label": "CimaCity",
@@ -196,7 +196,7 @@
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
-            "url": "https://w26.dramacafe-tv.com/"
+            "url": "https://w28.dramacafe-tv.com/"
         },
         "egyclub": {
             "label": "Egyclub",
@@ -206,7 +206,7 @@
         "egydead": {
             "label": "Egydead",
             "active": "True",
-            "url": "https://egydead.space/"
+            "url": "https://egydead.center/"
         },
         "ehna": {
             "label": "Ehna",
@@ -272,7 +272,7 @@
         "ifushaar": {
             "label": "iFushaar",
             "active": "True",
-            "url": "https://r.ifushaar.com/"
+            "url": "https://vs.ifushaar.com/"
         },
         "iptv": {
             "label": "IPTV",
@@ -343,7 +343,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shed4u1.com/"
+            "url": "https://shahid4u.diy/"
         },
         "shoffree": {
             "label": "Shoffree",
@@ -394,7 +394,7 @@
         "topcinema": {
             "label": "TopCinema",
             "active": "True",
-            "url": "https://web3.topcinema.top/"
+            "url": "https://web2.topcinema.cam/"
         },
         "topimdb": {
             "label": "Top IMDB",

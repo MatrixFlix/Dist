@@ -215,7 +215,7 @@ class cHosterGui:
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
                             'sibnet', 'userload', 'aparat', 'evoload', 'abcvideo', 'streamvid', 'darkibox', 'hexupload',
-                            'myvi', 'viewsb', 'yourvid', 'oneupload']
+                            'myvi', 'viewsb', 'yourvid', 'oneupload', 'terabox', 'streamsilk']
 
         val = next((x for x in supported_player if x in sHostName), None)
         if val:
@@ -259,7 +259,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly'] if x in sHostName), None)
+                            'wishonly', 'playerwish'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -310,7 +310,7 @@ class cHosterGui:
             return self.getHoster('dood')
 
         # Chillx Clone
-        chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx'] if x in sHostName), None)
+        chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx', 'boosterx'] if x in sHostName), None)
         if chillx:    
             return self.getHoster('chillx')
 
@@ -400,7 +400,7 @@ class cHosterGui:
         if ('diasfem' in sHosterUrl):
             return self.getHoster('fembed')
        
-        if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName):
+        if ('streamtape' in sHostName) or ('streamnoads' in sHostName) or ('tapenoads' in sHostName) or ('advertisertape' in sHostName) or ('adblocktape' in sHostName):
             return self.getHoster('streamtape')
        
         if ('lanesh' in sHosterUrl):

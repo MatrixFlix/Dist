@@ -468,10 +468,23 @@ def showEps():
     sPage = oInputParameterHandler.getValue('sPage')
 
     oParser = cParser()
-    oRequestHandler = cRequestHandler(sUrl)
-    oRequestHandler.addHeaderEntry('User-Agent', UA)
-    sHtmlContent = oRequestHandler.request()
+    if sPage is False:
+        sPage = '1'
+        oRequestHandler = cRequestHandler(sUrl)
+        oRequestHandler.addHeaderEntry('User-Agent', UA)
+        sHtmlContent = oRequestHandler.request()
+    else:
+        sPage = sPage
+        if '#' in sUrl:
+            sUrl = sUrl.split('#')[0]
 
+            oRequestHandler = cRequestHandler(f'{sUrl}?page={sPage}')
+            oRequestHandler.addHeaderEntry('User-Agent', UA)
+            oRequestHandler.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
+            sHtmlContent = oRequestHandler.request(jsonDecode=True)
+            sHtmlContent = sHtmlContent['html']
+
+    oParser = cParser()
     sPattern = '<div class="item info">.+?<a href="([^"]+)".+?data-src="([^"]+)".+?<h3>(.+?)</h3>'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
@@ -487,9 +500,9 @@ def showEps():
             if ':' in aEntry[2]:
                 sTitle = f'{sMovieTitle} {sTitle.split(":")[1]}'
             else:
-                sTitle = f'{sMovieTitle} {sTitle}'          
+                sTitle = f'{sMovieTitle} {sTitle}'        
 
-            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 			
@@ -500,6 +513,7 @@ def showEps():
             sPage = int(sPage) +1
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('sPage', sPage)
+            oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
             oOutputParameterHandler.addParameter('siteUrl', sUrl.split('?')[0])
             oGui.addDir(SITE_IDENTIFIER, 'showEps', '[COLOR teal]More >>>[/COLOR]', 'next.png', oOutputParameterHandler)
 
@@ -629,3 +643,6 @@ def showLinks():
             cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     oGui.setEndOfDirectory()
+
+def opensetting():
+    addon().openSettings()

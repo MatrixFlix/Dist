@@ -478,10 +478,17 @@ def showServer():
 
 def decode_page(data):
     t_script = re.findall(r'<script.*?;.*?\'(.*?);', data, re.S)
-    t_int = re.findall(r'/g.....(.*?)\)', data, re.S)
+    t_int = re.findall(r'/g.....(.*?)\)', data, re.S)  
     if t_script and t_int:
-        script = t_script[0].replace("'", '').replace("+", '').replace("\n", '')
-        decoded_parts = [chr(int(re.findall(r'\d+', base64.b64decode(elm + '==').decode(), re.S)[0]) + int(t_int[0])) for elm in script.split('.')]
+        script = t_script[0].replace("'+\n'", '').replace("'", '').replace("+", '')
+        decoded_parts = []
+        for elm in script.split('.'):
+            decoded_elm = base64.b64decode(elm + '==').decode()
+            if decoded_elm:
+                number = int(re.findall(r'\d+', decoded_elm)[0])
+                decoded_char = chr(number + int(t_int[0]))
+                decoded_parts.append(decoded_char)
+        
         return ''.join(decoded_parts)
-
-    return None  
+    
+    return None

@@ -338,3 +338,6 @@ def get_code():
     code = datas["code"]["code"]
 
     return code, token
+
+def opensetting():
+    addon().openSettings()

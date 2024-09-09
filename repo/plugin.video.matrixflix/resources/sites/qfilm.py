@@ -190,7 +190,7 @@ def showHosters():
             sHosterUrl = aEntry
             if sHosterUrl.startswith('//'):
                 sHosterUrl = f'http:{sHosterUrl}'
-            if 'qvid' in sHosterUrl:
+            if 'qvid' in sHosterUrl or 'filmey' in sHosterUrl:
                 oRequestHandler = cRequestHandler(sHosterUrl)
                 oRequestHandler.addHeaderEntry('User-Agent', UA)
                 sHtmlContent = oRequestHandler.request()  

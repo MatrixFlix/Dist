@@ -89,7 +89,7 @@ def showSeries(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<div class="thumb.+?href="([^"]+)".+?src="([^"]+)".+?>(.+?)<br>(.+?)</a>'
+    sPattern = '<div class="thumb.+?href="([^"]+)".+?src="([^"]+)" alt="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         total = len(aResult[1])
@@ -99,8 +99,8 @@ def showSeries(sSearch = ''):
             if progress_.iscanceled():
                 break
             
-            sTitle = aEntry[2] + aEntry[3]
-            sTitle = sTitle.replace("مشاهدة وتحميل","").replace("اون لاين","").replace("مترجمة","").replace("مترجم","").replace("مسلسل","")
+            sTitle = aEntry[2]
+            sTitle = sTitle.replace("مشاهدة وتحميل","").replace("اون لاين","").replace("مترجمة","").replace("مترجم","").replace("مسلسل","").replace("حلقات","")
             if 'الحلقة' in sTitle:
                 sTitle = sTitle.split('الحلقة')[0]
             siteUrl = aEntry[0]
@@ -168,7 +168,7 @@ def showEpisodes():
     if aResult[0]:
         sHtmlContent2 = aResult[1][0]
 
-    sPattern = '(<div class="episode|<div class="thumb).+?href="([^"]+)".+?<br>(.+?)</a>'
+    sPattern = '<div class="thumb.+?href="([^"]+)".+?src="([^"]+)" alt="([^"]+)'
     aResult = oParser.parse(sHtmlContent2, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -178,14 +178,14 @@ def showEpisodes():
             if progress_.iscanceled():
                 break
  
-            sTitle = f'{sMovieTitle} E{aEntry[2].replace("الحلقة ","")}'
-            siteUrl = aEntry[1].replace('video/','watch/')
+            sTitle = f'{sMovieTitle} E{aEntry[2].split("الحلقة ")[1]}'
+            siteUrl = aEntry[0].replace('video/','watch/')
             if siteUrl.startswith('//'):
                 siteUrl = f'http:{siteUrl}'
             if siteUrl.startswith('/'):
                 siteUrl = f'{URL_MAIN}{siteUrl}'
 
-            sThumb = sThumb
+            sThumb = aEntry[1]
 			
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)

@@ -271,3 +271,6 @@ def account_login():
         return merged_cookies_string
     else:
         return addons.getSetting('last_connan_cookie')
+
+def opensetting():
+    addon().openSettings()

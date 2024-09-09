@@ -2,6 +2,7 @@
 
 import re
 import base64
+import json
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -237,10 +238,10 @@ def ShowEps():
     oParser = cParser()
     sStart = '<div class="episodes-list-content">'
     sEnd = '<div class="space"></div>'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    sHtmlContent1 = oParser.abParse(sHtmlContent, sStart, sEnd)
 
     sPattern = '<h3><a href=.+?onclick="(.+?)">([^<]+)</a></h3>.+?src="([^"]+)'
-    aResult = oParser.parse(sHtmlContent, sPattern)   
+    aResult = oParser.parse(sHtmlContent1, sPattern)   
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
@@ -260,7 +261,25 @@ def ShowEps():
             oOutputParameterHandler.addParameter('sDesc', sDesc)
             oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
     else:
-        oGui.addText(SITE_IDENTIFIER, '[COLOR olive]لم يتم رفع حلقة الى الآن[/COLOR]')
+        sPattern = "processedEpisodeData = '([^']+)'"
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:        
+            sEps = decode(aResult[1][0])
+            oOutputParameterHandler = cOutputParameterHandler()
+            for item in sEps:
+                sEp = item["number"]
+                sTitle = f'{sMovieTitle} E{sEp}'
+                siteUrl = item["url"]
+                sDesc = ''
+                sYear = ''
+                sThumb = re.sub(r'-\d+x\d{0,3}','', item["screenshot"])  
+    
+                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+                oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+                oOutputParameterHandler.addParameter('sThumb', sThumb)
+                oOutputParameterHandler.addParameter('sYear', sYear)
+                oOutputParameterHandler.addParameter('sDesc', sDesc)
+                oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler) 
 
     oGui.setEndOfDirectory()
 
@@ -284,32 +303,25 @@ def showHosters():
     sHtmlContent = oRequestHandler.request()
     oParser = cParser()
 
-    sPattern = r'var server\w+ = ({.*});'
+    sPattern = "sU\s*=\s*([^;]*)"
     aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-        sHtmlContent = aResult[1]
+    if aResult[0]:        
+        vds = json.loads(aResult[1][0])
+        for item in vds:
 
-        sPattern = '"([^"]+)":"([^"]+)'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0] :       
-            for aEntry in aResult[1]:
-
-                url = base64.b64decode(aEntry[1]).decode('utf8',errors='ignore')
-                sTitle = aEntry[0]
+                url = base64.b64decode(item).decode('utf8',errors='ignore')
                 if url.startswith('//'):
                     url = 'http:' + url
                 if 'yona' in url:
-                    url = url + '&apiKey=8fda55fb-7bd4-42a9-b99a-2d41505c1d8d'
+                    url = url + '&apiKey=9b2704f6-6b6f-4a48-b3f3-cd9cd4dbe494'
                     oRequestHandler = cRequestHandler(url)
                     oRequestHandler.addHeaderEntry('User-Agent', UA)
-                    oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
-                    oRequestHandler.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
+                    oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
                     oRequestHandler.addHeaderEntry('Referer', URL_MAIN)
                     sData = oRequestHandler.request()
-                    sPattern = 'go_to_player(.+?)".+?<p>([^<]+)'
-                    oParser = cParser()
-                    aResult = oParser.parse(sData, sPattern)
                     
+                    sPattern = 'go_to_player(.+?)".+?<p>([^<]+)'
+                    aResult = oParser.parse(sData, sPattern)
                     if aResult[0]:
                        for aEntry in reversed(aResult[1]):  
                             if 'mega' in aEntry[0]:
@@ -330,9 +342,52 @@ def showHosters():
                 sHosterUrl = url
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
                 if oHoster:
-                    sDisplayTitle = f'{sMovieTitle} [COLOR coral]({sTitle})[/COLOR]'
+                    sDisplayTitle = f'{sMovieTitle}'
                     oHoster.setDisplayName(sDisplayTitle)
                     oHoster.setFileName(sMovieTitle)
                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
+    sPattern = "_d\s*=\s*([^;]*)"
+    aResult = oParser.parse(sHtmlContent, sPattern)
+    if aResult[0]:        
+        vds = json.loads(aResult[1][0])
+        for item in vds:
+
+                url = base64.b64decode(item).decode('utf8',errors='ignore')
+                if url.startswith('//'):
+                    url = 'http:' + url           
+
+                sHosterUrl = url
+                oHoster = cHosterGui().checkHoster(sHosterUrl)
+                if oHoster:
+                    sDisplayTitle = f'{sMovieTitle}'
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sMovieTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
 	       
     oGui.setEndOfDirectory()
+
+def decode(data: str):
+        parts = data.split(".")
+        if len(parts) != 2:
+            raise VSlog("Bad data format")
+
+        try:
+            decoded_part1 = base64.b64decode(parts[0])
+            decoded_part2 = base64.b64decode(parts[1])
+        except Exception as err:
+            return None, err
+
+        decoded_data = bytearray(len(decoded_part1))
+        for i in range(len(decoded_part1)):
+            decoded_data[i] = decoded_part1[i] ^ decoded_part2[i % len(decoded_part2)]
+
+        clean_data = decoded_data.decode('utf-8').replace(r'\"', '"')
+
+        try:
+            decoded_json = json.loads(clean_data)
+        except json.JSONDecodeError as err:
+            return None, err
+
+        return decoded_json
