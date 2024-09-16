@@ -214,8 +214,8 @@ class cHosterGui:
                             'hdvid', 'vidload', 'giga', 'vidbom', 'cloudvid', 'megadrive', 'clickopen', 'gettyshare',
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
-                            'sibnet', 'userload', 'aparat', 'evoload', 'abcvideo', 'streamvid', 'darkibox', 'hexupload',
-                            'myvi', 'viewsb', 'yourvid', 'oneupload', 'terabox', 'streamsilk']
+                            'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload',
+                            'myvi', 'viewsb', 'yourvid', 'oneupload', 'terabox', 'streamsilk', 'vixstream']
 
         val = next((x for x in supported_player if x in sHostName), None)
         if val:

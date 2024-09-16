@@ -1,12 +1,12 @@
 #-*- coding: utf-8 -*-
 
 import re
-import base64
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
 from resources.lib.hunter import hunter
-from resources.lib.comaddon import VSlog, isMatrix
+from resources.lib.comaddon import VSlog
+from resources.lib.util import urlHostName
 
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
 
@@ -16,9 +16,10 @@ class cHoster(iHoster):
         iHoster.__init__(self, 'streamsilk', 'StreamSilk')
 
     def _getMediaLinkForGuest(self, autoPlay = False):
-        api_call = False
+        hls_url = False
         VSlog(self._url)
 
+        self._url = self._url.replace('/d/','/p/')
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
@@ -31,12 +32,13 @@ class cHoster(iHoster):
             for j in l:
                 unpacked = hunter(j[0],int(j[1]),j[2],int(j[3]),int(j[4]),int(j[5]))
 
-                hls_url = re.search(r'var urlPlay =\s*"(.*?m3u8.*?)"', unpacked).group(1)       
+                sPattern = 'var urlPlay =\s*"(.*?m3u8.*?)"'
+                aResult = oParser.parse(unpacked, sPattern)
+                if aResult[0]:  
+                    hls_url = aResult[1][0] 
 
+        sRefer = urlHostName(self._url)
         if hls_url:
-            return True, f'{hls_url.strip()}|User-Agent={UA}&Referer={self._url}'
-
-        if api_call:
-            return True, api_call
+            return True, f'{hls_url.strip()}|User-Agent={UA}&Referer=https://{sRefer}/&Origin=https://{sRefer}'
 
         return False, False

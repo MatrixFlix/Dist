@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# vStream https://github.com/Kodi-vStream/venom-xbmc-addons
 
 from resources.lib.parser import cParser
 from resources.lib.util import urlEncode
@@ -7,6 +6,8 @@ from resources.hosters.hoster import iHoster
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import VSlog, isMatrix
 from resources.lib.aadecode import AADecoder
+from resources.lib.util import urlHostName
+from resources.lib.hunter import hunter
 
 import re
 import base64
@@ -94,11 +95,24 @@ class cHoster(iHoster):
 
         sPattern = "var urlPlay = '([^']+)'"
         aResult = oParser.parse(sHtmlContent, sPattern)
-        
-        api_call = aResult[1][0]
-        if api_call:
+        if aResult[0]:
+            api_call = aResult[1][0]
             return True, api_call + '|' + urlEncode(headers4)
 
+        sPattern = 'return decodeURIComponent\(escape\(r\)\)}\("([^,]+)",([^,]+),"([^,]+)",([^,]+),([^,]+),([^,\))]+)\)'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            l = aResult[1]
+            for j in l:
+                unpacked = hunter(j[0],int(j[1]),j[2],int(j[3]),int(j[4]),int(j[5]))
+
+                sPattern = "var urlPlay =\s*'([^']+)'"
+                aResult = oParser.parse(unpacked, sPattern)
+                if aResult[0]:  
+                    hls_url = aResult[1][0]  
+
+                    sRefer = urlHostName(self._url)
+                    return True, f'{hls_url.strip()}|User-Agent={UA}&Referer=https://{sRefer}/&Origin=https://{sRefer}'
 
         sPattern = '<input type="hidden" value="([^"]+)" id="js" \/><input type="hidden" value="([^"]+)" id="code" \/><input type="hidden" value="([^"]+)"'
         aResult = oParser.parse(sHtmlContent, sPattern)
@@ -122,8 +136,8 @@ class cHoster(iHoster):
         
         sPattern = "\('src',\s*'([^']+)'"
         aResult = oParser.parse(t, sPattern)
-        
-        api_call = aResult[1][0]
+        if aResult[0]:
+            api_call = aResult[1][0]
 
         if api_call:
             return True, api_call + '|' + urlEncode(headers4)

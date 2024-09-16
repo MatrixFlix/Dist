@@ -21,10 +21,10 @@ URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 MOVIE_EN = (f'{URL_MAIN}category.php?cat=english-movies', 'showMovies')
 MOVIE_AR = (f'{URL_MAIN}category.php?cat=arabic-movies', 'showMovies')
-MOVIE_DUBBED = (f'{URL_MAIN}category.php?cat=modablaja-movies', 'showMovies')
-MOVIE_HI = (f'{URL_MAIN}category.php?cat=hindia-movies', 'showMovies')
+MOVIE_DUBBED = (f'{URL_MAIN}category.php?cat=modablj-movies', 'showMovies')
+MOVIE_HI = (f'{URL_MAIN}category.php?cat=hindi-movies', 'showMovies')
 MOVIE_ASIAN = (f'{URL_MAIN}category.php?cat=asian-movies', 'showMovies')
-MOVIE_TURK = (f'{URL_MAIN}category.php?cat=turkey-movies', 'showMovies')
+MOVIE_TURK = (f'{URL_MAIN}category.php?cat=turke-movies', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category.php?cat=animation-movies', 'showMovies')
 
 DOC_NEWS = (f'{URL_MAIN}category.php?cat=aflam-wthaaeqe', 'showMovies')
@@ -53,10 +53,10 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
     oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category.php?cat=moslslat-cima-city')
+    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category.php?cat=moslslat-cima')
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات سيما سيتي', 'mslsl.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category.php?cat=cimacity-movies')
+    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category.php?cat=cima-movies')
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'افلام سيما سيتي', 'film.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', RAMADAN_SERIES[0])

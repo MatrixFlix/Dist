@@ -418,7 +418,9 @@ def showLinks(oInputParameterHandler = False):
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:
-
+            if 'megamax' in aEntry[0]:
+                continue
+            
             url = aEntry[0]
             sQual = aEntry[1]
             if url.startswith('//'):
