@@ -26,34 +26,34 @@ class cTMDb:
     # https://developers.themoviedb.org/3/genres/get-movie-list
     # https://developers.themoviedb.org/3/genres/get-tv-list
     TMDB_GENRES = {
-        12: 'Aventure',
-        14: 'Fantastique',
+        12: 'Adventure',
+        14: 'Fantasy',
         16: 'Animation',
-        18: 'Drame',
-        27: 'Horreur',
+        18: 'Drama',
+        27: 'Horror',
         28: 'Action',
-        35: 'Comédie',
-        36: 'Histoire',
+        35: 'Comedy',
+        36: 'History',
         37: 'Western',
         53: 'Thriller',
         80: 'Crime',
-        99: 'Documentaire',
+        99: 'Documentary',
         878: 'Science-Fiction',
-        9648: 'Mystère',
-        10402: 'Musique',
+        9648: 'Mystery',
+        10402: 'Music',
         10749: 'Romance',
-        10751: 'Familial',
-        10752: 'Guerre',
-        10759: 'Action & Aventure',
+        10751: 'Family',
+        10752: 'War',
+        10759: 'Action & Adventure',
         10762: 'Kids',
         10763: 'News',
-        10764: 'Realité',
-        10765: 'Science-Fiction & Fantastique',
-        10766: 'Feuilleton',
+        10764: 'Reality',
+        10765: 'Science-Fiction & Fantasy',
+        10766: 'Soap',
         10767: 'Talk',
-        10768: 'Guerre & Politique',
-        10769: 'Etranger',
-        10770: 'Téléfilm'
+        10768: 'War & Politics',
+        10769: 'Stranger',
+        10770: 'TV Movie'
     }
 
     URL = 'https://api.themoviedb.org/3/'
@@ -316,37 +316,37 @@ class cTMDb:
 
         if 'errors' not in meta and 'status_code' not in meta:
 
-            # si pas de résultat avec l'année, on teste sans l'année
+            # if no result with the year, we test without the year
             if 'total_results' in meta and meta['total_results'] == 0 and year:
                 return self.search_movie_name(name)
 
-            # cherche 1 seul resultat
+            # search for only 1 result
             if 'total_results' in meta and meta['total_results'] != 0:
                 movie = ''
 
-                # s'il n'y en a qu'un, c'est le bon
+                # if there is only one, it is the right one
                 if meta['total_results'] == 1:
                     movie = meta['results'][0]
 
                 else:
-                    # premiere boucle, recherche la correspondance parfaite sur le nom
+                    # first loop, search for perfect match on name
                     for searchMovie in meta['results']:
                         if searchMovie['genre_ids'] and 99 not in searchMovie['genre_ids']:
                             if self._clean_title(searchMovie['title']) == self._clean_title(name):
                                 movie = searchMovie
                                 break
-                    # sinon, hors documentaire et année proche
+                    # otherwise, excluding documentary and close year
                     if not movie:
                         for searchMovie in meta['results']:
                             if searchMovie['genre_ids'] and 99 not in searchMovie['genre_ids']:
 
-                                # controle supplémentaire sur l'année meme si déjà dans la requete
+                                # additional control on the year even if already in the query
                                 if year:
                                     if 'release_date' in searchMovie and searchMovie['release_date']:
                                         release_date = searchMovie['release_date']
                                         yy = release_date[:4]
                                         if int(year)-int(yy) > 1 :
-                                            continue    # plus de deux ans d'écart, c'est pas bon
+                                            continue    # more than two years difference, it's not good
                                 movie = searchMovie
                                 break
 

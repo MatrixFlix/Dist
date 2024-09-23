@@ -2,8 +2,9 @@
 
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.hosters.hoster import iHoster
-from resources.lib.comaddon import VSlog
+from resources.lib.comaddon import VSlog, dialog
 from resources.lib.util import Unquote
+from resources.lib.parser import cParser
 import re
 
 UA = 'Mozilla/5.0 (iPad; CPU OS 17_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Mobile/15E148 Safari/604.1'
@@ -21,7 +22,9 @@ class cHoster(iHoster):
             self._url = self._url.split('|Referer=')[0]
 
         oRequestHandler = cRequestHandler(self._url)
+        oRequestHandler.disableSSL()
         oRequestHandler.addHeaderEntry('User-Agent', UA)
+        oRequestHandler.addHeaderEntry('Referer', sReferer)
         oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
         oRequestHandler.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
         oRequestHandler.addHeaderEntry('Accept-Language', 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3')
@@ -31,9 +34,25 @@ class cHoster(iHoster):
 
         if (r2):
             api_call = r2.group(1)
-
-        api_call = Unquote(api_call)
-        if api_call:
+            api_call = Unquote(api_call)
             return True, api_call.replace(' ', '%20') + "|Referer=" + sReferer + '&User-Agent=' + UA
+
+        oParser = cParser()
+        sPattern = ' src="([^<]+)" type="video/mp4" size="([^"]+)">'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            shost = self._url.split('/e/')[0]
+            url = []
+            qua = []
+
+            for aEntry in aResult[1]:
+                url.append(aEntry[0])
+                qua.append(f'{aEntry[1]}p')
+
+            mUrl = dialog().VSselectqual(qua, url)
+            api_call = f'{shost}{mUrl}'
+
+            api_call = Unquote(api_call)
+            return True, api_call.replace(' ', '%20') + "|Referer=" + sReferer + '&User-Agent=' + UA + '&verifypeer=false'
 
         return False, False

@@ -114,7 +114,9 @@ def showMovies(sSearch = ''):
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
                 break
- 
+            if 'مواسم' in aEntry[2] or 'موسم' in aEntry[2] or 'حلقة' in aEntry[2]:
+                continue
+
             sTitle = cUtil().CleanMovieName(aEntry[2])
             siteUrl = aEntry[0]
             sThumb = aEntry[1]
@@ -156,7 +158,7 @@ def showSeries(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<div class="movie"><a href="(.+?)"><div class="your-productSeCndary blog-post-img-thumb"><img alt="(.+?)" src="(.+?)" />'
+    sPattern = '<div class="movie"><a href="([^"]+)".+?alt="([^"]+)"\s*src="([^"]+)"\s*/>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -204,13 +206,18 @@ def showSeasons():
 	oRequestHandler = cRequestHandler(sUrl)
 	sHtmlContent = oRequestHandler.request()
 
+	sStart = '<ul class="SeasonsList">'
+	sEnd = '</div>'
+	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
 	sPattern = '<li><a href="([^<]+)">([^<]+)</a></li>' 
 	aResult = oParser.parse(sHtmlContent, sPattern)
 	if aResult[0]:
 		oOutputParameterHandler = cOutputParameterHandler()
 		for aEntry in aResult[1]:
- 
-			sTitle = sMovieTitle+aEntry[1].replace("الموسم"," S").replace("S "," S").replace("موسم"," S").replace("الأول"," S1")
+            
+			sSeason = (cUtil().ConvertSeasons(aEntry[1])).strip()
+			sTitle = f'{sMovieTitle} {sSeason}'
 			siteUrl = aEntry[0]
 			sThumb = ''
 			sDesc = ""

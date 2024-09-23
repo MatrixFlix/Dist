@@ -21,8 +21,18 @@ class cHoster(iHoster):
 
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
+        
+        if 'embed' not in self._url:
+            import re
+            match = re.search(r"(\/[^\/]+)$", self._url)
 
+            if match:
+                to_replace = match.group(1)[1:]
+                self._url = self._url.replace(match.group(1), "/embed-embed-" + to_replace)
+
+        sReferer = self._url
         oRequest = cRequestHandler(self._url)
+        oRequest.addHeaderEntry('referer', sReferer)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()

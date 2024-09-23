@@ -135,7 +135,21 @@ def showLive():
                                oHoster.setDisplayName(sMovieTitle)
                                oHoster.setFileName(sMovieTitle)
                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-            if 'youtube' in url:
+
+            if '/embed' in url:           
+
+                sHosterUrl = url
+
+                if 'vimeo' in sHosterUrl:
+                    sHosterUrl = sHosterUrl + "|Referer=" + mSite                  
+
+                oHoster = cHosterGui().getHoster('xvideo') 
+                if oHoster:
+                        oHoster.setDisplayName(sMovieTitle)
+                        oHoster.setFileName(sMovieTitle)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
+            elif 'youtube' in url:
                 url = url.split('?')[0]
                 
             sHosterUrl = url

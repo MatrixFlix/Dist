@@ -681,9 +681,7 @@ class cGui:
         sFileName = oInputParameterHandler.getValue('sFileName')
         sFileName = sFileName.split('مدبلج')[0]
         sType = oInputParameterHandler.getValue('sType')
-        sImdbId = oInputParameterHandler.getValue('sImdbId')
-        sTmdbId = oInputParameterHandler.getValue('sTmdbId')
-        sIMDb = 'tt9536846'
+
         if 'movie'in sType:
             meta = cTMDb().get_meta(sType, sFileName, imdb_id = xbmc.getInfoLabel('ListItem.Property(ImdbId)'))
             sIMDb = meta['imdb_id']

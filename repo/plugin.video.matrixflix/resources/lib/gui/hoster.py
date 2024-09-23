@@ -214,7 +214,7 @@ class cHosterGui:
                             'hdvid', 'vidload', 'giga', 'vidbom', 'cloudvid', 'megadrive', 'clickopen', 'gettyshare',
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
-                            'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload',
+                            'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload', 'dailyuploads',
                             'myvi', 'viewsb', 'yourvid', 'oneupload', 'terabox', 'streamsilk', 'vixstream']
 
         val = next((x for x in supported_player if x in sHostName), None)
@@ -259,7 +259,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly', 'playerwish'] if x in sHostName), None)
+                            'wishonly', 'playerwish', 'katomen'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -335,7 +335,7 @@ class cHosterGui:
             return self.getHoster('streamhide')
 
         # X-Video Clone
-        xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram'] if x in sHostName), None)
+        xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 

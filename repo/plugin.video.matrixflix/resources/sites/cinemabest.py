@@ -116,7 +116,7 @@ def showMovies(sSearch = ''):
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
                 break
-            if '/episode' in aEntry[0] or '/serie' in aEntry[0]:
+            if '/episode' in aEntry[0] or '/serie' in aEntry[0] or 'حلقة' in aEntry[1]:
                 continue
 
             sTitle = cUtil().CleanMovieName(aEntry[1]).replace('سينما بيست','')

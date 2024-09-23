@@ -9,7 +9,7 @@ import re
 import requests
 import time
 
-UA = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36 Edg/122.0.0.0"
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
 
 class cHoster(iHoster):
 
@@ -34,9 +34,9 @@ class cHoster(iHoster):
          _r = Sgn.post(self._url, data, headers=headers)
          sHtmlContent = _r.content.decode('utf8',errors='ignore')
 
-         r = re.search(r'class="done.+?href="([^"]+)', sHtmlContent, re.DOTALL)
+         r = r = re.search(r'''sources:\s*\[{src:\s*["'](?P<url>[^"']+)''', sHtmlContent, re.DOTALL)
          if r:
-            api_call = urllib_parse.quote(r.group(1), '/:') + helpers.append_headers(headers)
+            api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)
          
          if api_call:
              return True, api_call
