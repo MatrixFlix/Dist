@@ -329,7 +329,7 @@ def showHosters():
                             url = aEntry[0].replace(')','').replace('(','').replace("'","").replace('"','')
                             sQual = aEntry[1].replace('-','').replace(' ','')
 
-                            sHosterUrl = url
+                            sHosterUrl = base64.b64decode(url).decode('utf8',errors='ignore')
                             if 'soraplay' in sHosterUrl:
                                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
                             oHoster = cHosterGui().checkHoster(sHosterUrl)

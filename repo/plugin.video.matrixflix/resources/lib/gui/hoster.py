@@ -335,7 +335,8 @@ class cHosterGui:
             return self.getHoster('streamhide')
 
         # X-Video Clone
-        xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online'] if x in sHostName), None)
+        xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online', 'miravd',
+                                   'mwdy', 'vidsp.net', 'mp4plus'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 

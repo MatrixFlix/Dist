@@ -49,7 +49,7 @@
         "animeup": {
             "label": "Anime4up",
             "active": "True",
-            "url": "https://anime4up.lol/"
+            "url": "https://anime4up.rest/"
         },
         "animezid": {
             "label": "Animezid",
@@ -69,7 +69,8 @@
         "aracinema_co": {
             "label": "Aramosalsal",
             "active": "True",
-            "url": "https://aradrmtv.com/"
+            "cloudflare": "True",
+            "url": "https://aradramatv.com/"
         },
         "arbcinema": {
             "label": "Arbcinema",
@@ -154,7 +155,7 @@
         "cimacity": {
             "label": "CimaCity",
             "active": "True",
-            "url": "https://vip.cima-city.xyz/"
+            "url": "https://cima-city.xyz/"
         },
         "cimalina": {
             "label": "CimaLina",
@@ -170,13 +171,13 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://nimaty.store/"
+            "url": "https://cinematyko.online/"
         },
         "coolcima": {
             "label": "CoolCima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://coolmaan.store/"
+            "url": "https://egycool.online/"
         },
         "daily": {
             "label": "Daily IPTV List",
@@ -201,7 +202,7 @@
         "dramacafe": {
             "label": "Dramacafe",
             "active": "True",
-            "url": "https://w28.dramacafe-tv.com/"
+            "url": "https://w30.dramacafe-tv.com/"
         },
         "egyclub": {
             "label": "Egyclub",
@@ -252,7 +253,8 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "url": "https://halacima.media/"
+            "cloudflare": "True",
+            "url": "https://halacima.vip/"
         },
         "hidaya": {
             "label": "Hidaya",
@@ -436,7 +438,7 @@
             "active": "True",
             "cloudflare": "False",
             "url": "https://wecima.media/",
-            "url2": "https://wecima.show/"
+            "url2": "https://wecima.movie/"
         },
         "witanime": {
             "label": "WitAnime",
