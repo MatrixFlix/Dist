@@ -24,6 +24,7 @@ class cHoster(iHoster):
         self._url = self._url.replace('/d/','/v/').replace('/f/','/v/').replace('/file/','/v/').replace('/download/','/v/')
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('Referer', referer)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         api_call = ''

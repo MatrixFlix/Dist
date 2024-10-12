@@ -14,6 +14,7 @@ class cHoster(iHoster):
         api_call = False
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()

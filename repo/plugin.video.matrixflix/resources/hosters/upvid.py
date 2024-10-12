@@ -35,6 +35,7 @@ class cHoster(iHoster):
             oRequest = cRequestHandler(sUrl)
             oRequest.addHeaderEntry('User-Agent', UA)
             oRequest.addHeaderEntry('Referer', referer)
+            oRequest.enableCache(False)
             sHtmlContent = oRequest.request()
             sHtmlContent = sHtmlContent.replace('\n', '')
             

@@ -53,6 +53,7 @@ class cHoster(iHoster):
 
         oRequestHandler = cRequestHandler(url)
         oRequestHandler.addHeaderEntry('Referer', referer)
+        oRequestHandler.enableCache(False)
         sHtmlContent1 = oRequestHandler.request()
 
         sPattern2 = '<script type="text/javascript">(\s*eval\s*\(\s*function(?:.|\s)+?{}\)\))'

@@ -20,6 +20,7 @@ class cHoster(iHoster):
         sUrl = self._url
         
         oRequest = cRequestHandler(sUrl)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()

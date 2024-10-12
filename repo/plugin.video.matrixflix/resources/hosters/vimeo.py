@@ -25,6 +25,7 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('Host', 'vimeo.com')
         oRequest.addHeaderEntry('Referer', sReferer)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = '"config":"(.+?)",'

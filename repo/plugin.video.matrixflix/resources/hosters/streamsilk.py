@@ -23,6 +23,7 @@ class cHoster(iHoster):
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = 'return decodeURIComponent\(escape\(r\)\)}\("([^,]+)",([^,]+),"([^,]+)",([^,]+),([^,]+),([^,\))]+)\)'

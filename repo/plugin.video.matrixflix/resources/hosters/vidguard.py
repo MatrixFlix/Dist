@@ -22,6 +22,7 @@ class cHoster(iHoster):
         sURL = getHost(self._url)
         oRequest = cRequestHandler(sURL)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         api_call = ''

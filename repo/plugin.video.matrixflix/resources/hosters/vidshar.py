@@ -17,6 +17,7 @@ class cHoster(iHoster):
         oParser = cParser()
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern1 = 'sources.+?src.+?"(.+?)"'

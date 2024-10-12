@@ -17,6 +17,7 @@ class cHoster(iHoster):
         VSlog(self._url)
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()       

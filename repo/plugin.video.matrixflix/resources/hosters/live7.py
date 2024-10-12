@@ -24,6 +24,7 @@ class cHoster(iHoster):
 
         oRequestHandler = cRequestHandler(url)
         oRequestHandler.addHeaderEntry('Referer', Referer)
+        oRequestHandler.enableCache(False)
         data3 = oRequestHandler.request()
 
         sPatternUrl = 'hlsUrl = "https:\/\/" \+ ea \+ "([^"]+)"'

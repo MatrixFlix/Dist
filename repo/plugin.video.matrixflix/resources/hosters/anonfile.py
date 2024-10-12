@@ -19,18 +19,16 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         VSlog(self._url)
 
-        
         oParser = cParser()
         
-            # (.+?) .+?
         sPattern = 'class="btn btn-primary btn-block btn-download-quality" href="(.+?)">(.+?)</a>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         
         api_call = False
-
         if aResult[0]:
             url=[]
             qua=[]

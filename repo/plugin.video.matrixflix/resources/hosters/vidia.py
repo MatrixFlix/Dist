@@ -18,7 +18,9 @@ class cHoster(iHoster):
         api_call = False
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
+        
         sPattern = "(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>"
         oParser = cParser()
         aResult = oParser.parse(sHtmlContent, sPattern)

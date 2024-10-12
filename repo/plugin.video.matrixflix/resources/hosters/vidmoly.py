@@ -21,6 +21,7 @@ class cHoster(iHoster):
         
         oParser = cParser()
         oRequest = cRequestHandler(surl)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 		
         if ' can be watched as embed' in sHtmlContent:

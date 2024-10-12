@@ -20,6 +20,7 @@ class cHoster(iHoster):
 
         oRequestHandler = cRequestHandler(self._url)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
+        oRequestHandler.enableCache(False)
         oRequestHandler.request()
         surl = oRequestHandler.getRealUrl()
 

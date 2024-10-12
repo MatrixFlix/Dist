@@ -163,11 +163,9 @@ class cRequestHandler:
         self.addHeaderEntry('Accept-Charset', 'ISO-8859-1,utf-8;q=0.7,*;q=0.7')
 
     def __callRequest(self, jsonDecode=False):
-        if self.__enableCache == True:
-            if cRequestHandler.ENABLECACHED == "true":
-                self.s = CachedSession(VSPath(CACHE), cache_control=True, expire_after=cRequestHandler.CACHE_EXPIRY, stale_if_error=True)
-        else:
-            self.s = Session()
+        self.s = Session()
+        if self.__enableCache and cRequestHandler.ENABLECACHED == "true":
+            self.s = CachedSession(VSPath(CACHE), cache_control=True, expire_after=cRequestHandler.CACHE_EXPIRY, stale_if_error=True)
             
         if self.__enableDNS:
             self.save_getaddrinfo = socket.getaddrinfo

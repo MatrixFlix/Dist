@@ -36,6 +36,7 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(sUrl)
         oRequest.addHeaderEntry('User-Agent', UA)
         oRequest.addHeaderEntry('Referer','https://streamax.club/public/dist/index.html?id=' + urlId)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = 'RESOLUTION=(\d+x\d+)(.+?.m3u8)'

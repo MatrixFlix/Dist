@@ -19,6 +19,7 @@ class cHoster(iHoster):
         url = self._url
 
         oRequestHandler = cRequestHandler(url)
+        oRequestHandler.enableCache(False)
         sHtmlContent2 = oRequestHandler.request()
         sPattern2 = '<script type="text/javascript" src="([^"]+)'
         aResult = re.findall(sPattern2, sHtmlContent2)

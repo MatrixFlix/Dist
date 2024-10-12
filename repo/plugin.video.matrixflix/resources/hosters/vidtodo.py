@@ -35,6 +35,7 @@ class cHoster(iHoster):
     def extractSmil(self,smil):
         oRequest = cRequestHandler(smil)
         oRequest.addParameters('referer', self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         Base = re.search('<meta base="(.+?)"', sHtmlContent)
         Src = re.search('<video src="(.+?)"', sHtmlContent)
@@ -48,6 +49,7 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('Referer', self._url)
         oRequest.addParameters('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = 'sources:* \[(?:{file:)*"([^"]+)"'

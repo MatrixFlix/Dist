@@ -33,6 +33,7 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('user-agent',UA)
         oRequest.addHeaderEntry('Referer',sReferer.encode('utf-8'))
         oRequest.addHeaderEntry('Host',sHost.encode('utf-8'))
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()

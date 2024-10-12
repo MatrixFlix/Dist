@@ -67,6 +67,7 @@ class cHoster(iHoster):
         oRequestHandler = cRequestHandler(self._url)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
         oRequestHandler.addHeaderEntry('accept-language', 'en-US,en;q=0.9')
+        oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
 
         videoid = videokey = adbn = ''

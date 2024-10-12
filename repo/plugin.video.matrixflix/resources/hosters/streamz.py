@@ -32,6 +32,7 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         urlDownload = oRequest.getRealUrl()

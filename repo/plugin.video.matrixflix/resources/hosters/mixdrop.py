@@ -27,6 +27,7 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('Cookie', 'hds2=1')
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = '(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>'

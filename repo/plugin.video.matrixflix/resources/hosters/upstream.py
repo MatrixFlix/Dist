@@ -28,6 +28,7 @@ class cHoster(iHoster):
         oParser = cParser()
         oRequestHandler = cRequestHandler(self._url)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
+        oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
 
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'

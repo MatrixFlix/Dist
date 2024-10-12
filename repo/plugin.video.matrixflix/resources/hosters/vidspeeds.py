@@ -20,6 +20,7 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('user-agent',UA)
         oRequest.addHeaderEntry('Referer',sReferer)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         
         oParser = cParser()

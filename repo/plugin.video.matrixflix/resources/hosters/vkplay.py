@@ -29,6 +29,7 @@ class cHoster(iHoster):
 
         oParser = cParser()
         oRequest = cRequestHandler(url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern =  '"url":"([^"]+)'

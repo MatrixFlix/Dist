@@ -22,6 +22,7 @@ class cHoster(iHoster):
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = 'var\s*_[0-9a-f]+\s*=\s*"([^"]+)'

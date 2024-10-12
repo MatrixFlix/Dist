@@ -16,6 +16,7 @@ class cHoster(iHoster):
         VSlog(self._url)
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sHtmlContent = oParser.abParse(sHtmlContent, 'var player', 'vvplay')

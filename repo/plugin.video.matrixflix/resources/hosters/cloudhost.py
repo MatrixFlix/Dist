@@ -15,6 +15,7 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False, api_call=None):
         VSlog(self._url)
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = '<source src="([^"]+)"'

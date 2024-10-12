@@ -25,6 +25,7 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('Referer', sReferer)
         oRequest.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
         oRequest.addHeaderEntry('accept', '*/*')
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
        
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'

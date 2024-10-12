@@ -23,6 +23,7 @@ class cHoster(iHoster):
         oRequest.setRequestType(1)
         oRequest.addHeaderEntry('User-Agent', UA)
         oRequest.addHeaderEntry('Referer', self._url)
+        oRequest.enableCache(False)
         oRequest.addParametersLine(postdata)
         sHtmlContent = oRequest.request()
 

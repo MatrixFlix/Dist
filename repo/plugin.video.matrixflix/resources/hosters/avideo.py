@@ -21,6 +21,7 @@ class cHoster(iHoster):
         sUrl = self._url
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         if '/e' in sUrl:
             sHost = sUrl.split('/e')[0]

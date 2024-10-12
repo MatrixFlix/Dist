@@ -83,6 +83,7 @@ class cHoster(iHoster):
             oRequest.addHeaderEntry('User-Agent', UA)
             if url:
                 oRequest.addHeaderEntry('Referer', url)
+            oRequest.enableCache(False)
             sHtmlContent = oRequest.request()
             
             aResult = oParser.parse(sHtmlContent, sPattern)

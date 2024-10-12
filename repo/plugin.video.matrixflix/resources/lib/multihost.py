@@ -107,6 +107,7 @@ class cMegamax:
         if 'leech' in sHosterUrl or '/e/' in sHosterUrl:
             return False
         oRequestHandler = cRequestHandler(sHosterUrl)
+        oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
         sHtmlContent = sHtmlContent.replace('&quot;','"')
         oParser = cParser()

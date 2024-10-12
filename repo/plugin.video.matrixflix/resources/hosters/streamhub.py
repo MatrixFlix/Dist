@@ -14,6 +14,7 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         oRequest = cRequestHandler(self._url)
         oRequest.setTimeout(TimeOut)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         api_call = ''

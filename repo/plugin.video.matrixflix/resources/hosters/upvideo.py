@@ -24,6 +24,7 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('Cookie', 'popads2=opened')
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         aResult = oParser.parse(sHtmlContent, sPattern)

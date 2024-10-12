@@ -44,6 +44,7 @@ class cHoster(iHoster):
             '&pass=undefined&key=%s') % (self.__getIdFromUrl(), self.__getKey())
 
         oRequest = cRequestHandler(api_call)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern =  'url=(.+?)&title'

@@ -21,7 +21,6 @@ class cHoster(iHoster):
         self._url = self._url.replace('filemoon.sx','filemoon.in')
 
         if ('sub.info' in self._url):
-            VSlog(self._url)
             SubTitle = self._url.split('sub.info=')[1]
             oRequest0 = cRequestHandler(SubTitle)
             sHtmlContent0 = oRequest0.request().replace('\\','')
@@ -41,19 +40,19 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
-        if 'iframe src' in sHtmlContent:
-            try:
-                sPattern = r'iframe src="(.*?)"'
-                aResult = oParser.parse(sHtmlContent,sPattern)
-                if aResult[0]:
-                    oRequest = cRequestHandler(aResult[1][0])
-                    oRequest.addHeaderEntry('User-Agent', UA)
-                    oRequest.addHeaderEntry('Referer', self._url)
-                    sHtmlContent = oRequest.request()
-            except:
-                VSlog('Failed to get iframe')
+        try:
+            sPattern = r'iframe src="(.*?)"'
+            aResult = oParser.parse(sHtmlContent,sPattern)
+            if aResult[0]:
+                oRequest = cRequestHandler(aResult[1][0])
+                oRequest.addHeaderEntry('User-Agent', UA)
+                oRequest.addHeaderEntry('Referer', self._url)
+                sHtmlContent = oRequest.request()
+        except:
+            VSlog('Failed to get iframe')
                 
         api_call = False
 

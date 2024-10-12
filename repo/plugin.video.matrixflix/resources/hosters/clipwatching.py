@@ -22,6 +22,7 @@ class cHoster(iHoster):
         sReferer = f'https://{self._url.split("/")[2]}'
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sHtmlContent1 = oParser.abParse(sHtmlContent, 'var holaplayer', 'vvplay')

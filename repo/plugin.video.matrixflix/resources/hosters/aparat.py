@@ -24,6 +24,7 @@ class cHoster(iHoster):
 
         if VideoType == 1:
             oRequestHandler = cRequestHandler(self._url)
+            oRequestHandler.enableCache(False)
             sHtmlContent = oRequestHandler.request()
 
             oParser = cParser()
@@ -47,6 +48,7 @@ class cHoster(iHoster):
 
         if VideoType == 2:
             oRequestHandler = cRequestHandler(self._url)
+            oRequestHandler.enableCache(False)
             sHtmlContent = oRequestHandler.request()
 
             oParser = cParser()

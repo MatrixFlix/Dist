@@ -22,6 +22,7 @@ class cHoster(iHoster):
         oRequestHandler.addHeaderEntry('User-Agent', UA)
         oRequestHandler.addHeaderEntry('Origin', self._url.rsplit('/', 1)[0])
         oRequestHandler.addHeaderEntry('Referer', self._url)
+        oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
 
         api_call = ''

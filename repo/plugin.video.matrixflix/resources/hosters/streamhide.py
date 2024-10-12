@@ -19,6 +19,7 @@ class cHoster(iHoster):
         else:
             eURL = eURL
         oRequest = cRequestHandler(eURL)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()
