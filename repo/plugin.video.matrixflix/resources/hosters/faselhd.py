@@ -23,6 +23,7 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('user-agent',UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         sPattern = ',RESOLUTION=(.+?),.+?(http.+?m3u8)'

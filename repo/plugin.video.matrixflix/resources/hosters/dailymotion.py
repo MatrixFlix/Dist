@@ -29,6 +29,7 @@ class cHoster(iHoster):
         qua=[]
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         VSlog(self._url)
 

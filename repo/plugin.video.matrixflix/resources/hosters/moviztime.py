@@ -24,6 +24,7 @@ class cHoster(iHoster):
         
         oRequest = cRequestHandler(url)
         oRequest.addHeaderEntry('user-agent',UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         oParser = cParser()

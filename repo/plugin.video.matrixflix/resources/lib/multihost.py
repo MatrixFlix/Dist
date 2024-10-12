@@ -347,8 +347,8 @@ class cVidNet:
 
 class cVidPro:
     def __init__(self):
-        self.name = "Vidsrc.pro"
-        self.mainUrl = "https://vidsrc.pro"
+        self.name = "embed.su"
+        self.mainUrl = "https://embed.su"
 
     def sSub(self, id):
         try:
@@ -369,10 +369,13 @@ class cVidPro:
         html_search = self.make_get_request(sUrl, f'{self.mainUrl}/')
 
         hash_value = ''
-        match = re.search(r'hash\" *\: *\"([^\"]+)', html_search, re.IGNORECASE)
+        match = re.search(r"atob\(`(.*?)`\)", html_search)
         if match:
-            hash_value = match.group(1)
-        
+            encoded_json = match.group(1)
+            decoded_json = base64.b64decode(encoded_json).decode('utf-8')
+            hashload = json.loads(decoded_json)
+            hash_value = hashload["hash"]
+       
         decode_hash = lambda a: base64.b64decode(a[::-1] + '==').decode('utf-8')
         parse_hash = json.loads(decode_hash(hash_value))
 
@@ -427,7 +430,7 @@ class cVidPro:
 class cVidVip:
     def __init__(self):
         self.list = []
-        self.name = "Vidsrc.pro"
+        self.name = "Vidsrc.vip"
         self.mainUrl = "https://vidsrc.vip/"
         self.mainDL = "https://dl.vidsrc.vip"
 

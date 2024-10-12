@@ -20,6 +20,7 @@ class cHoster(iHoster):
         if 'fembed' in self._url:
             oRequest = cRequestHandler(self._url)
             oRequest.addHeaderEntry('User-Agent', UA)
+            oRequest.enableCache(False)
             oRequest.request()
             self._url = oRequest.getRealUrl()
 

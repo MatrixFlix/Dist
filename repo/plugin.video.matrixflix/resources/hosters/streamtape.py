@@ -38,6 +38,7 @@ class cHoster(iHoster):
             SubTitle = ''
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         
         src = re.findall(r'''ById\('.+?=\s*(["']//[^;<]+)''', sHtmlContent)

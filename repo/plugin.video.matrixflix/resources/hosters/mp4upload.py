@@ -24,6 +24,7 @@ class cHoster(iHoster):
             oRequestHandler = cRequestHandler(self._url)
             oRequestHandler.addHeaderEntry('User-Agent', UA)
             oRequestHandler.addHeaderEntry('Referer', urlmain + '/')
+            oRequestHandler.enableCache(False)
             sHtmlContent = oRequestHandler.request()
 
             sPattern = 'src:.+?"([^"]+)'
@@ -37,6 +38,7 @@ class cHoster(iHoster):
             oRequestHandler = cRequestHandler(self._url)
             oRequestHandler.addHeaderEntry('User-Agent', UA)
             oRequestHandler.addHeaderEntry('Referer', urlmain + '/')
+            oRequestHandler.enableCache(False)
             sHtmlContent = oRequestHandler.request()
 
             s = requests.Session()

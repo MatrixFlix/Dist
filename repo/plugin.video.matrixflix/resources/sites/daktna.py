@@ -81,7 +81,6 @@ def showSeries(sSearch = ''):
                 break
  
             siteUrl = aEntry[0]
-            
             sTitle = cUtil().CleanSeriesName(aEntry[1])
             sThumb = aEntry[2]
             sDesc = ''
@@ -132,9 +131,11 @@ def showEpisodes():
             m3url = aResult[1][0] 
             if m3url.startswith('//'):
                 m3url = 'https:' + m3url
+            if m3url.startswith('#'):
+                m3url = sUrl
 
-            oRequestHandler = cRequestHandler(m3url)
-            sHtmlContent = oRequestHandler.request()
+    oRequestHandler = cRequestHandler(m3url)
+    sHtmlContent = oRequestHandler.request()
    
     sPattern = '<div class="thumb"><a href="(.+?)"><img src=".+?" alt="(.+?)" data-src="(.+?)" class='
     aResult = oParser.parse(sHtmlContent, sPattern)

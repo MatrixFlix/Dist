@@ -259,7 +259,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly', 'playerwish', 'katomen'] if x in sHostName), None)
+                            'wishonly', 'playerwish', 'katomen', 'hlswish'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -410,7 +410,7 @@ class cHosterGui:
         if ('lulustream' in sHosterUrl) or ('luluvdo' in sHostName) or ('luluvid' in sHostName) or ('lulu.st' in sHostName) or ('732eg54de642sa' in sHostName):
             return self.getHoster('lulustream')
 
-        if ('rubystream' in sHosterUrl) or ('tuktukmulti' in sHostName) or ('stmruby' in sHostName) or ('streamruby' in sHostName) or ('rubystm' in sHostName):
+        if ('rubystream' in sHosterUrl) or ('tuktukmulti' in sHostName) or ('stmruby' in sHostName) or ('streamruby' in sHostName) or ('rubystm' in sHostName) or ('rubyvid' in sHostName):
             return self.getHoster('rubystream')
 
         if ('asiawiki' in sHostName):

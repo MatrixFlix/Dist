@@ -22,6 +22,7 @@ class cHoster(iHoster):
         sReferer = f'https://{self._url.split("/")[2]}'
 
         oRequest = cRequestHandler(self._url)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         oParser = cParser()
        

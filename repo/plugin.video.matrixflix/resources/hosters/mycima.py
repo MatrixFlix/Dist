@@ -28,6 +28,7 @@ class cHoster(iHoster):
         oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8')
         oRequestHandler.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
         oRequestHandler.addHeaderEntry('Accept-Language', 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3')
+        oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
 
         r2 = re.search(' src="([^<]+)" type="video/mp4">', sHtmlContent)

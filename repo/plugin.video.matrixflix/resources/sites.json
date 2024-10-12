@@ -28,6 +28,7 @@
         "alfajertv": {
             "label": "Alfajertv",
             "active": "True",
+            "cloudflare": "True",
             "url": "https://show.alfajertv.com/"
         },
         "aljazeera": {
@@ -160,7 +161,7 @@
         "cimalina": {
             "label": "CimaLina",
             "active": "True",
-            "url": "https://cimalina.live/"
+            "url": "https://cimalina.online/"
         },
         "cimanow": {
             "label": "CimaNow",
@@ -187,7 +188,7 @@
         "daktna": {
             "label": "Daktna",
             "active": "True",
-            "url": "https://u.daktna.cam/"
+            "url": "https://v.daktna.cam/"
         },
         "detectiveconanar": {
             "label": "Detectiveconanar",
@@ -198,11 +199,6 @@
             "label": "Docarabic",
             "active": "True",
             "url": "https://docarabic.wordpress.com/"
-        },
-        "dramacafe": {
-            "label": "Dramacafe",
-            "active": "True",
-            "url": "https://w30.dramacafe-tv.com/"
         },
         "egyclub": {
             "label": "Egyclub",
@@ -274,7 +270,7 @@
         "honadrama": {
             "label": "Honadrama",
             "active": "True",
-            "url": "https://tn.honadrama.vip/"
+            "url": "https://new.honadrama.xyz/"
         },
         "ifushaar": {
             "label": "iFushaar",
@@ -349,8 +345,8 @@
         "shahidu": {
             "label": "Shahid4u",
             "active": "True",
-            "cloudflare": "False",
-            "url": "https://shahid4u.diy/"
+            "cloudflare": "True",
+            "url": "https://shiid4u.cam/"
         },
         "shoffree": {
             "label": "Shoffree",
@@ -422,11 +418,6 @@
             "label": "Tv96",
             "active": "True",
             "url": "https://www.s96.net/"
-        },
-        "vidplay": {
-            "label": "VidPlay",
-            "active": "True",
-            "url": "https://vidplay.org"
         },
         "watanflix": {
             "label": "Watanflix",

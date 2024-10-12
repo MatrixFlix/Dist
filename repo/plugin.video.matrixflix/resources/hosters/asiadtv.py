@@ -30,7 +30,7 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('Referer',sReferer)
         oRequest.addHeaderEntry('x-requested-with','XMLHttpRequest')
         oRequest.addHeaderEntry('accept','*/*')
-        
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
         
         oParser = cParser()

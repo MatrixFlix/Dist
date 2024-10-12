@@ -51,10 +51,7 @@ class cRequestHandler:
         self.__sResponseHeader = ''
         self.BUG_SSL = False
         self.__enableDNS = False
-        if cRequestHandler.ENABLECACHED == "true":
-            self.s = CachedSession(VSPath(CACHE), cache_control=True, expire_after=cRequestHandler.CACHE_EXPIRY, stale_if_error=True)
-        else:
-            self.s = Session()
+        self.__enableCache = True
         self.redirects = True
         self.verify = True
         self.json = {}
@@ -78,6 +75,9 @@ class cRequestHandler:
 
     def disableRedirect(self):
         self.redirects = False
+
+    def enableCache(self, enableCache):
+        self.__enableCache = enableCache
 
     def removeNewLines(self, bRemoveNewLines):
         self.__bRemoveNewLines = bRemoveNewLines
@@ -163,6 +163,12 @@ class cRequestHandler:
         self.addHeaderEntry('Accept-Charset', 'ISO-8859-1,utf-8;q=0.7,*;q=0.7')
 
     def __callRequest(self, jsonDecode=False):
+        if self.__enableCache == True:
+            if cRequestHandler.ENABLECACHED == "true":
+                self.s = CachedSession(VSPath(CACHE), cache_control=True, expire_after=cRequestHandler.CACHE_EXPIRY, stale_if_error=True)
+        else:
+            self.s = Session()
+            
         if self.__enableDNS:
             self.save_getaddrinfo = socket.getaddrinfo
             socket.getaddrinfo = self.new_getaddrinfo
@@ -257,7 +263,7 @@ class cRequestHandler:
             else:
                 error_msg = "%s (%s),%s" % (addon().VSlang(30205), e, self.__sUrl)
 
-            dialog().VSerror(error_msg)
+            VSlog(error_msg)
             sContent = ''
 
         if self.oResponse is not None:

@@ -499,6 +499,7 @@ def showLink():
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.enableCache(False)
     sHtmlContent = oRequestHandler.request()
 
     sPattern = 'player_iframe.location.href = ["\']([^"\']+)["\']'
@@ -509,6 +510,7 @@ def showLink():
             oRequest = cRequestHandler(aEntry)
             oRequest.addHeaderEntry('user-agent',UA)
             oRequest.addHeaderEntry('referer',URL_MAIN)
+            oRequestHandler.enableCache(False)
             data = oRequest.request()
             if 'adilbo' in data:
                 data = decode_page(data)

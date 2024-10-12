@@ -18,6 +18,7 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         start_delimiter = "function%20fn%28a%29%7Bwindow.jsToken%20%3D%20a%7D%3Bfn%28%22"

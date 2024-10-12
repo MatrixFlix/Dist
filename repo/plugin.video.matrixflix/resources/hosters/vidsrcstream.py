@@ -21,16 +21,26 @@ class cHoster(iHoster):
         if ('sub.info' in self._url):
             SubTitle = self._url.split('sub.info=')[1]
             if '/search/' in SubTitle:
-                headers = { "User-Agent": "VLSub 0.10.2",
+                try:
+                    headers = { "User-Agent": "VLSub 0.10.2",
                             "X-Requested-With": "XMLHttpRequest"}
-                data = requests.get(SubTitle, headers=headers).json()
-                SubTitle = [item['SubDownloadLink'].replace(".gz", "").replace("download/", "download/subencoding-utf8/") for item in data]
-
+                    data = requests.get(SubTitle, headers=headers).json()
+                    SubTitle = [item['SubDownloadLink'].replace(".gz", "").replace("download/", "download/subencoding-utf8/") for item in data]
+                except:
+                    VSlog('Failed to process subtitle')
+                    
         if '|Referer=' in self._url:
             referer = self._url.split('|Referer=')[1]
             self._url = self._url.split('|Referer=')[0]
 
         if 'm3u8' in self._url or 'vidsrc.pro' in self._url or '.mp4' in self._url:
+            if '/soaper/' in self._url:
+                import urllib.parse
+                inner_url = self._url.split('soaper/')[1]
+                main_url = self._url.split('soaper/')[0]
+                encoded_inner_url = urllib.parse.quote(inner_url, safe='')
+                self._url = f'{main_url}soaper/{encoded_inner_url}'
+                
             return True, f'{self._url}|Referer={referer}', SubTitle
         
         headers = {'User-Agent': UA,

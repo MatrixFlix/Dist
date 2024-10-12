@@ -43,6 +43,18 @@ class cHoster(iHoster):
         oRequest.addHeaderEntry('User-Agent', UA)
         sHtmlContent = oRequest.request()
 
+        if 'iframe src' in sHtmlContent:
+            try:
+                sPattern = r'iframe src="(.*?)"'
+                aResult = oParser.parse(sHtmlContent,sPattern)
+                if aResult[0]:
+                    oRequest = cRequestHandler(aResult[1][0])
+                    oRequest.addHeaderEntry('User-Agent', UA)
+                    oRequest.addHeaderEntry('Referer', self._url)
+                    sHtmlContent = oRequest.request()
+            except:
+                VSlog('Failed to get iframe')
+                
         api_call = False
 
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'

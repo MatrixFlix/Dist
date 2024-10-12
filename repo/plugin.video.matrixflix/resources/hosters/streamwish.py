@@ -30,6 +30,7 @@ class cHoster(iHoster):
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry("User-Agent", UA)
         oRequest.addHeaderEntry('Referer', sReferer)
+        oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
        
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?\))<\/script>'

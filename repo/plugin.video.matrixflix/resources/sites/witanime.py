@@ -329,9 +329,13 @@ def showHosters():
                             url = aEntry[0].replace(')','').replace('(','').replace("'","").replace('"','')
                             sQual = aEntry[1].replace('-','').replace(' ','')
 
-                            sHosterUrl = base64.b64decode(url).decode('utf8',errors='ignore')
+                            try:
+                                sHosterUrl = base64.b64decode(f'{url}==').decode('utf8',errors='ignore')
+                            except:
+                                sHosterUrl = url
                             if 'soraplay' in sHosterUrl:
                                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
+
                             oHoster = cHosterGui().checkHoster(sHosterUrl)
                             if oHoster:
                                 sDisplayTitle = f'{sMovieTitle} [COLOR coral] Yonaplay ({sQual})[/COLOR]'
@@ -339,13 +343,14 @@ def showHosters():
                                 oHoster.setFileName(sMovieTitle)
                                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)                 
 
-                sHosterUrl = url
-                oHoster = cHosterGui().checkHoster(sHosterUrl)
-                if oHoster:
-                    sDisplayTitle = f'{sMovieTitle}'
-                    oHoster.setDisplayName(sDisplayTitle)
-                    oHoster.setFileName(sMovieTitle)
-                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                else:
+                    sHosterUrl = url
+                    oHoster = cHosterGui().checkHoster(sHosterUrl)
+                    if oHoster:
+                        sDisplayTitle = f'{sMovieTitle}'
+                        oHoster.setDisplayName(sDisplayTitle)
+                        oHoster.setFileName(sMovieTitle)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     sPattern = "_d\s*=\s*([^;]*)"
     aResult = oParser.parse(sHtmlContent, sPattern)

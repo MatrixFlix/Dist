@@ -56,6 +56,7 @@ class cHoster(iHoster):
             api_call = f'{api_call}|User-Agent={UA}&Referer={self._url}&verifypeer=false'
 
         if api_call:
+            VSlog(api_call)
             if ('http' in SubTitle):
                 return True, api_call, SubTitle
             else:
