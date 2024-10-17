@@ -249,7 +249,7 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "cloudflare": "True",
+            "cloudflare": "False",
             "url": "https://halacima.vip/"
         },
         "hidaya": {
@@ -322,10 +322,10 @@
             "active": "True",
             "url": "https://movtime94.homes/"
         },
-        "nabdhlb": {
-            "label": "Nabd8lb",
-            "active": "False",
-            "url": "https://nabd8lb.net/"
+        "newmirror": {
+            "label": "newmirror",
+            "active": "True",
+            "url": "L2NjLnJvcnJpbXNvaS8vOnNwdHRo"
         },
         "naqoos": {
             "label": "Naqoos",
@@ -345,7 +345,7 @@
         "shahidu": {
             "label": "Shahid4u",
             "active": "True",
-            "cloudflare": "True",
+            "cloudflare": "False",
             "url": "https://shiid4u.cam/"
         },
         "shoffree": {
@@ -366,7 +366,7 @@
         "showb": {
             "label": "ShowB",
             "active": "True",
-            "cloudflare": "True",
+            "cloudflare": "False",
             "url": "L2FpZGVtLnhvYndvaHMud3d3Ly86c3B0dGg="
         },
         "spacepowerfan": {

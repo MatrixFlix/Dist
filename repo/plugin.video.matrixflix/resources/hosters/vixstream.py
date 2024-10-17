@@ -1,14 +1,15 @@
 #-*- coding: utf-8 -*-
 
-import re, base64
+import base64
 import urllib.parse
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
 from resources.lib.comaddon import VSlog
 from resources.lib.util import urlHostName
+from resources.lib import random_ua
 
-UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+UA = random_ua.get_phone_ua()
 
 class cHoster(iHoster):
 
@@ -19,9 +20,12 @@ class cHoster(iHoster):
         api_call = False
         VSlog(self._url)
 
+        sRefer = urlHostName(self._url)
+
         oParser = cParser()
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.addHeaderEntry('Referer', sRefer)
         oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
@@ -36,7 +40,6 @@ class cHoster(iHoster):
             if aResult[0]:  
                 api_call = aResult[1][0]
 
-        sRefer = urlHostName(self._url)
         if api_call:
             return True, f'{api_call}|User-Agent={UA}&Referer=https://{sRefer}/'
 

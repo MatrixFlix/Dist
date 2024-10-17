@@ -241,7 +241,7 @@ def showEps():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<div class="movie"><a href="(.+?)"><div class="your-productSeCndary blog-post-img-thumb"><img src="(.+?)" class="image"></div>.+?<h3>(.+?)</h3>'
+    sPattern = '<div class="movie"><a href="([^"]+)".+?<img src="([^"]+)".+?<h3>(.+?)</h3>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()    
@@ -252,9 +252,8 @@ def showEps():
             siteUrl = aEntry[0]
             sThumb = aEntry[1]
             sDesc = ''
-            sYear = ""
 
-            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oGui.addEpisode(SITE_IDENTIFIER, 'showServer', sTitle, '', sThumb, sDesc, oOutputParameterHandler)              

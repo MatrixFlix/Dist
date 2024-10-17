@@ -26,9 +26,9 @@ class cHoster(iHoster):
         sHtmlContent = oRequestHandler.request()
 
         api_call = ''
-        aResult = re.search(r'getNextDownloadPageLink\("([^"]+)', sHtmlContent)
+        aResult = re.search(r'"([^"]+)","DOWNLOAD', sHtmlContent, re.IGNORECASE)
         if aResult:
-            api_call = ''.join([chr((x if isinstance(x, int) else ord(x)) ^ 117) for x in binascii.unhexlify(aResult.group(1))])
+            api_call = ''.join([chr(((x if isinstance(x, int) else ord(x)) ^ 15) ^ 117) for x in binascii.unhexlify(aResult.group(1))])
 
         if api_call:
             return True, api_call

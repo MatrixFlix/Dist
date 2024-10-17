@@ -347,75 +347,120 @@ def showHosters():
     sHtmlContent = oRequestHandler.request()
     oParser = cParser()
 
-    sPattern =  '<form method="post" action="([^"]+)".+?name="watch" value="([^"]+)' 
+    sPattern =  '<div class="btnWatch">.+?href="([^"]+)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
-        for aEntry in aResult[1]:
-            wcode = aEntry[1]
-            sLink = aEntry[0]
+        sLink = aResult[1][0] 
 
-            oRequestHandler = cRequestHandler(sLink)
-            oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
-            oRequestHandler.addHeaderEntry('Referer', URL_MAIN)
-            oRequestHandler.addHeaderEntry('Origin', URL_MAIN[:-1])
-            oRequestHandler.addParameters('watch', wcode)
-            oRequestHandler.addParameters('submit', '')
-            oRequestHandler.setRequestType(1)
-            sHtmlContent = oRequestHandler.request()
+        oRequestHandler = cRequestHandler(sLink)
+        oRequestHandler.addHeaderEntry('Referer', URL_MAIN)
+        oRequestHandler.addHeaderEntry('Origin', URL_MAIN[:-1])
+        sHtmlContent = oRequestHandler.request()
 
-    sPattern =  '<form method="post" action="([^"]+)".+?name="watch" value="([^"]+)' 
+    sPattern =  'vo_postID = "([^"]+)' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
+        sID = aResult[1][0] 
+
+    sPattern = 'id="s_.+?onClick="([^"]+)">(.+?)</i>'
+    aResult = oParser.parse(sHtmlContent,sPattern)
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:
-            wcode = aEntry[1]
-            sLink = aEntry[0]
+            if 'getServer2' in aEntry[0]:
+                ServerIDs = aEntry[0].replace('getServer2(this.id,','').replace(');','') 
+                sHosterID = ServerIDs.split(',')[0]
+                serverId = ServerIDs.split(',')[1]
+        
+                url = f'{URL_MAIN}wp-content/themes/vo2023/temp/ajax/iframe2.php?id={sID}&video={sHosterID}&serverId={serverId}'
+                sHost = aEntry[1]
+                sTitle = f'{sMovieTitle} [COLOR coral]{sHost}[/COLOR]'
 
-            oRequestHandler = cRequestHandler(sLink)
-            oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
-            oRequestHandler.addHeaderEntry('Referer', URL_MAIN)
-            oRequestHandler.addHeaderEntry('Origin', URL_MAIN[:-1])
-            oRequestHandler.addParameters('watch', wcode)
-            oRequestHandler.addParameters('submit', '')
-            oRequestHandler.setRequestType(1)
-            sHtmlContent = oRequestHandler.request()
+                oRequestHandler = cRequestHandler(url)
+                cook = oRequestHandler.GetCookies()
+                oRequestHandler.addHeaderEntry('User-Agent', UA)
+                oRequestHandler.addHeaderEntry('Referer', sLink)
+                oRequestHandler.addHeaderEntry('Cookie', cook.encode('utf-8'))
+                oRequestHandler.addHeaderEntry('sec-fetch-dest', 'empty'.encode('utf-8'))
+                oRequestHandler.addHeaderEntry('sec-fetch-mode', 'cors'.encode('utf-8'))
+                oRequestHandler.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
+                sHtmlContent2 = oRequestHandler.request()
 
-            sPattern = 'data-src=["\']([^"\']+)["\']'
-            aResult = oParser.parse(sHtmlContent, sPattern)
-            itemList = []
-            if aResult[0]:
-                oOutputParameterHandler = cOutputParameterHandler()
-                for aEntry in (aResult[1]):
-     
-                    sHosterUrl = aEntry
-                    if sHosterUrl not in itemList:
-                        itemList.append(sHosterUrl)
+                sPattern = 'iframe.+?src=["\']([^"\']+)["\']'
+                aResult = oParser.parse(sHtmlContent2, sPattern)
+                if aResult[0]:
+                    oOutputParameterHandler = cOutputParameterHandler()
+                    sHosterUrl = aResult[1][0]
 
-                        if 'leech' in aEntry:
-                            continue
-                        if sHosterUrl.startswith('//'):
-                            sHosterUrl = 'http:' + sHosterUrl
-                        if 'megamax' in sHosterUrl:
-                            data = cMegamax().GetUrls(sHosterUrl)
-                            if data is not False:
-                                for item in data:
-                                    sHosterUrl = item.split(',')[0].split('=')[1]
-                                    sQual = item.split(',')[1].split('=')[1]
-                                    sLabel = item.split(',')[2].split('=')[1]
+                    if 'megamax' in sHosterUrl or '/iframe/' in sHosterUrl:
+                        data = cMegamax().GetUrls(sHosterUrl)
+                        if data is not False:
+                            for item in data:
+                                sHosterUrl = item.split(',')[0].split('=')[1]
+                                sQual = item.split(',')[1].split('=')[1]
+                                sLabel = item.split(',')[2].split('=')[1]
 
-                                    sDisplayTitle = f'{sMovieTitle} ({sQual}) [COLOR coral]{sLabel}[/COLOR]'     
-                                    oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
-                                    oOutputParameterHandler.addParameter('siteUrl', sUrl)
-                                    oOutputParameterHandler.addParameter('sQual', sQual)
-                                    oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
-                                    oOutputParameterHandler.addParameter('sThumb', sThumb)
+                                sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sQual}][/COLOR][COLOR orange] - {sLabel}[/COLOR]'     
+                                oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
+                                oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                                oOutputParameterHandler.addParameter('sQual', sQual)
+                                oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
+                                oOutputParameterHandler.addParameter('sThumb', sThumb)
 
-                                    oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
- 
-                        oHoster = cHosterGui().checkHoster(sHosterUrl)
-                        if oHoster != False:
-                            oHoster.setDisplayName(sMovieTitle)
-                            oHoster.setFileName(sMovieTitle)
-                            cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+                                oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
+
+                    oHoster = cHosterGui().checkHoster(sHosterUrl)
+                    if oHoster:
+                        oHoster.setDisplayName(sMovieTitle)
+                        oHoster.setFileName(sMovieTitle)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+            else:
+                sPattern = 'id="s_.+?onClick=".*?getServer([^"]+)"'
+                aResult = oParser.parse(sHtmlContent,sPattern)
+                if aResult[0]:
+                    for aEntry in aResult[1]:
+                        sHosterID = aEntry.replace('(this.id,','').replace(');','') 
+
+                        url = f'{URL_MAIN}wp-content/themes/vo2023/temp/ajax/iframe.php?id={sID}&video={sHosterID}'
+
+                        oRequestHandler = cRequestHandler(url)
+                        cook = oRequestHandler.GetCookies()
+                        oRequestHandler.addHeaderEntry('User-Agent', UA)
+                        oRequestHandler.addHeaderEntry('Referer', sLink)
+                        oRequestHandler.addHeaderEntry('Cookie', cook.encode('utf-8'))
+                        oRequestHandler.addHeaderEntry('sec-fetch-dest', 'empty'.encode('utf-8'))
+                        oRequestHandler.addHeaderEntry('sec-fetch-mode', 'cors'.encode('utf-8'))
+                        oRequestHandler.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
+                        sHtmlContent2 = oRequestHandler.request()
+            
+                        sPattern = 'iframe.+?src=["\']([^"\']+)["\']'
+                        aResult = oParser.parse(sHtmlContent2, sPattern)
+                        if aResult[0]:
+                            oOutputParameterHandler = cOutputParameterHandler()
+                            sHosterUrl = aResult[1][0]
+
+                            if 'megamax' in sHosterUrl or '/iframe/' in sHosterUrl:
+                                data = cMegamax().GetUrls(sHosterUrl)
+                                if data is not False:
+                                    for item in data:
+                                        sHosterUrl = item.split(',')[0].split('=')[1]
+                                        sQual = item.split(',')[1].split('=')[1]
+                                        sLabel = item.split(',')[2].split('=')[1]
+
+                                        sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sQual}][/COLOR][COLOR orange] - {sLabel}[/COLOR]'     
+                                        oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
+                                        oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                                        oOutputParameterHandler.addParameter('sQual', sQual)
+                                        oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
+                                        oOutputParameterHandler.addParameter('sThumb', sThumb)
+
+                                        oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
+        
+                            oHoster = cHosterGui().checkHoster(sHosterUrl)
+                            if oHoster:
+                                oHoster.setDisplayName(sMovieTitle)
+                                oHoster.setFileName(sMovieTitle)
+                                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     oGui.setEndOfDirectory()
 
