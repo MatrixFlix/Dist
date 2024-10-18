@@ -385,7 +385,7 @@ def showHosters():
             sThumb = ''
             sTitle = ('%s  [COLOR coral](%s)[/COLOR]') % (sMovieTitle, sQual)  
 
-            sHosterUrl = f'{sUrl}|Referer={URL_MAIN}&cookie=t_hash_t={addons.getSetting("t_hash_t")}; hd=on'
+            sHosterUrl = f'{sUrl}|Referer={URL_MAIN}&cookie=t_hash_t={addons.getSetting("t_hash_t")};hd=on'
             if sSub:
                 sHosterUrl += f'?sub.info={sSub}'
             oHoster = cHosterGui().checkHoster(sHosterUrl)

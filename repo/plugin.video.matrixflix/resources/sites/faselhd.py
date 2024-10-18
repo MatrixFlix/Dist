@@ -553,10 +553,10 @@ def __checkForNextPage(sHtmlContent):
     return False
 
 def decode_page(data):
-    t_script = re.findall('<script.*?;.*?\'(.*?);', data, re.S)
+    t_script = re.findall('var adilbo.*?;.*?\'(.*?);', data, re.S)
     t_int = re.findall('/g.....(.*?)\)', data, re.S)
     if t_script and t_int:
-        script = t_script[3].replace("'",'')
+        script = t_script[0].replace("'",'')
         script = script.replace("+",'')
         script = script.replace("\n",'')
         sc = script.split('.')
@@ -565,7 +565,7 @@ def decode_page(data):
             c_elm = base64.b64decode(elm+'==').decode()
             t_ch = re.findall('\d+', c_elm, re.S)
             if t_ch:
-                nb = int(t_ch[0])+int(t_int[2])
+                nb = int(t_ch[0])+int(t_int[1])
                 page = page + chr(nb)
 
     return page
