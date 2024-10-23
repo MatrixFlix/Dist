@@ -944,12 +944,20 @@ msgid "Select a list"
 msgstr "حدد قائمة"
 
 msgctxt "#31213"
-msgid "Auto play"
-msgstr "تشغيل تلقائي"
+msgid "Use Trakt addon for sync and notation"
+msgstr "استخدم إضافة Trakt للمزامنة والتدوين"
 
 msgctxt "#31214"
-msgid "Accepted language for auto play"
-msgstr "اللغة المقبولة للتشغيل التلقائي"
+msgid "Trakt addon support"
+msgstr "دعم إضافة Trakt"
+
+msgctxt "#31215"
+msgid "Install Trakt addon"
+msgstr "تثبيت إضافة Trakt"
+
+msgctxt "#31216"
+msgid "Trakt source"
+msgstr "مصدر Trakt"
 
 msgctxt "#30400"
 msgid "Premium/Login"

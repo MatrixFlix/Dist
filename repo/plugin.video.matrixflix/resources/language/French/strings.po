@@ -966,12 +966,20 @@ msgid "Select a list"
 msgstr "Select a list"
 
 msgctxt "#31213"
-msgid "Auto play"
-msgstr "Lecture automatique"
+msgid "Use Trakt addon for sync and notation"
+msgstr "Utiliser l'extension Trakt pour la synchronisation et la notation"
 
 msgctxt "#31214"
-msgid "Accepted language for auto play"
-msgstr "Langue acceptée pour le player automatique"
+msgid "Trakt addon support"
+msgstr "Intégration de l'extension Trakt"
+
+msgctxt "#31215"
+msgid "Install Trakt addon"
+msgstr "Installer l'extension Trakt"
+
+msgctxt "#31216"
+msgid "Trakt source"
+msgstr "Source Trakt"
 
 msgctxt "#30400"
 msgid "Premium/Login"

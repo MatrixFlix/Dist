@@ -172,13 +172,13 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://cinematyko.online/"
+            "url": "https://nematyko.store/"
         },
         "coolcima": {
             "label": "CoolCima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://egycool.online/"
+            "url": "https://egcoool.store/"
         },
         "daily": {
             "label": "Daily IPTV List",
@@ -346,7 +346,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shiid4u.cam/"
+            "url": "https://shaa4u.cam/"
         },
         "shoffree": {
             "label": "Shoffree",

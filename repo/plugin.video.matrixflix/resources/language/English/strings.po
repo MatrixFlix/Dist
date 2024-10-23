@@ -978,11 +978,19 @@ msgid "Select a list"
 msgstr ""
 
 msgctxt "#31213"
-msgid "Auto play"
+msgid "Use Trakt addon for sync and notation"
 msgstr ""
 
 msgctxt "#31214"
-msgid "Accepted language for auto play"
+msgid "Trakt addon support"
+msgstr ""
+
+msgctxt "#31215"
+msgid "Install Trakt addon"
+msgstr ""
+
+msgctxt "#31216"
+msgid "Trakt source"
 msgstr ""
 
 msgctxt "#30361"

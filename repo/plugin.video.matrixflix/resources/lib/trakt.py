@@ -87,7 +87,7 @@ class cTrakt:
         oGui.setEndOfDirectory()
 
     def getLoad(self):
-        # pour regen le token()
+        # to regen token()
         # self.getToken()
         oGui = cGui()
 
@@ -98,7 +98,7 @@ class cTrakt:
             oOutputParameterHandler.addParameter('type', 'movie')
             oGui.addDir(SITE_IDENTIFIER, 'getToken', self.ADDON.VSlang(30305), 'trakt.png', oOutputParameterHandler)
         else:
-            # nom de l'user
+            # username
             try:
                 oRequestHandler = cRequestHandler(URL_API + 'users/me')
                 oRequestHandler.addHeaderEntry('Content-Type', 'application/json')
@@ -146,17 +146,17 @@ class cTrakt:
 
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('siteUrl', 'https://')
-        oOutputParameterHandler.addParameter('type', 'lists-tendances')
-        oGui.addDir(SITE_IDENTIFIER, 'getLists', "Trending lists", 'trakt.png', oOutputParameterHandler)
+        oOutputParameterHandler.addParameter('type', 'trending-lists')
+        oGui.addDir(SITE_IDENTIFIER, 'getLists', "Trending Lists", 'trakt.png', oOutputParameterHandler)
 
-        oOutputParameterHandler.addParameter('type', 'lists-pop')
-        oGui.addDir(SITE_IDENTIFIER, 'getLists', "Popular lists", 'trakt.png', oOutputParameterHandler)
+        oOutputParameterHandler.addParameter('type', 'pop-lists')
+        oGui.addDir(SITE_IDENTIFIER, 'getLists', "Popular Lists", 'trakt.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('type', 'custom-lists')
         oGui.addDir(SITE_IDENTIFIER, 'getLists', self.ADDON.VSlang(30360), 'trakt.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('type', 'liked-lists')
-        oGui.addDir(SITE_IDENTIFIER, 'getLists', 'My Liked Lists', 'trakt.png', oOutputParameterHandler)  
+        oGui.addDir(SITE_IDENTIFIER, 'getLists', 'My Favorite Lists', 'trakt.png', oOutputParameterHandler)  
 
         oGui.setEndOfDirectory() 
 
@@ -165,11 +165,11 @@ class cTrakt:
 
         today_date = str(datetime.datetime.now().date())
 
-        # DANGER ca rame, freeze
+        # DANGER it lags, freezes
         liste = []
-        liste.append(['سجل المشاهدة خلال الـ 7 أيام', URL_API + 'calendars/my/shows/' + today_date + '/7'])
-        liste.append(['سجل المشاهدة خلال الـ 30 يوم', URL_API + 'calendars/my/shows/' + today_date + '/30'])
-        liste.append(['الجديد خلال الـ 7 أيام', URL_API + 'calendars/all/shows/new/' + today_date + '/7'])
+        liste.append(['My plans for the next 7 days', URL_API + 'calendars/my/shows/' + today_date + '/7'])
+        liste.append(['My plans for the next 30 days', URL_API + 'calendars/my/shows/' + today_date + '/30'])
+        liste.append(['What is new in 7 days', URL_API + 'calendars/all/shows/new/' + today_date + '/7'])
 
         for sTitle, sUrl in liste:
 
@@ -257,12 +257,12 @@ class cTrakt:
                 url = URL_API + 'users/me/lists/' + List['ids']['slug'] + '/items'
                 liste.append([self.decode((List['name'] + ' (' + str(List['item_count']) + ')')), url])
 
-        elif sType == 'liked-lists' or sType == 'lists-tendances' or sType == 'lists-pop':
+        elif sType == 'liked-lists' or sType == 'trending-lists' or sType == 'pop-lists':
             if sType == 'liked-lists':
                 URL = URL_API + '/users/likes/lists'
-            elif sType == "lists-tendances":
+            elif sType == "trending-lists":
                 URL = URL_API + '/lists/trending'
-            elif sType == 'lists-pop':
+            elif sType == 'pop-lists':
                 URL = URL_API + 'lists/popular'
 
             oRequestHandler = cRequestHandler(URL)
@@ -345,12 +345,12 @@ class cTrakt:
         sHtmlContent = oRequestHandler.request(jsonDecode=True)
         sHeaders = oRequestHandler.getResponseHeader()
 
-        # Fonctionnement specifique au calendrier.
+        # Calendar specific functions.
         if 'X-Pagination-Page-Count' not in sHeaders:
             if sCurrentLimit == False:
                 sCurrentLimit = 0
             else:
-                # Supprimer les elements deja afficher.
+                # Delete items already displayed.
                 sHtmlContent = sHtmlContent[int(sCurrentLimit):]
 
             if len(sHtmlContent) > 20:
@@ -376,7 +376,7 @@ class cTrakt:
             progress_ = progress().VScreate(SITE_NAME)
 
             for i in sHtmlContent:
-                # Limite les elements du calendrier
+                # Limits calendar items
                 if not 'X-Pagination-Page-Count' in sHeaders:
                     if progress_.getProgress() >= int(MAXRESULT):
                         break
@@ -419,7 +419,7 @@ class cTrakt:
                         sTitle = ('%s') % (sTitle)
 
                 elif 'history' in sUrl:
-                    # commun
+                    # common
                     sFunction = 'showSearch'
                     sId = 'globalSearch'
                     if 'episode' in i:
@@ -443,7 +443,7 @@ class cTrakt:
                     sTitle = ('[COLOR gold]%s %s [/COLOR]- %s %s') % (sType, 'vu', sTitle, sExtra)
 
                 elif 'watchlist' in sUrl:
-                    # commun
+                    # common
                     sFunction = 'showSearch'
                     sId = 'globalSearch'
 
@@ -472,7 +472,7 @@ class cTrakt:
                     sTitle = ('%s %s') % (sTitle, sExtra)
 
                 elif 'watched' in sUrl:
-                    # commun
+                    # common
                     sPlays = i['plays']
                     if 'show' in i:
                         show = i['show']
@@ -495,7 +495,7 @@ class cTrakt:
                         sTitle = ('%s Lectures - %s (%s)') % (sPlays, sTitle, sYear)
 
                 elif 'played' in sUrl:
-                    # commun
+                    # common
                     sWatcher_count, sPlay_count, sCollected_count = i['watcher_count'], i['play_count'], i['collected_count']
                     sFunction = 'showSearch'
                     sId = 'globalSearch'
@@ -720,7 +720,7 @@ class cTrakt:
             for titleSearch in sHtmlContent:
                 if titleSearch['language'].lower() == 'ar':
                     title = titleSearch['title']
-                if titleSearch['country'].lower() == 'bh':
+                if titleSearch['country'].lower() == 'ar':
                     break
 
             if title is None:
@@ -847,10 +847,19 @@ class cTrakt:
             self.__sType = disp[ret]
         return self.__sType
 
-    def getAction(self, Action='', sEpisode = ''):
 
+    def convertCatToType(self, sCat):
+        # Film, serie, anime, season, episode
+        if sCat not in ('1', '2', '3', '4', '8'):
+            return -1
+        
+        sType = sCat.replace('1', 'movies').replace('2', 'shows').replace('3', 'shows').replace('4', 'shows').replace('8', 'shows')
+        return sType
+
+
+    def getAction(self, Action='', sEpisode = ''):
         if self.ADDON.getSetting('bstoken') == '':
-            self.DIALOG.VSinfo('Vous devez être connecté')
+            self.DIALOG.VSinfo('يجب عليك تسجيل الدخول')
             return
 
         oInputParameterHandler = cInputParameterHandler()
@@ -865,18 +874,16 @@ class cTrakt:
         sType = oInputParameterHandler.getValue('sCat')
         if not sType:
             sType = self.getType()
-        # entrer imdb ? venant d'ou?
+        # enter imdb? coming from where?
         sImdb = oInputParameterHandler.getValue('sImdbId')
         sTMDB = oInputParameterHandler.getValue('sTmdbId')
         sSeason = False
 
-        # Film, serie, anime, saison, episode
-        if sType not in ('1', '2', '3', '4', '8'):
+        sType = self.convertCatToType(sCat=sType)
+        if sType == -1:
             return
-        
-        sType = sType.replace('1', 'movies').replace('2', 'shows').replace('3', 'shows').replace('4', 'shows').replace('8', 'shows')
 
-        # Mettre en vu automatiquement.
+        # Automatically put into view.
         if Action == "SetWatched":
 
             if sType == "shows":
@@ -930,32 +937,32 @@ class cTrakt:
 
         try:
             if sHtmlContent['added']['movies'] == 1 or sHtmlContent['added']['episodes'] > 0 or sHtmlContent['added']['shows'] > 0:
-                sText = 'Added successfully'
+                sText = 'تمت الإضافة بنجاح'
         except:
             pass
 
         try:
             if sHtmlContent['updated']['movies'] == 1 or sHtmlContent['updated']['episodes'] > 0 or sHtmlContent['updated']['shows'] > 0:
-                sText = 'Updated successfully'
+                sText = 'تم التحديث بنجاح'
         except:
             pass
 
         try:
             if sHtmlContent['deleted']['movies'] == 1 or sHtmlContent['deleted']['episodes'] > 0:
-                sText = 'Successfully deleted'
+                sText = 'تم الحذف بنجاح'
         except:
             pass
 
         try:
             if sHtmlContent['existing']['movies'] > 0 or sHtmlContent['existing']['episodes'] > 0 or sHtmlContent['existing']['seasons'] > 0 or sHtmlContent['existing']['shows'] > 0:
-                sText = 'Entry already present'
+                sText = 'الإدخال موجود بالفعل'
         except:
             pass
 
         try:
             self.DIALOG.VSinfo(sText, 'trakt')
         except UnboundLocalError:
-            self.DIALOG.VSinfo("Error")
+            self.DIALOG.VSinfo("خطأ")
 
         if (oInputParameterHandler.exist('sReload')):
             xbmc.executebuiltin('Container.Refresh')
@@ -989,21 +996,21 @@ class cTrakt:
 
         oInputParameterHandler = cInputParameterHandler()
         sMovieTitle = oInputParameterHandler.getValue('file')
-        sMovieTitle = self.decode(sMovieTitle, Unicode=True).lower()  # on repasse en utf-8
+        sMovieTitle = self.decode(sMovieTitle, Unicode=True).lower()  # we go back to utf-8
         sMovieTitle = Quote(sMovieTitle)
-        sMovieTitle = re.sub('\(.+?\)', ' ', sMovieTitle)  # vire les tags entre parentheses
+        sMovieTitle = re.sub('\(.+?\)', ' ', sMovieTitle)  # remove the tags in parentheses
 
-        # modif venom si le titre comporte un - il doit le chercher
-        sMovieTitle = re.sub(r'[^a-z -]', ' ', sMovieTitle)  # vire les caracteres a la con qui peuvent trainer
+        # edit if the title has a - he has to look for it
+        sMovieTitle = re.sub(r'[^a-z -]', ' ', sMovieTitle)  # remove the stupid characters that may be hanging around
 
-        sMovieTitle = re.sub('( |^)(le|la|les|du|au|a|l)( |$)', ' ', sMovieTitle)  # vire les articles
+        sMovieTitle = re.sub('( |^)(le|la|les|du|au|a|l)( |$)', ' ', sMovieTitle)  # remove the articles
 
-        # vire les espaces multiples et on laisse les espaces sans modifs car certains codent avec %20 d'autres avec +
+        # remove the multiple spaces and leave the spaces without modifications because some code with %20 others with +
         sMovieTitle = re.sub(' +', ' ', sMovieTitle)
 
-        self.matrixSearch(sMovieTitle)
+        self.MatrixFlixSearch(sMovieTitle)
 
-    def matrixSearch(self, sMovieTitle):
+    def MatrixFlixSearch(self, sMovieTitle):
         oGui = cGui()
 
         oHandler = cRechercheHandler()
@@ -1022,7 +1029,7 @@ class cTrakt:
 
         oRequestHandler = cRequestHandler('https://api.themoviedb.org/3/movie/' + str(sTmdb))
         oRequestHandler.addParameters('api_key', '92ab39516970ab9d86396866456ec9b6')
-        oRequestHandler.addParameters('language', 'ar')
+        oRequestHandler.addParameters('language', 'en')
 
         sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
@@ -1045,8 +1052,7 @@ class cTrakt:
 
         return
 
-    def getTmdbID(self, sTitle, sType):
-
+    def getTmdbID(self, sTitle, sType, sYear = ''):
         from resources.lib.tmdb import cTMDb
         grab = cTMDb()
 
@@ -1055,14 +1061,17 @@ class cTrakt:
         elif sType == 'movies':
             sType = 'movie'
 
-        meta = 0
-        year = ''
-        # on cherche l'annee
-        r = re.search('(\([0-9]{4}\))', sTitle)
-        if r:
-            year = str(r.group(0))
-            sTitle = sTitle.replace(year, '')
+        # we are looking for the year
+        year = sYear
+        if year == '':
+            r = re.search('(\([0-9]{4}\))', sTitle)
+            if r:
+                year = str(r.group(0))
+                sTitle = sTitle.replace(year, '')
 
         meta = grab.get_idbyname(sTitle, year, sType)
 
-        return int(meta)
+        try:
+            return int(meta)
+        except:
+            return 0

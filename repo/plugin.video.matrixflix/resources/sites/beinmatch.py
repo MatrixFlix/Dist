@@ -147,7 +147,7 @@ def showLive():
                 url = url.split('?')[0]     
                 sHosterUrl = url
 
-            elif 'vimeo' in sHosterUrl:
+            elif 'vimeo' in url:
                 sHosterUrl = sHosterUrl + "|Referer=" + mSite
 
             if sHosterUrl.startswith('//'):

@@ -329,7 +329,7 @@ def showHosters():
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:           
-            url = aEntry[0]
+            url = decode(aEntry[0])
             sServer = aEntry[1].replace('Govid','govid.me').replace('متعدد الجودات','tuktukmulti').replace('TukTuk Vip','megamax')
             if url.startswith('//'):
                url = f'http:{url}'
@@ -367,7 +367,7 @@ def showHosters():
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         for aEntry in aResult[1]:           
-            url = aEntry[0]
+            url = decode(aEntry[0])
             sTitle = f'{sMovieTitle} ({aEntry[1]})' 
             if url.startswith('//'):
                url = f'http:{url}'
@@ -421,3 +421,14 @@ def showLinks():
         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     oGui.setEndOfDirectory()
+
+def decode(string):
+    try:
+        import base64
+        string1 = string.split("0REL0Y&")[0]
+        string2 = string1[::-1]
+        decoded_string = base64.b64decode(string2).decode('utf-8')
+        return decoded_string
+    
+    except:
+        return string
