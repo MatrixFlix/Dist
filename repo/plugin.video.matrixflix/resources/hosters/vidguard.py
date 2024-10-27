@@ -7,7 +7,7 @@ from resources.lib.comaddon import dialog, VSlog
 from resources.lib.aadecode import decodeAA
 from resources.lib import random_ua
 
-UA = random_ua.get_ua()
+UA = random_ua.get_pc_ua()
 
 import re
 import binascii

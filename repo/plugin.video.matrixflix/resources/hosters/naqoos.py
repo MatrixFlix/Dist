@@ -17,20 +17,16 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.enableCache(False)
-        sHtmlContent = oRequest.request()
+        sHtmlContent = oRequest.request(jsonDecode=True)
 
-        oParser = cParser()
-        sPattern = '"file":"([^"]+)","label":"([^"]+)'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0]:
-
+        files = sHtmlContent["files"]
+        for file_obj in files:
             url = []
             qua = []
-            for i in aResult[1]:
-                url.append(str(i[0]))
-                qua.append(str(i[1]))
+            url.append(file_obj["file"])
+            qua.append(file_obj["label"])
 
-            api_call = dialog().VSselectqual(qua, url)
+        api_call = dialog().VSselectqual(qua, url)
 
         if api_call:
             return True, api_call

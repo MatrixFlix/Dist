@@ -382,7 +382,7 @@
         "taxielcima": {
             "label": "TaxiElCima",
             "active": "True",
-            "url": "https://txcima.com/"
+            "url": "https://a1.txcima.com/"
         },
         "tma": {
             "label": "tma",

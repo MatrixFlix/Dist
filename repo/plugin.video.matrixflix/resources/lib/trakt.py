@@ -720,7 +720,7 @@ class cTrakt:
             for titleSearch in sHtmlContent:
                 if titleSearch['language'].lower() == 'ar':
                     title = titleSearch['title']
-                if titleSearch['country'].lower() == 'ar':
+                if titleSearch['country'].lower() == 'bh':
                     break
 
             if title is None:
@@ -1029,7 +1029,7 @@ class cTrakt:
 
         oRequestHandler = cRequestHandler('https://api.themoviedb.org/3/movie/' + str(sTmdb))
         oRequestHandler.addParameters('api_key', '92ab39516970ab9d86396866456ec9b6')
-        oRequestHandler.addParameters('language', 'en')
+        oRequestHandler.addParameters('language', 'ar')
 
         sHtmlContent = oRequestHandler.request(jsonDecode=True)
 

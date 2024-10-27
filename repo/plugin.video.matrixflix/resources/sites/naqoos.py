@@ -255,7 +255,7 @@ def showLinks(oInputParameterHandler = False):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
           
-    sPattern = 'data-type="([^"]+)" data-post="([^"]+)" data-nume="([^"]+).+?class="server">(.+?)</span>' 
+    sPattern = 'data-type=["\']([^"\']+)["\'] data-post=["\']([^"\']+)["\'] data-nume=["\']([^"\']+)["\'].+?class=["\']server["\']>(.+?)</span>' 
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()

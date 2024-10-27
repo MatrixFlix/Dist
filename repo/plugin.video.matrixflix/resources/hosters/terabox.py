@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-# TEST #
 
+import re, time, urllib.parse
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import VSlog
+from resources.lib.util import urlHostName
 from resources.hosters.hoster import iHoster
-import re, time, urllib.parse
+from resources.lib import random_ua
 
-UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0"
+UA = random_ua.get_pc_ua()
 
 class cHoster(iHoster):
 
@@ -15,6 +16,8 @@ class cHoster(iHoster):
 			
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
+
+        sHost = urlHostName(self._url)
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
@@ -31,10 +34,10 @@ class cHoster(iHoster):
             app_id = '250528'
             url_short = self._url.split('surl=')[1].split("&")[0]
 
-            api_link = f'https://www.terabox.com/api/shorturlinfo?app_id={app_id}&web=1&channel=dubox&clienttype=0&jsToken={js_token}&shorturl=1{url_short}&root=1&scene='
+            api_link = f'https://www.{sHost}/api/shorturlinfo?app_id={app_id}&web=1&channel=dubox&clienttype=0&jsToken={js_token}&shorturl=1{url_short}&root=1&scene='
 
             headers = {
-                    "host": "www.terabox.com",
+                    "host": f"www.{sHost}",
                     "accept": "application/json, text/plain, */*",
                     "x-requested-with": "XMLHttpRequest",
                     "user-agent": UA,
@@ -44,7 +47,7 @@ class cHoster(iHoster):
             import requests
             sHtmlContent = requests.get(api_link, headers=headers).json()
 
-            req_playlist_url = f'https://www.terabox.com/share/extstreaming.m3u8'
+            req_playlist_url = f'https://www.{sHost}/share/extstreaming.m3u8'
             timestamp = int(time.time() * 1000)
     
             params = {

@@ -3,8 +3,8 @@
 from resources.lib.parser import cParser
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import VSlog
-from Cryptodome.Cipher import ARC4
-from urllib.parse import unquote, quote, urlparse
+# from Cryptodome.Cipher import ARC4
+from urllib.parse import urlparse
 import re
 import requests, base64, json
 
@@ -16,13 +16,13 @@ class cMultiup:
         self.list = []
 
     def GetUrls(self, url):
+        VSlog(url)
         sHtmlContent = GetHtml(url)
         sPattern = '<form action="([^"]+)'
         result = re.findall(sPattern, sHtmlContent)
         if result:
-           NewUrl = f'https://multiup.io{result[0]}'.replace('/fr/download', '/en/mirror').replace('/en/download', '/en/mirror').replace('/download', '/en/mirror')
-
-        sHtmlContent = GetHtml(NewUrl)
+            NewUrl = f'https://multiup.io{result[0]}'.replace('/fr/download', '/en/mirror').replace('/en/download', '/en/mirror').replace('/download', '/en/mirror')
+            sHtmlContent = GetHtml(NewUrl)
 
         sPattern = 'nameHost="([^"]+)"\s*link="([^"]+)'
         r = re.findall(sPattern, sHtmlContent)
