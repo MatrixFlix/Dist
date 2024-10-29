@@ -219,7 +219,7 @@ def showEpisodes():
 	oRequestHandler = cRequestHandler(sUrl)
 	sHtmlContent = oRequestHandler.request()
 
-	sPattern = 'class="numerando">(.+?)</div><div class="episodiotitle"><a href="([^"]+)'
+	sPattern = 'class=["\']numerando["\']>(.+?)</div><div class=["\']episodiotitle["\']><a href=["\']([^"\']+)["\']'
 	aResult = oParser.parse(sHtmlContent, sPattern)
 	if aResult[0] is True:
 		oOutputParameterHandler = cOutputParameterHandler()

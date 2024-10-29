@@ -146,7 +146,7 @@ def showSeriesSearch(sSearch = ''):
             if "فيلم" in aEntry[1]:
                 continue
  
-            sTitle = cUtil().CleanSeriesName(aEntry[1])
+            sTitle = (cUtil().ConvertSeasons(aEntry[1])).replace("الجزء","S").replace("الموسم","S").replace("الحلقة "," E").replace("انمي ","")
             siteUrl = aEntry[0].replace('watch.php?','play.php?')
             sDesc = ''
             sThumb = aEntry[2]
@@ -156,9 +156,9 @@ def showSeriesSearch(sSearch = ''):
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 			
             if 'category.php' in siteUrl:
-                oGui.addEpisode(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addSeason(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
             else:
-                oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc,  oOutputParameterHandler)
+                oGui.addSeason(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc,  oOutputParameterHandler)
         
         progress_.VSclose(progress_)
  

@@ -194,7 +194,9 @@ def showSeries(sSearch = ''):
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
                 break
- 
+            if 'فيلم' in aEntry[1]:
+                continue
+
             sTitle = cUtil().CleanSeriesName(aEntry[1])
             sTitle = re.sub(r"S\d{1,2}", "", sTitle)
             sYear = ''
@@ -238,7 +240,11 @@ def showSeasons():
 	oRequestHandler = cRequestHandler(sUrl)
 	sHtmlContent = oRequestHandler.request()
 
-	sPattern = '<div class="Block--Item"><a href="([^<]+)" title.+?class="Poster--Block"><img src=".+?" alt="([^<]+)" data-srccs="([^<]+)">'
+	sStart = 'class="allseasons'
+	sEnd = 'class="otherser"'
+	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+	sPattern = '<div class="Block--Item">\s*<a href="([^<]+)" title.+?class="Poster--Block">\s*<img src=".+?" alt="([^<]+)" data-srccs="([^<]+)">'
 	aResult = oParser.parse(sHtmlContent, sPattern)	
 	if aResult[0] is True:
 		oOutputParameterHandler = cOutputParameterHandler()
@@ -272,7 +278,7 @@ def showEpisodes():
 	sEnd = 'class="otherser"'
 	sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
 
-	sPattern = '<a href="(.+?)" title=.+?<div class="epnum"><span>الحلقة</span>(.+?)</div></a>'
+	sPattern = '<a href="(.+?)" title=.+?<div class="epnum">\s*<span>الحلقة</span>(.+?)</div>\s*</a>'
 	aResult = oParser.parse(sHtmlContent, sPattern)
 	if aResult[0] is True:
 		oOutputParameterHandler = cOutputParameterHandler()
