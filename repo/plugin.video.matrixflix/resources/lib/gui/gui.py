@@ -677,145 +677,143 @@ class cGui:
 
 		
     def viewParents(self):
+        oGuiElement = cGuiElement()
+        from resources.lib.handler.requestHandler import cRequestHandler
+        from resources.lib.runscript import cClear
+
         oInputParameterHandler = cInputParameterHandler()
         sFileName = oInputParameterHandler.getValue('sFileName')
-        sFileName = sFileName.split('مدبلج')[0]
+        if not sFileName:
+            sFileName = oGuiElement.getFileName()
+        try:
+            sFileName = sFileName.split('مدبلج')[0]
+        except:
+            VSlog('مدبلج not found')
         sType = oInputParameterHandler.getValue('sType')
-
         if 'movie'in sType:
-            meta = cTMDb().get_meta(sType, sFileName, imdb_id = xbmc.getInfoLabel('ListItem.Property(ImdbId)'))
-            sIMDb = meta['imdb_id']
-            sUrl = 'https://www.imdb.com/title/'+sIMDb+'/parentalguide?ref_=tt_stry_pg'
+            try:
+                meta = cTMDb().get_meta(sType, sFileName, oGuiElement.getImdbId())
+                sIMDb = meta['imdb_id']
+                sUrl = 'https://www.imdb.com/title/'+sIMDb+'/parentalguide?ref_=tt_stry_pg'
+            except:
+                VSlog('movie not found')
         else:
-            meta = cTMDb().get_meta(sType, sFileName, imdb_id = xbmc.getInfoLabel('ListItem.Property(TmdbId)'))
-            sIMDb = meta['tmdb_id']
-            metaURL = f'https://api.themoviedb.org/3/tv/{sIMDb}/external_ids?api_key='+self.ADDON.getSetting('api_tmdb')
-            req = urllib2.Request(metaURL)
-            response = urllib2.urlopen(req)
-            r = json.loads(response.read().decode(response.info().get_param('charset') or 'utf-8'))
-            sIMDb = r['imdb_id']
-            sUrl = 'https://www.imdb.com/title/'+sIMDb+'/parentalguide?ref_=tt_stry_pg'
-        oRequest = urllib2.Request(sUrl)
-        oResponse = urllib2.urlopen(oRequest)
-        DIALOG = dialog()
+            try:
+                meta = cTMDb().get_meta(sType, sFileName, oGuiElement.getTmdbId())
+                sIMDb = meta['tmdb_id']
+                metaURL = f'https://api.themoviedb.org/3/tv/{sIMDb}/external_ids?api_key='+self.ADDON.getSetting('api_tmdb')
+                oRequestHandler = cRequestHandler(metaURL)
+                sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
-        if xbmc.getInfoLabel('system.buildversion')[0:2] >= '19':
-            sContent = oResponse.read().decode('utf-8')
-        else:
-            sContent = oResponse.read()
-        Stext = "لم يقع تصنيف المحتوى"
-        Stext0 = ""
+                sIMDb = sHtmlContent['imdb_id']
+                sUrl = 'https://www.imdb.com/title/'+sIMDb+'/parentalguide?ref_=tt_stry_pg'
+            except:
+                VSlog('movie not found')
 
-        oParser = cParser()
-        sPattern = '>MPAA</td>.+?<td>([^<]+)<'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            Stext0 = aResult[1][0]
-        if 'Rated R' in Stext0 and 'sex' not in Stext0:
-            Stext = 'غير مناسب للمشاهدة العائلية'
-        if 'Rated R' in Stext0 and 'sex'  in Stext0 or 'nudity'  in Stext0:
-            Stext = 'تحذير غير مناسب للمشاهدة وجود أو تكرار مشاهد تحتوي على عُري أو لقطات خادشة للحياء'
-        if 'Rated R' not in Stext0:
-            sPattern = 'Nudity</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
+        try:
+            oRequestHandler = cRequestHandler(sUrl)
+            sContent = oRequestHandler.request()
+            
+            Stext = "No rating ● لم يقع تصنيف المحتوى بشكل عام\n"
+
+            detailitems = []
+            oParser = cParser()
+            sPattern = '>Motion Picture Rating.+?role="presentation">.+?role="presentation">(.+?)</div>'
             aResult = oParser.parse(sContent, sPattern)
             if (aResult[0]):
-               Stext2 = aResult[1][0]
-               if 'None'  in Stext2:
-                  Stext = '  مناسب للمشاهدة العائلية'
-               if 'Mild'  in Stext2:
-                  Stext = '   بعض المواد قد لا تكون مناسبة'
-               if 'Moderate'  in Stext2:
-                  Stext = '   غير مناسب للمشاهدة العائلية'
-               if 'Severe'  in Stext2:
-                  Stext = 'تحذير غير مناسب للمشاهدة وجود أو تكرار مشاهد تحتوي على عُري أو لقطات خادشة للحياء'
-            Stext1 = re.findall('class="ipl-zebra-list__item">([^<]+)<div', sContent, re.S) 
-            if Stext1:
-               Stext1 = ' '.join(Stext1)
-               if 'kiss'  in Stext1:
-                  Stext = Stext+"\n"+' قد يحتوي بعض القبلات '
-               if 'cleavage'  in Stext1 or 'bikini'  in Stext1:
-                  Stext = Stext+"\n"+' ملابس غير ملائمة في بعض المشاهد '
-               if 'have sex'  in Stext1 or 'topless'  in Stext1:
-                  Stext = Stext+"\n"+' لقطات غير مناسبة للمشاهدة العائلية '
+                Stext = aResult[1][0]
 
-        sPattern = 'Nudity</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            SNude = aResult[1][0]
-            if 'unable' in SNude:
-                SNude = 'No rating لا يوجد تقييم'
-            if 'None'  in SNude:
-                  SNude = f'[COLOR green] {SNude} [/COLOR]'
-            if 'Mild'  in SNude:
-                  SNude = f'[COLOR yellow] {SNude} [/COLOR]'
-            if 'Moderate'  in SNude:
-                  SNude = f'[COLOR orange] {SNude} [/COLOR]'
-            if 'Severe'  in SNude:
-                  SNude = f'[COLOR red] {SNude} [/COLOR]'
+                parental_codes = {
+                    "G": "مناسب لجميع الأعمار",
+                    "PG": "إشراف الوالدين مطلوب",
+                    "PG-13": "غير مناسب للأطفال دون سن 13 سنة",
+                    "R": "ممنوع للأشخاص دون سن 17 سنة",
+                    "NC-17": "ممنوع للأشخاص دون سن 18 سنة",
+                    "TV-Y": "مناسب لجميع الأعمار",
+                    "TV-Y7": "مناسب للأطفال بعمر 7 سنوات فما فوق",
+                    "TV-G": "مناسب لجميع الأعمار",
+                    "TV-PG": "إشراف الوالدين مطلوب",
+                    "TV-14": "غير مناسب للأطفال دون سن 14 سنة",
+                    "TV-MA": "غير مناسب للأطفال"
+                }
 
-        sPattern = 'Gore</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            SGore = aResult[1][0]
-            if 'unable' in SGore:
-                SGore = 'No rating لا يوجد تقييم'
-            if 'None'  in SGore:
-                  SGore = f'[COLOR green] {SGore} [/COLOR]'
-            if 'Mild'  in SGore:
-                  SGore = f'[COLOR yellow] {SGore} [/COLOR]'
-            if 'Moderate'  in SGore:
-                  SGore = f'[COLOR orange] {SGore} [/COLOR]'
-            if 'Severe'  in SGore:
-                  SGore = f'[COLOR red] {SGore} [/COLOR]'
+                pattern = re.compile(r'\b(?:' + '|'.join(re.escape(code) for code in parental_codes.keys()) + r')\b')
+                matches = pattern.findall(Stext)
+                translations = {code: parental_codes[code] for code in matches}
+                for code, meaning in translations.items():
+                    Stext = f'التقيبم هو {code}\n - {meaning}\n\n'
 
-        sPattern = 'Profanity</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            SProfanity = aResult[1][0]
-            if 'unable' in SProfanity:
-                SProfanity = 'No rating لا يوجد تقييم'
-            if 'None'  in SProfanity:
-                  SProfanity = f'[COLOR green] {SProfanity} [/COLOR]'
-            if 'Mild'  in SProfanity:
-                  SProfanity = f'[COLOR yellow] {SProfanity} [/COLOR]'
-            if 'Moderate'  in SProfanity:
-                  SProfanity = f'[COLOR orange] {SProfanity} [/COLOR]'
-            if 'Severe'  in SProfanity:
-                  SProfanity = f'[COLOR red] {SProfanity} [/COLOR]'
+            def process_rating(rating_name, pattern):
+                result = oParser.parse(sContent, pattern)
+                if result[0]:
+                    rating = result[1][0]
+                    if 'unable' in rating:
+                        return 'No rating ● لايوجد تقييم'
+                    else:
+                        if 'None' in rating:
+                            rating = f'{rating} ● لايوجد'
+                            color = 'green'
+                        elif 'Mild' in rating:
+                            rating = f'{rating} ● خفيف'
+                            color = 'yellow'
+                        elif 'Moderate' in rating:
+                            rating = f'{rating} ● متوسط'
+                            color = 'orange'
+                        elif 'Severe' in rating:
+                            rating = f'{rating} ● شديد'
+                            color = 'red'
+                        else:
+                            rating = f'{rating} ● لايوجد تقييم'
+                            color = 'green'
+                        return f'[COLOR {color}] {rating} [/COLOR]'
+                else:
+                    return 'No rating ● لايوجد تقييم'
 
-        sPattern = 'Smoking</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            SSmoking = aResult[1][0]
-            if 'unable' in SSmoking:
-                SSmoking = 'No rating لا يوجد تقييم'
-            if 'None'  in SSmoking:
-                  SSmoking = f'[COLOR green] {SSmoking} [/COLOR]'
-            if 'Mild'  in SSmoking:
-                  SSmoking = f'[COLOR yellow] {SSmoking} [/COLOR]'
-            if 'Moderate'  in SSmoking:
-                  SSmoking = f'[COLOR orange] {SSmoking} [/COLOR]'
-            if 'Severe'  in SSmoking:
-                  SSmoking = f'[COLOR red] {SSmoking} [/COLOR]'
+            SNude = process_rating('Nudity', 'Nudity:<.+?role="presentation">.+?role="presentation">(.+?)</div>')
+            SGore = process_rating('Gore', 'Gore:<.+?role="presentation">.+?role="presentation">(.+?)</div>')
+            SProfanity = process_rating('Profanity', 'Profanity:<.+?role="presentation">.+?role="presentation">(.+?)</div>')
+            SSmoking = process_rating('Smoking', 'Smoking:<.+?role="presentation">.+?role="presentation">(.+?)</div>')
+            SIntense = process_rating('Intense Scenes', 'Intense Scenes:<.+?role="presentation">.+?role="presentation">(.+?)</div>')
 
-        sPattern = 'Intense Scenes</h4>.+?ipl-status-pill.+?">([^<]+)</span>'
-        aResult = oParser.parse(sContent, sPattern)
-        if (aResult[0]):
-            SIntense = aResult[1][0]
-            if 'unable' in SIntense:
-                SIntense = 'No rating لا يوجد تقييم'
-            if 'None'  in SIntense:
-                  SIntense = f'[COLOR green] {SIntense} [/COLOR]'
-            if 'Mild'  in SIntense:
-                  SIntense = f'[COLOR yellow] {SIntense} [/COLOR]'
-            if 'Moderate'  in SIntense:
-                  SIntense = f'[COLOR orange] {SIntense} [/COLOR]'
-            if 'Severe'  in SIntense:
-                  SIntense = f'[COLOR red] {SIntense} [/COLOR]'
+            Stextf = f'{Stext}\nالجنس والعري: {SNude}\nالعنف والدموية: {SGore}\nالشتم: {SProfanity}\nالكحول والمخدرات والتدخين: {SSmoking}\nالمشاهد المخيفة: {SIntense}\n'
+            detailitems.append(Stextf)
 
-        Stextf = f'{Stext}\n{Stext0}\nSex & Nudity الجنس والعري: {SNude}\nViolence & Gore العنف والدموية: {SGore}\nProfanity الشتم: {SProfanity}\nAlcohol, Drugs & Smoking الكحول والمخدرات والتدخين: {SSmoking}\nFrightening & Intense Scene المشاهد المخيفة: {SIntense}'
+            sTranslate = {
+                            "NUDITY": "الجنس والعري",
+                            "VIOLENCE": "العنف والدموية",
+                            "PROFANITY": "الشتم",
+                            "ALCOHOL": "الكحول والمخدرات والتدخين",
+                            "FRIGHTENING": "المشاهد المخيفة"
+                            }
+                            
+            pattern = r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>'
+            match = re.search(pattern, sContent, re.DOTALL)
+            if match:
+                json_data = json.loads(match.group(1))
+                prtguide = json_data["props"]["pageProps"]["contentData"]["data"]["title"]["parentsGuide"]["nonSpoilerCategories"]
 
-        ret = DIALOG.VSok(Stextf)
+                merged_plaidhtml = {}
+                for category_summary in prtguide:
+                    category_id = category_summary["category"]["id"]
+                    merged_plaidhtml[category_id] = []
+
+                    for guide_item in category_summary["guideItems"]["edges"]:
+                        plaid_html = guide_item["node"]["text"]["plaidHtml"]
+                        merged_plaidhtml[category_id].append(plaid_html)
+
+                for category_id, plaid_html_list in merged_plaidhtml.items():
+                    if plaid_html_list:
+                        merged_plaidhtml[category_id] = "\n - ".join(plaid_html_list)
+                    else:
+                        merged_plaidhtml[category_id] = "\n - No Rating ● لايوجد تقييم"
+                
+                for category_id, merged_html in merged_plaidhtml.items():
+                    sDesc = f'{"_" * 20}\n\n{sTranslate.get(category_id, category_id)}\n{"_" * 20}\n\n - {merged_html}\n'
+                    detailitems.append(sDesc)
+
+            cClear.TextBoxes(self, f'[B][COLOR gold] الاشراف العائلي [/COLOR][/B]', "\n\n".join(map(str, detailitems)))
+        except:
+            dialog().VSinfo('لا توجد معلومات للاشراف العائلي')
 
     def viewSimil(self):
         sPluginPath = cPluginHandler().getPluginPath()

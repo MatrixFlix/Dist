@@ -59,7 +59,6 @@ def showSearch():
         return  
 
 def showSearchMovies(sSearch = ''):
-    import requests
     oGui = cGui()
     sUrl = sSearch
 
@@ -150,7 +149,7 @@ def showMovies(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<div class="browse-movie-wrap col-xs-10 col-sm-4 col-md-5 col-lg-4"><a href="([^"]+)".+?src="([^"]+)" alt="([^"]+)' 
+    sPattern = '<div class="browse-movie-wrap.+?<a href="([^"]+)".+?src="([^"]+)" alt="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])

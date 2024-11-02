@@ -106,7 +106,7 @@ def showMoviesSearch(sSearch = ''):
     sHtmlContent = oRequestHandler.request()
  
     oParser = cParser()
-    sPattern = '<li class="LodyBlock"><a href="([^<]+)"><div class="Ribbon">.+?</div><div class="Poster"><img alt="([^<]+)" src="([^<]+)" />'
+    sPattern = '<li class="LodyBlock">\s*<a href="([^"]+)".+?alt="([^"]+)".+?data-src="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -200,7 +200,7 @@ def showSearchSerie(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
  
-    sPattern = '<li class="LodyBlock"><a href="([^<]+)"><div class="Ribbon">.+?</div><div class="Poster"><img alt="([^<]+)" src="([^<]+)" />'
+    sPattern = '<li class="LodyBlock">\s*<a href="([^"]+)".+?alt="([^"]+)".+?data-src="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -254,7 +254,7 @@ def showMovies(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
  
-    sPattern = '<li class="LodyBlock"><a href="([^<]+)"><div class="Ribbon">.+?</div><div class="Poster"><img alt="([^<]+)" src="([^<]+)" />'
+    sPattern = '<li class="LodyBlock">\s*<a href="([^"]+)".+?alt="([^"]+)".+?data-src="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         total = len(aResult[1])
@@ -305,7 +305,7 @@ def showSerie(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
  
-    sPattern = '<li class="LodyBlock TermBlock"><a href="([^<]+)"><.+?<img alt="([^<]+)" src="([^<]+)" />'
+    sPattern = '<li class="LodyBlock TermBlock">\s*<a href="([^"]+)".+?alt="([^"]+)".+?data-src="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -368,7 +368,7 @@ def showEpisodes():
 			
             oGui.addEpisode(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-    sPattern = '<li class="LodyBlock"><a href="([^<]+)"><div class="Ribbon">.+?</div><div class="Poster"><img alt="([^<]+)" src="([^<]+)" />'
+    sPattern = '<li class="LodyBlock">\s*<a href="([^"]+)".+?alt="([^"]+)".+?data-src="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler() 

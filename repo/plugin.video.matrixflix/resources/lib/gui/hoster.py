@@ -206,7 +206,7 @@ class cHosterGui:
                     return self.getHoster("direct_link")
 
         supported_player = ['film77', 'hdup', 'streamable', 'stardima', 'filescdn', 'videott', 'vidlo', 'sendit', 'vidmoly', 
-                            'fastplay', 'cloudy', 'extremenow', 'yourupload', 'vidspeeds', 'voe', 'faselhd', 'naqoos', 'frdl',
+                            'fastplay', 'extremenow', 'yourupload', 'vidspeeds', 'voe', 'faselhd', 'naqoos', 'frdl',
                             'streamax', 'facebook', 'mixdrop', 'mixloads', 'vidoza', 'rutube', 'speedvid', 'krakenfiles', 
                             'playreplay', 'uqload', 'qiwi', 'gofile', 'mail.ru', 'videas', 'vidyard', '1cloud', 'uploady',
                             'letwatch', 'mp4upload', 'filepup', 'wstream', 'watchvideo', 'vidwatch', 'tune', 'extrashare',
