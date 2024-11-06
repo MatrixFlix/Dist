@@ -272,6 +272,11 @@
             "active": "True",
             "url": "https://new.honadrama.xyz/"
         },
+        "ifilm": {
+            "label": "iFilm",
+            "active": "True",
+            "url": "https://ar.ifilmtv.ir/"
+        },
         "ifushaar": {
             "label": "iFushaar",
             "active": "True",
@@ -403,6 +408,11 @@
             "label": "Top IMDB",
             "active": "True",
             "url": "https://www.imdb.com/"
+        },
+        "torrent": {
+            "label": "Torrent",
+            "active": "True",
+            "url": ""
         },
         "tuktukcinema": {
             "label": "Tuktukcinema",

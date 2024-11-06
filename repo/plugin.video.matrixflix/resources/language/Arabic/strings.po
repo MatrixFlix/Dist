@@ -460,6 +460,10 @@ msgctxt "#301047"
 msgid "Taiwanese"
 msgstr "تايوانية"
 
+msgctxt "#301048"
+msgid "Iranian"
+msgstr "إيرانية"
+
 msgctxt "#301111"
 msgid "Pakistani"
 msgstr "باكستانية"
@@ -930,6 +934,26 @@ msgstr "قوائم Trakt الشخصية الخاصة بي"
 msgctxt "#30361"
 msgid "Activate scrobbling"
 msgstr "تتبع القراءة"
+
+msgctxt "#30362"
+msgid "Torrent"
+msgstr "التورنت"
+
+msgctxt "#30363"
+msgid "Max Video Size in GB"
+msgstr "الحد الأقصى لحجم الفيديو بالجيجابايت"
+
+msgctxt "#30364"
+msgid "Install Torrest Repository"
+msgstr "تثبيت مستودع Torrest"
+
+msgctxt "#30365"
+msgid "Install Torrest Addon"
+msgstr "تثبيت اضافة Torrest"
+
+msgctxt "#30366"
+msgid "You'll need to install the Torrest Addon from the Torrest Repository.\nThis add-on will allow you to play/download torrents directly on your device."
+msgstr "سوف تحتاج إلى تثبيت Torrest Addon من Torrest Repository.\nستتيح لك هذه الإضافة تشغيل / تنـزيل الـتورنت مباشرة على جهازك."
 
 msgctxt "#31210"
 msgid "Add to new list"

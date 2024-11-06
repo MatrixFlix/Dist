@@ -510,7 +510,7 @@ def showLink():
             oRequest = cRequestHandler(aEntry)
             oRequest.addHeaderEntry('user-agent',UA)
             oRequest.addHeaderEntry('referer',URL_MAIN)
-            oRequestHandler.enableCache(False)
+            oRequest.enableCache(False)
             data = oRequest.request()
             if 'adilbo' in data:
                 data = decode_page(data)

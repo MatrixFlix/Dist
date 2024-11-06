@@ -457,6 +457,10 @@ msgctxt "#301047"
 msgid "Taiwanese"
 msgstr "Taiwanese"
 
+msgctxt "#301048"
+msgid "Iranian"
+msgstr "Iranian"
+
 msgctxt "#301111"
 msgid "Pakistani"
 msgstr "Pakistani"
@@ -948,6 +952,26 @@ msgstr "Listes personnelles Trakt"
 msgctxt "#30361"
 msgid "Activate scrobbling"
 msgstr "Activer le suivi de lecture"
+
+msgctxt "#30362"
+msgid "Torrent"
+msgstr "Torrent"
+
+msgctxt "#30363"
+msgid "Max Video Size in GB"
+msgstr "Taille maximale de la vidéo en Go"
+
+msgctxt "#30364"
+msgid "Install Torrest Repository"
+msgstr "Installer le référentiel Torrest"
+
+msgctxt "#30365"
+msgid "Install Torrest Addon"
+msgstr "Installer le module complémentaire Torrest"
+
+msgctxt "#30366"
+msgid "Vous devrez installer le module complémentaire Torrest à partir du référentiel Torrest.\nCe module complémentaire vous permettra de lire/télécharger des torrents directement sur votre appareil."
+msgstr ""
 
 msgctxt "#31209"
 msgid "Results: [COLOR deepskyblue]%s[/COLOR]"

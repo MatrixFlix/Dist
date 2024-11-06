@@ -226,6 +226,9 @@ class cHome:
         oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_4k')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(33108)), '4k.png', oOutputParameterHandler)
 
+        # oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_IR')
+        # oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(301048)), 'iran.png', oOutputParameterHandler)
+
         oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_TURK')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(30109)), 'turk.png', oOutputParameterHandler)
 
@@ -305,6 +308,9 @@ class cHome:
 
         oOutputParameterHandler.addParameter('siteUrl', 'SERIE_EN')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30121), self.addons.VSlang(30108)), 'agnab.png', oOutputParameterHandler)
+
+        oOutputParameterHandler.addParameter('siteUrl', 'SERIE_IR')
+        oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30121), self.addons.VSlang(301048)), 'iran.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'SERIE_TR')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30121), self.addons.VSlang(30109)), 'turk.png', oOutputParameterHandler)

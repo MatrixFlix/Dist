@@ -63,9 +63,9 @@ def fetch_html_content(url):
             addhash = match.group(1)
         else:
             VSlog("addhash not found")
-        
+
         unix_time = int(time.time())
-        verify_url = f"https://{VRF_MAIN}/verify?hash={addhash}&t={unix_time}"
+        verify_url = f"{main_url}v.php?hash={addhash}&t={unix_time}"
         requests.get(verify_url)
         
         request_body = {

@@ -8,7 +8,7 @@ from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
 from resources.lib.parser import cParser
-from resources.lib.util import Quote, cUtil
+from resources.lib.util import Quote, cUtil, urlHostName
 from resources.lib import random_ua
 
 UA = random_ua.get_ua()
@@ -558,8 +558,8 @@ def showHosters():
 
         oRequestHandler = cRequestHandler(sUrl)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
-        oRequestHandler.addHeaderEntry('Referer', sUrl.encode('utf-8'))
-        oRequestHandler.addHeaderEntry('Host', "shoffree.net")
+        oRequestHandler.addHeaderEntry('Referer', sUrl2)
+        oRequestHandler.addHeaderEntry('Host', urlHostName(URL_MAIN))
         oRequestHandler.addParameters('key', mkey)
         oRequestHandler.setRequestType(1)
         sHtmlContent = oRequestHandler.request()
