@@ -489,15 +489,9 @@ def showHosters():
 
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    oRequestHandler.addHeaderEntry('User-Agent', UA)
+    oRequestHandler.addParameters('View', '1')
+    oRequestHandler.setRequestType(1)
     sHtmlContent = oRequestHandler.request()
-
-    s = requests.Session()
-    data = {'View':'1'}
-    r = s.post(sUrl, data = data)
-    sHtmlContent = r.content
-    if isMatrix(): 
-       sHtmlContent = sHtmlContent.decode('utf8',errors='ignore')
 
     sPattern = '<li data-link="(.+?)">'
     aResult = oParser.parse(sHtmlContent, sPattern)	

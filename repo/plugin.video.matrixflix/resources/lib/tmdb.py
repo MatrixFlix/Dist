@@ -551,7 +551,7 @@ class cTMDb:
             'imdb_id': meta.get('imdb_id', ""),
             'tmdb_id': meta.get('tmdb_id', "") if meta.get('tmdb_id') else meta.get('id'),
             'tvdb_id': "",
-            "title": meta.get('title') if meta.get('title') else meta.get('name', ""),
+            "title": meta.get('original_title') if meta.get('original_title') else meta.get('original_name', ""),
             'media_type': meta.get('media_type', "") if media_type == "" else media_type,
             'rating': meta.get('s_vote_average', 0.0) if meta.get('s_vote_average') else meta.get('vote_average', 0.0),
             'votes': meta.get('s_vote_count', 0) if meta.get('s_vote_count') else meta.get('vote_count', 0),
@@ -1154,7 +1154,10 @@ class cTMDb:
 
     def _call(self, action, append_to_response=''):
         from resources.lib.handler.requestHandler import cRequestHandler
-        url = '%s%s?language=%s&api_key=%s' % (self.URL, action, self.lang, self.api_key)
+        if 'discover/' in action:
+            url = '%s%s&language=%s&api_key=%s' % (self.URL, action, self.lang, self.api_key)    
+        else:
+            url = '%s%s?language=%s&api_key=%s' % (self.URL, action, self.lang, self.api_key)
         if append_to_response:
             url += '&%s' % append_to_response
 

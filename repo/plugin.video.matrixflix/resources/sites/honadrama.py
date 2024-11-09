@@ -7,7 +7,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.parser import cParser
-from resources.lib.util import cUtil
+from resources.lib.util import cUtil, Quote
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
 from resources.lib import random_ua
 
@@ -271,11 +271,12 @@ def showServer():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern =  '<link itemprop="embedURL" href="([^"]+)' 
+    sPattern =  '<div class="ButtonsSingle">.+?href="([^"]+)' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         murl =  aResult[1][0]
         oRequest = cRequestHandler(murl)
+        oRequest.addHeaderEntry('Referer', sUrl.encode('utf8'))
         sHtmlContent = oRequest.request()
   
     sPattern = 'data-server="([^<]+)" data-q="([^"]+)' 

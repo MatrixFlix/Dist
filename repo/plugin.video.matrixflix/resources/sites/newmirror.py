@@ -65,7 +65,7 @@ def fetch_html_content(url):
             VSlog("addhash not found")
 
         unix_time = int(time.time())
-        verify_url = f"{main_url}v.php?hash={addhash}&t={unix_time}"
+        verify_url = f"https://{VRF_MAIN}/verify?vhf={addhash}&a=yy&t={unix_time}"
         requests.get(verify_url)
         
         request_body = {
@@ -92,7 +92,7 @@ def fetch_html_content(url):
     
     headers = {
         "user-agent": UA,
-        "cookie": f"t_hash_t={t_hash_t}; hd=on",
+        "cookie": f"t_hash_t={t_hash_t}; ott=nf; hd=on",
     }
 
     sHtmlContent = requests.get(url, headers=headers)

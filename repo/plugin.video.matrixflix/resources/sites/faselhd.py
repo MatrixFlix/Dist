@@ -19,6 +19,10 @@ SITE_NAME = 'Faselhd'
 SITE_DESC = 'arabic vod'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+if addon().getSetting('Use_alternative') == "true":
+    sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
+    URL_MAIN = sHost[::-1]
+
 
 MOVIE_EN = (f'{URL_MAIN}movies', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}hindi', 'showMovies')
@@ -70,7 +74,7 @@ def load():
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام انمي', 'anime.png', oOutputParameterHandler)
     
     oOutputParameterHandler.addParameter('siteUrl', KID_MOVIES[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام كرتون', 'crtoon.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام انيميشن', 'anim.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', DOC_NEWS[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام وثائقية', 'doc.png', oOutputParameterHandler) 
@@ -327,6 +331,11 @@ def showSeasons():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
+        URL_MAIN = sHost[::-1]
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -336,10 +345,10 @@ def showSeasons():
     if (aResult[0]):
         oOutputParameterHandler = cOutputParameterHandler() 
         for aEntry in aResult[1]:
+            
             postid = aEntry[0]
             sSeason = aEntry[3].replace("موسم "," S")
             siteUrl = f'{URL_MAIN[:-1]}{postid}'
- 
             sTitle = ("%s %s") % (sMovieTitle, sSeason)         
             sThumb = aEntry[1]
             sDesc = ""
@@ -389,6 +398,9 @@ def showEpisodes():
     postid = oInputParameterHandler.getValue('postid')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
+
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
@@ -454,7 +466,11 @@ def showEpisodes1():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    
+
+    if addon().getSetting('Use_alternative') == "true":
+        URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("http://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -497,48 +513,27 @@ def showLink():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
     oRequestHandler.enableCache(False)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = 'player_iframe.location.href = ["\']([^"\']+)["\']'
+    sPattern = 'player_iframe.location.href = ["\']([^"\']+)["\'].+?</i>(.+?)</a>'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         for aEntry in aResult[1]:
 
-            oRequest = cRequestHandler(aEntry)
-            oRequest.addHeaderEntry('user-agent',UA)
-            oRequest.addHeaderEntry('referer',URL_MAIN)
-            oRequest.enableCache(False)
-            data = oRequest.request()
-            if 'adilbo' in data:
-                data = decode_page(data)
-            
-            sPattern =  'data-url="([^<]+)">([^<]+)</button>' 
-            aResult = oParser.parse(data, sPattern)
-            if aResult[0]:
-                for aEntry in aResult[1]:
-                    sHosterUrl = aEntry[0]
-                    sHost = aEntry[1].upper()
-                    sTitle = f'{sMovieTitle} ({sHost})'
-                    oHoster = cHosterGui().getHoster('faselhd') 
-                    if oHoster:
-                        oHoster.setDisplayName(sTitle)
-                        oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)            
-
-            sPattern =  'videoSrc = ["\']([^"\']+)["\']' 
-            aResult = oParser.parse(data, sPattern)
-            if aResult[0]:
-                for aEntry in aResult[1]:
-                    sHosterUrl = aEntry
-                    sTitle = f'{sMovieTitle} (Server 2)' 
-                    oHoster = cHosterGui().getHoster('faselhd') 
-                    if oHoster:
-                        oHoster.setDisplayName(sTitle)
-                        oHoster.setFileName(sMovieTitle)
-                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)    
+            sHosterUrl = aEntry[0]
+            sHost = aEntry[1]
+            sTitle = f'{sMovieTitle} ({sHost})'
+            oHoster = cHosterGui().getHoster('faselhd') 
+            if oHoster:
+                oHoster.setDisplayName(sTitle)
+                oHoster.setFileName(sMovieTitle)
+                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)            
 
     oGui.setEndOfDirectory()       
   

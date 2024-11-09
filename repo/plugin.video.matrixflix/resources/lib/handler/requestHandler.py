@@ -360,7 +360,7 @@ class cRequestHandler:
                                 payload = {
 	                                "cmd": "request.post",
 	                                "url": convert_url(self.__sUrl),
-                                    "postData": _request.data
+                                    "postData": ', '.join([f"{key}={value}" for key, value in _request.data.items()])
                                     }
                             headers = {
 	                            "content-type": "application/json",

@@ -200,6 +200,11 @@
             "active": "True",
             "url": "https://docarabic.wordpress.com/"
         },
+        "egybest": {
+            "label": "EgyBest",
+            "active": "True",
+            "url": "https://egybest.land/"
+        },
         "egyclub": {
             "label": "Egyclub",
             "active": "True",
@@ -224,7 +229,8 @@
         "faselhd": {
             "label": "Faselhd",
             "active": "True",
-            "url": "https://www.faselhds.care/"
+            "url": "https://www.faselhds.care/",
+            "url2": "Lzk5LjAxMi42Ni41OTEvLzpwdHRo"
         },
         "fushaar": {
             "label": "Fushaar",
