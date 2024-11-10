@@ -162,6 +162,9 @@ def showMovies(sSearch = ''):
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -234,6 +237,9 @@ def showSeries(sSearch = ''):
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -283,6 +289,9 @@ def showAnimes(sSearch = ''):
     else:
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
+
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
