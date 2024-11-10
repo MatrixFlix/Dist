@@ -1,5 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
+import base64
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -13,7 +14,12 @@ SITE_IDENTIFIER = 'aracinema_co'
 SITE_NAME = 'ARA-Drama'
 SITE_DESC = 'arabic vod'
  
+sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
+sHost = sHost[::-1]
+
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+if addon().getSetting('Use_alternative') == "true":
+    URL_MAIN = sHost
 
 MOVIE_ASIAN = (f'{URL_MAIN}category/%d8%a7%d9%84%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d9%84%d8%a2%d8%b3%d9%8a%d9%88%d9%8a%d8%a9/', 'showMovies')
 MOVIE_KR = (f'{URL_MAIN}type/k-movies/', 'showMovies')
@@ -118,6 +124,7 @@ def showYears():
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sStart = '>كل السنوات</option>'
@@ -144,6 +151,7 @@ def showSerieYears():
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sStart = '>كل السنوات</option>'
@@ -170,6 +178,7 @@ def moviesGenres():
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sStart = '>كل الأنواع</option>'
@@ -196,6 +205,7 @@ def seriesGenres():
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sStart = '>كل الأنواع</option>'
@@ -225,6 +235,7 @@ def showMovies(sSearch = ''):
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sPattern ='<a class="first_A" href="([^<]+)" title="([^<]+)">.+?<img src="([^<]+)" alt.+?<i class="fa fa-calendar-o"></i>([^<]+)</a>'
@@ -276,6 +287,7 @@ def showSeries(sSearch = ''):
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sPattern ='<article id="post-.+?href="([^<]+)" title="([^<]+)"><img src="([^<]+)" alt=.+?<i class="icon-folder-open mi"></i>([^<]+)</a>.+?<i class="icon-calendar mi"></i>([^<]+)</a>'
@@ -324,12 +336,13 @@ def showSerie(sSearch = ''):
     else:
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
-
+    
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
-    sPattern ='<a class="first_A" href="([^<]+)" title="([^<]+)"><img src="([^<]+)" alt.+?</i>([^<]+)</a>'
+    sPattern ='<a class="first_A" href="([^"]+)" title="([^"]+)".+?src="([^"]+)"\s*alt.+?</i>([^<]+)</a>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -376,8 +389,12 @@ def showEpisodes():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
 
     sNote = ''
@@ -430,8 +447,12 @@ def showLink():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request()
     
     sDesc = ''
@@ -504,6 +525,7 @@ def showHosters():
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.disableSSL()
     sHtmlContent = oRequestHandler.request() 
 
     sPattern =  '<a class="first_A" href="([^<]+)" title=' 

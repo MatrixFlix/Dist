@@ -200,7 +200,7 @@ def account_login():
         last_gen = int(addons.getSetting('last_connan_cookie_create'))
     except Exception:
         last_gen = 0
-    if not addons.getSetting('last_connan_cookie') or last_gen < (time.time() - (2 * 24 * 60 * 60)):
+    if not addons.getSetting('last_connan_cookie') or last_gen < (time.time() - (1 * 20 * 60 * 60)):
 
         sess = requests.session()
 

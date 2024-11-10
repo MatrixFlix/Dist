@@ -45,7 +45,8 @@
             "label": "Animeblkom",
             "active": "True",
             "cloudflare": "True",
-            "url": "https://animeblkom.net/"
+            "url": "https://animeblkom.net/",
+            "url2": "LzI0LjI5LjU1MS4zMDEvLzpwdHRo"
         },
         "animeup": {
             "label": "Anime4up",
@@ -71,7 +72,8 @@
             "label": "Aramosalsal",
             "active": "True",
             "cloudflare": "True",
-            "url": "https://aradramatv.com/"
+            "url": "https://aradramatv.com/",
+            "url2": "LzIxMi40NTEuNjMyLjI5MS8vOnNwdHRo"
         },
         "arbcinema": {
             "label": "Arbcinema",

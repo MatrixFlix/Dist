@@ -1,5 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
+import base64
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -12,9 +13,14 @@ from resources.lib.util import cUtil
 SITE_IDENTIFIER = 'animeblkom'
 SITE_NAME = 'Animeblkom'
 SITE_DESC = 'arabic vod'
- 
-URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
+sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
+sHost = sHost[::-1]
+
+URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+if addon().getSetting('Use_alternative') == "true":
+    URL_MAIN = sHost
+    
 ANIM_NEWS = (f'{URL_MAIN}series-list', 'showSeries')
 ANIM_MOVIES = (f'{URL_MAIN}movie-list', 'showMovies')
 
@@ -165,6 +171,9 @@ def showEpisodes():
     sThumb = oInputParameterHandler.getValue('sThumb')
     sDesc = oInputParameterHandler.getValue('sDesc')
 
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -209,6 +218,9 @@ def showHosters():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
+
+    if addon().getSetting('Use_alternative') == "true":
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)

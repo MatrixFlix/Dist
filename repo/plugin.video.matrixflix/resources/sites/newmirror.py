@@ -85,7 +85,7 @@ def fetch_html_content(url):
     except Exception:
         last_gen = 0
 
-    if not addons.getSetting('t_hash_t') or last_gen < (time.time() - (1 * 24 * 60 * 60)):
+    if not addons.getSetting('t_hash_t') or last_gen < (time.time() - (1 * 20 * 60 * 60)):
         t_hash_t = bypass(URL_MAIN)
     else:
         t_hash_t = addons.getSetting('t_hash_t')

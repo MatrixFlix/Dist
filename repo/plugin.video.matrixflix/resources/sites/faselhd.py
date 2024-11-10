@@ -18,11 +18,12 @@ SITE_IDENTIFIER = 'faselhd'
 SITE_NAME = 'Faselhd'
 SITE_DESC = 'arabic vod'
 
+sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
+sHost = sHost[::-1]
+
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 if addon().getSetting('Use_alternative') == "true":
-    sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
-    URL_MAIN = sHost[::-1]
-
+    URL_MAIN = sHost
 
 MOVIE_EN = (f'{URL_MAIN}movies', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}hindi', 'showMovies')
@@ -332,8 +333,6 @@ def showSeasons():
     sThumb = oInputParameterHandler.getValue('sThumb')
 
     if addon().getSetting('Use_alternative') == "true":
-        sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf-8")
-        URL_MAIN = sHost[::-1]
         sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser() 
@@ -399,8 +398,9 @@ def showEpisodes():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
     if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("http://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
@@ -467,8 +467,8 @@ def showEpisodes1():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
+    URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
     if addon().getSetting('Use_alternative') == "true":
-        URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
         sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("http://") else sUrl
 
     oParser = cParser() 
@@ -527,8 +527,8 @@ def showLink():
         for aEntry in aResult[1]:
 
             sHosterUrl = aEntry[0]
-            sHost = aEntry[1]
-            sTitle = f'{sMovieTitle} ({sHost})'
+            sHoster = aEntry[1]
+            sTitle = f'{sMovieTitle} ({sHoster})'
             oHoster = cHosterGui().getHoster('faselhd') 
             if oHoster:
                 oHoster.setDisplayName(sTitle)
