@@ -310,6 +310,21 @@ def showMovies(sSearch = ''):
             oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
     if not sSearch:
+        sStart = '<div class="pagination">'
+        sEnd = 'class="dtw_content"'
+        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+        sPattern = 'href=["\']([^"\']+)["\'] class=".+?">(.+?)</a>'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+                for aEntry in aResult[1]:
+                
+                    sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
+                    siteUrl = aEntry[0]
+
+                    oOutputParameterHandler = cOutputParameterHandler()
+                    oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                
+                    oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'next.png', oOutputParameterHandler)
         oGui.setEndOfDirectory()
 		
 def showTopMovies(sSearch = ''):
@@ -376,6 +391,7 @@ def showSeries(sSearch = ''):
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
+    VSlog(sHtmlContent)
 
     sPattern = '<article id=".+?" class="item tvshows "><div class="poster"><img src="([^<]+)" alt="([^<]+)"><div class="rating"><span class="icon-star2"></span>.+?<a href="(.+?)"><div class="see">'
     aResult = oParser.parse(sHtmlContent, sPattern)
@@ -411,6 +427,21 @@ def showSeries(sSearch = ''):
             oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
     if not sSearch:
+        sStart = '<div class="pagination">'
+        sEnd = 'class="dtw_content"'
+        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+        sPattern = 'href=["\']([^"\']+)["\'] class=".+?">(.+?)</a>'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+                for aEntry in aResult[1]:
+                
+                    sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
+                    siteUrl = aEntry[0]
+
+                    oOutputParameterHandler = cOutputParameterHandler()
+                    oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                
+                    oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, 'next.png', oOutputParameterHandler)
         oGui.setEndOfDirectory()
    		
 def showEpisodes():
@@ -463,8 +494,9 @@ def showEpisodes():
     oGui.setEndOfDirectory()
 
 def __checkForNextPage(sHtmlContent):
+    
     oParser = cParser()
-    sPattern = '<link rel="next" href="(.+?)" />'
+    sPattern = 'id=["\']nextpagination["\'].+?href=["\']([^"\']+)["\']'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         return aResult[1][0]

@@ -22,8 +22,6 @@ sHost = base64.b64decode(siteManager().getUrlMain2(SITE_IDENTIFIER)).decode("utf
 sHost = sHost[::-1]
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-if addon().getSetting('Use_alternative') == "true":
-    URL_MAIN = sHost
 
 MOVIE_EN = (f'{URL_MAIN}movies', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}hindi', 'showMovies')
@@ -163,7 +161,7 @@ def showMovies(sSearch = ''):
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
     if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
@@ -237,9 +235,6 @@ def showSeries(sSearch = ''):
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
-    if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
-
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -290,9 +285,6 @@ def showAnimes(sSearch = ''):
         oInputParameterHandler = cInputParameterHandler()
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
-    if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
-
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -340,9 +332,6 @@ def showSeasons():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-
-    if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
@@ -406,10 +395,6 @@ def showEpisodes():
     postid = oInputParameterHandler.getValue('postid')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-
-    URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-    if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("http://") else sUrl
 
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
@@ -476,10 +461,6 @@ def showEpisodes1():
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
 
-    URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-    if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("http://") else sUrl
-
     oParser = cParser() 
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
@@ -523,7 +504,7 @@ def showLink():
     sThumb = oInputParameterHandler.getValue('sThumb')
 
     if addon().getSetting('Use_alternative') == "true":
-        sUrl = URL_MAIN + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
+        sUrl = sHost + "/".join(sUrl.split("/")[3:]) if sUrl.startswith("https://") else sUrl
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
