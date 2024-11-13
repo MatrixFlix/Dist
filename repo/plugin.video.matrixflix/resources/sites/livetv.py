@@ -23,11 +23,11 @@ SITE_DESC = 'Live sport events'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-SPORT_GENRES = (f'{URL_MAIN}enx/allupcoming/', 'showMovies') 
+SPORT_GENRES = (f'{URL_MAIN}enx/allupcoming/', 'showGenres') 
 SPORT_LIVE = (f'{URL_MAIN}enx/', 'showLive') 
 SPORT_SPORTS = (True, 'load')
 
-HEURE_HIVER = False
+HEURE_HIVER = True
 
 def load():
     oGui = cGui()
@@ -87,7 +87,7 @@ def showLive():
 
     oGui.setEndOfDirectory()
 
-def showMovies():
+def showGenres():
     oGui = cGui()
 
     oInputParameterHandler = cInputParameterHandler()
@@ -103,7 +103,7 @@ def showMovies():
         oGui.addText(SITE_IDENTIFIER)
     else:
         oOutputParameterHandler = cOutputParameterHandler()
-        for aEntry in aResult[1]:
+        for aEntry in sorted(aResult[1], key=lambda genre: genre[1]):
             sUrl2 = f'{URL_MAIN}{aEntry[0]}'
             sTitle = aEntry[1]
 
@@ -121,11 +121,11 @@ def showMovies():
 
             oOutputParameterHandler.addParameter('siteUrl2', sUrl2)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies2', sTitle, 'genres.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'sport.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
-def showMovies2(): 
+def showMovies(): 
 
     oGui = cGui()
     oInputParameterHandler = cInputParameterHandler()

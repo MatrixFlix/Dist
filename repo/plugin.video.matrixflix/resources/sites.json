@@ -5,6 +5,11 @@
             "active": "True",
             "url": "https://aflamfree.one/"
         },
+        "aflamtop": {
+            "label": "AflamTOP",
+            "active": "True",
+            "url": "https://aflam.top/"
+        },
         "akoam": {
             "label": "Akoam",
             "active": "True",
@@ -216,11 +221,6 @@
             "label": "Egydead",
             "active": "True",
             "url": "https://egydead.center/"
-        },
-        "ehna": {
-            "label": "Ehna",
-            "active": "True",
-            "url": "https://aflam.top/"
         },
         "esseq": {
             "label": "Esseq",

@@ -215,7 +215,7 @@ class cHosterGui:
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
                             'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload', 'dailyuploads',
-                            'myvi', 'viewsb', 'yourvid', 'oneupload', 'terabox', 'streamsilk', 'vixstream']
+                            'myvi', 'viewsb', 'yourvid', 'terabox', 'streamsilk', 'vixstream']
 
         val = next((x for x in supported_player if x in sHostName), None)
         if val:
@@ -295,7 +295,7 @@ class cHosterGui:
 
         # Voe Clone
         voe = next((x for x in ['voe', 'kathleenmemberhistory', 'timberwoodanotia', 'stevenimaginelittle', 'availedsmallest', 'monorhinouscassaba', 'jamiesamewalk',
-                                'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace'] if x in sHostName), None)
+                                'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace', 'jamessoundcost'] if x in sHostName), None)
         if voe:
             return self.getHoster("voe")
 
@@ -349,6 +349,9 @@ class cHosterGui:
 
         if ('short.ink' in sHostName):
             return self.getHoster('shortlink')
+
+        if ('oneupload' in sHostName) or ('tipfly' in sHostName):
+            return self.getHoster('oneupload')
 
         if ('vidsrc.stream' in sHostName):
             return self.getHoster('vidsrcstream')
@@ -575,7 +578,7 @@ class cHosterGui:
         if ('stream.moe' in sHostName):
             return self.getHoster('streammoe')
 
-        if ('upvid.' in sHostName):
+        if ('upvid' in sHostName) or ('opvid' in sHostName) or ('illvid' in sHostName):
             return self.getHoster('upvid')
 
         if ('dynamicrevival' in sHostName):
@@ -583,9 +586,6 @@ class cHosterGui:
 
         if ('upvideo' in sHostName) or ('streamon' in sHostName):
             return self.getHoster('upvideo')
-
-        if ('upvid' in sHostName) or ('opvid' in sHostName):
-            return self.getHoster('upvid')
 
         if ('estream' in sHostName) and not ('widestream' in sHostName):
             return self.getHoster('estream')
