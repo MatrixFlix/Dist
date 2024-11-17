@@ -3,7 +3,7 @@
 
 import re
 import xbmc
-from resources.lib.comaddon import addon, isMatrix, isNexus
+from resources.lib.comaddon import addon, isMatrix, isNexus, VSlog
 from resources.lib.db import cDb
 from resources.lib.util import cUtil, QuoteSafe
 
@@ -529,19 +529,21 @@ class cGuiElement:
         if 'tvdb_id' in meta:
             meta.pop('tvdb_id')
 
-        if 'backdrop_path' in meta:
-            url = meta.pop('backdrop_path')
-            if url:
-                self.addItemProperties('fanart_image', url)
-                self.__sFanart = url
-            else:
-                self.addItemProperties('fanart_image', '')
+        # Temporary fix to avoid showing wrong images of Arabic Series/Movies
+        if bool(re.search(r"[\u0600-\u06FF]", self.__sTitle)) is False:
+            if 'backdrop_path' in meta:
+                url = meta.pop('backdrop_path')
+                if url:
+                    self.addItemProperties('fanart_image', url)
+                    self.__sFanart = url
+                else:
+                    self.addItemProperties('fanart_image', '')
 
-        if 'poster_path' in meta:
-            url = meta.pop('poster_path')
-            if url:
-                self.__sThumbnail = url
-                self.__sPoster = url
+            if 'poster_path' in meta:
+                url = meta.pop('poster_path')
+                if url:
+                    self.__sThumbnail = url
+                    self.__sPoster = url
 
         if 'trailer' in meta and meta['trailer']:
             self.__sTrailer = meta['trailer']
