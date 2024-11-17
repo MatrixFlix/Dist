@@ -30,8 +30,11 @@ class cMultiup:
             return False
 
         for aEntry in r:
-            if 'UseNext' in aEntry[0] or 'doodrive' in aEntry[0] or 'fikper' in aEntry[0] or 'ddownload' in aEntry[0] or 'rapidgator' in aEntry[0] or '1fichier' in aEntry[0]:
-                  continue
+            false_links = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload', 'vidhd', 'oktube', 'mdiaload', 'fikper', 'turbobit', '1fichier',
+                                            'mega.nz', 'rapidgator', 'ddownload', 'bowfile', 'uptobox', 'uptostream', 'wahmi', 'doodrive', 'highload', 'anonfiles', 'jawcloud', 'dailyuploads', 
+                                            'videomega', 'prostream', 'fembed', 'filegage', 'streamlare', 'katfile', 'usersdrive', 'uploadbank', 'fastupload', 'fireload', 'vikingfile', 'workupload'] if x in aEntry[0]), None)
+            if false_links:    
+                continue
             sHosterUrl = aEntry[1]
             sLabel = 'Multiup - ' + aEntry[0]
             self.list.append(f'url={sHosterUrl}, label={sLabel}')

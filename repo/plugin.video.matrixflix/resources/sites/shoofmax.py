@@ -21,6 +21,11 @@ URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 MOVIE_AR = (f'{URL_MAIN}genre/filter/فيلم/1/yop?country=&subgenre=', 'showMovies')
 SERIE_AR = (f'{URL_MAIN}genre/filter/مسلسل/1/yop?country=&subgenre=', 'showSeries')
 
+URL_SEARCH = (f'{URL_MAIN}search?q=', 'showSearchResults')
+URL_SEARCH_MOVIES = (f'{URL_MAIN}search?q=', 'showSearchResults')
+URL_SEARCH_SERIES = (f'{URL_MAIN}search?q=', 'showSearchResults')
+FUNCTION_SEARCH = 'showSearchResults'
+
 def load():
     oGui = cGui()
     addons = addon()
@@ -101,7 +106,8 @@ def showSearchResults(sSearch = ''):
             else:
                 oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         
-    oGui.setEndOfDirectory()
+    if not sSearch:
+        oGui.setEndOfDirectory()
 
 def showMovies(sSearch = ''):
     oGui = cGui()

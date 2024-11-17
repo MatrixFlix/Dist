@@ -325,7 +325,7 @@ class cHosterGui:
             return self.getHoster('mcloud')
 
         # Arabseed Clone
-        arabseed = next((x for x in ['reviewtech', 'reviewrate', 'seeeed', 'techinsider', 'gamezone.cam'] if x in sHostName), None)
+        arabseed = next((x for x in ['reviewtech', 'reviewrate', 'seeeed', 'techinsider', 'gamezone.cam', 'gameshop4u'] if x in sHostName), None)
         if arabseed:    
             return self.getHoster('arabseed')
 
@@ -341,9 +341,9 @@ class cHosterGui:
             return self.getHoster('xvideo')
 
         # False Links
-        false_links = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload', 'vidhd', 'oktube', 'mdiaload', 'fikper', 'turbobit', '1fichier',
-                                        'mega.nz', 'rapidgator', 'ddownload', 'bowfile', 'uptobox', 'uptostream', 'wahmi', 'doodrive', 'highload', 'anonfiles', 'jawcloud', 
-                                        'videomega', 'prostream', 'fembed', 'filegage', 'streamlare', 'katfile', 'usersdrive', 'uploadbank'] if x in sHostName), None)
+        false_links = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload', 'vidhd', 'oktube', 'mdiaload', 'fikper', 'turbobit', '1fichier', 'multiup.io',
+                                        'mega.nz', 'rapidgator', 'ddownload', 'bowfile', 'uptobox', 'uptostream', 'wahmi', 'doodrive', 'highload', 'anonfiles', 'jawcloud', 'dailyuploads',
+                                        'videomega', 'prostream', 'fembed', 'filegage', 'streamlare', 'katfile', 'usersdrive', 'uploadbank', 'fastupload', 'fireload', 'vikingfile', 'workupload'] if x in sHostName), None)
         if false_links:    
             return False
 
@@ -451,9 +451,6 @@ class cHosterGui:
            
         if ('mediafire' in sHostName):
             return self.getHoster('mediafire')
-
-        if ('workupload' in sHostName):
-            return self.getHoster('workupload')
 
         if ('rabbitstream' in sHostName) or ('dokicloud' in sHostName):
             return self.getHoster('streamrapid')

@@ -196,6 +196,7 @@ def showHosters():
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.enableCache(False)
     sHtmlContent = oRequestHandler.request()
 
     sPattern =  '["\']true["\'] src=["\']([^"\']+)["\']'
@@ -213,6 +214,7 @@ def showHosters():
                 url = aEntry
                 if url.startswith('//'):
                     url = f'http:{url}'
+
                 oRequest = cRequestHandler(url)
                 sHtmlContent3 = oRequest.request()
             
@@ -242,6 +244,7 @@ def showHosters():
                 url = aEntry
                 if url.startswith('//'):
                     url = 'http:' + url
+                    
                 oRequest = cRequestHandler(url)
                 sHtmlContent3 = oRequest.request()
             

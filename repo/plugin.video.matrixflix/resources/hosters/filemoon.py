@@ -63,7 +63,7 @@ class cHoster(iHoster):
                 sHtmlContent = cPacker().unpack(aEntry)
 
         headers = {'User-Agent': UA}
-        sPattern = 'sources:\s*\[{\s*file:\s*"([^"]+)'
+        sPattern = 'sources:\s*\[\s*{\s*file:\s*"([^"]+)'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             headers.update({

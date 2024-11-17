@@ -6,6 +6,9 @@ from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
 from resources.lib.packer import cPacker
 from resources.lib.comaddon import VSlog
+from resources.lib import random_ua
+
+UA = random_ua.get_ua()
 
 class cHoster(iHoster):
 
@@ -45,6 +48,6 @@ class cHoster(iHoster):
                 api_call = 'https:' + aResult[1][0]
 
             if api_call:
-                return True, api_call
+                return True, f'{api_call}|Referer={self._url}&User-Agent={UA}'
 
         return False, False

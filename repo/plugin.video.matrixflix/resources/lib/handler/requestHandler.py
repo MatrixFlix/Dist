@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
 
-from requests import post, get, Session, Request, RequestException, ConnectionError, cookies
+from requests import post, get, Session, Request, RequestException, ConnectionError
 from resources.lib.comaddon import addon, dialog, VSlog, VSPath, isMatrix
 from resources.lib.util import urlHostName
 from resources.lib import random_ua
@@ -380,44 +380,47 @@ class cRequestHandler:
 
                     # Try by myE2i (Manual)
                     if bypass == '3':
-                        import time
-                        from resources.lib.mCaptcha.mserver import UnCaptchaReCaptcha
-
-                        captcha_data = {
-                            "siteUrl": self.__sUrl,
-                            "siteKey": time.time(),
-                            "captchaType": "CF"
-                        }
-                        import json, base64
                         try:
-                            expiry_gen = int(addon().getSetting(f'{urlHostName(self.__sUrl)}_create'))
-                        except Exception:
-                            expiry_gen = 0
+                            import time
+                            from resources.lib.mCaptcha.mserver import UnCaptchaReCaptcha
 
-                        if not addon().getSetting(f'{urlHostName(self.__sUrl)}_cloudCaptcha') or expiry_gen < (time.time()):
-                            UnCaptchaReCaptcha.run_script(captcha_data)
+                            captcha_data = {
+                                "siteUrl": self.__sUrl,
+                                "siteKey": time.time(),
+                                "captchaType": "CF"
+                            }
+                            import json, base64
+                            try:
+                                expiry_gen = int(addon().getSetting(f'{urlHostName(self.__sUrl)}_create'))
+                            except Exception:
+                                expiry_gen = 0
 
-                        encoded_result = addon().getSetting(f'{urlHostName(self.__sUrl)}_cloudCaptcha')
-                        decoded_result = base64.b64decode(encoded_result).decode('utf-8')
+                            if not addon().getSetting(f'{urlHostName(self.__sUrl)}_cloudCaptcha') or expiry_gen < (time.time()):
+                                UnCaptchaReCaptcha.run_script(captcha_data)
 
-                        data = json.loads(decoded_result)
+                            encoded_result = addon().getSetting(f'{urlHostName(self.__sUrl)}_cloudCaptcha')
+                            decoded_result = base64.b64decode(encoded_result).decode('utf-8')
 
-                        user_agent = data['user_agent']
-                        cookies = ''
-                        cookies = {cookie['name']: cookie['value'] for cookie in data['cookie']}
-                        headers = {'User-Agent': user_agent}
-                        self.s.headers.update(headers)
-                        if method == 'POST':
-                            sContent = self.s.post(self.__sUrl, data=_request.data, headers=self.s.headers, cookies=cookies)
-                            
-                        else:
-                            sContent = self.s.get(self.__sUrl, headers=self.s.headers, cookies=cookies)
-                            
-                        if sContent.status_code in [503, 403]:
-                            addon().setSetting(f'{urlHostName(self.__sUrl)}_create', str(int(time.time())))
-                            dialog().VSinfo('الموقع يطلب اعادة فك الحماية ، أعد المحاولة', 'MatrixFlix', 4)
-                        else:
-                            sContent = sContent.text
+                            data = json.loads(decoded_result)
+
+                            user_agent = data['user_agent']
+                            cookies = ''
+                            cookies = {cookie['name']: cookie['value'] for cookie in data['cookie']}
+                            headers = {'User-Agent': user_agent}
+                            self.s.headers.update(headers)
+                            if method == 'POST':
+                                sContent = self.s.post(self.__sUrl, data=_request.data, headers=self.s.headers, cookies=cookies)
+                                
+                            else:
+                                sContent = self.s.get(self.__sUrl, headers=self.s.headers, cookies=cookies)
+                                
+                            if sContent.status_code in [503, 403]:
+                                addon().setSetting(f'{urlHostName(self.__sUrl)}_create', str(int(time.time())))
+                                dialog().VSinfo('الموقع يطلب اعادة فك الحماية ، أعد المحاولة', 'MatrixFlix', 4)
+                            else:
+                                sContent = sContent.text
+                        except:
+                            sContent = ''
 
             if self.oResponse and not sContent:
                 ignoreStatus = [200, 302]

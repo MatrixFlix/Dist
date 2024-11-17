@@ -25,7 +25,8 @@ MOVIE_GENRES = ('genre/movie/list', 'showGenreMovie')
 
 SERIE_EN = ('discover/tv?with_original_language=en', 'showSeries')
 
-URL_SEARCH_MOVIES = ('https://api.themoviedb.org/3/search/movie?include_adult=false&query=', 'showMoviesSearch')
+URL_SEARCH_MOVIES = ('https://api.themoviedb.org/3/search/movie?include_adult=false&query=', 'showMovies')
+URL_SEARCH_SERIES = ('https://api.themoviedb.org/3/search/tv?include_adult=false&query=', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
 
 def load():
@@ -145,8 +146,8 @@ def showMovies(sSearch=''):
     except:
         oGui.addText(SITE_IDENTIFIER, '[COLOR red]لم يتم العثور على نتائج.[/COLOR]')
 
-    oGui.setEndOfDirectory()
-
+    if not sSearch:
+        oGui.setEndOfDirectory()
 
 def showSeries(sSearch=''):
     grab = cTMDb()
@@ -215,7 +216,8 @@ def showSeries(sSearch=''):
     except TypeError:
         oGui.addText(SITE_IDENTIFIER, '[COLOR red]لم يتم العثور على نتائج.[/COLOR]')
 
-    oGui.setEndOfDirectory()
+    if not sSearch:
+        oGui.setEndOfDirectory()
 
 
 def showSeasons():
@@ -377,7 +379,7 @@ def showHosters():
         simdb_id = data["imdb_id"]
 
     oOutputParameterHandler = cOutputParameterHandler()
-    for sServer in ['apiBay', 'Torrentio', 'YTX', 'PopcornTime', 'EZTV']:
+    for sServer in ['apiBay', 'Torrentio', 'YTX', 'PopcornTime', 'EZTV', 'MediaFusion', 'PirateB']:
         sDisplayTitle = f'{sMovieTitle} [COLOR coral]- {sServer}[/COLOR]'      
         oOutputParameterHandler.addParameter('sTmdbId', sTmdbId)
         oOutputParameterHandler.addParameter('simdb_id', simdb_id)
@@ -494,6 +496,46 @@ def showLinks():
             for item in sLinks:
                 sTitle = item[0].replace("."," ").replace("\n", "")
                 sDisplayTitle = f'File: {sTitle}\nQuality: [COLOR orange]{item[3]}[/COLOR] Size: [COLOR gold]{item[2]}[/COLOR]'                
+                sHosterUrl = item[1]
+    
+                oHoster = cHosterGui().getHoster('torrent')
+                if oHoster:  
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sMovieTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
+        except:
+            VSlog('Error')
+
+    elif sServer == 'MediaFusion':
+        try:
+            from resources.lib.scrapers.mediafusion import get_links
+
+            sLinks = get_links(sType, simdb_id, sMovieTitle, sSeason, sEpisode)
+            for item in sLinks:
+                sTitle = item[0].replace("."," ").replace("\n", "")
+                sTitle = ' '.join(re.findall(r'S\d{2}E\d{2}', sTitle)) + ' ' + re.sub(r'S\d{2}E\d{2}', '', sTitle).strip()
+                sDisplayTitle = f'File: {sTitle.lower()}\nQuality: [COLOR orange]{item[3]}[/COLOR] Size: [COLOR gold]{item[2]}[/COLOR]'          
+                sHosterUrl = item[1]
+    
+                oHoster = cHosterGui().getHoster('torrent')
+                if oHoster:  
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sMovieTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
+        except:
+            VSlog('Error')
+
+    elif sServer == 'PirateB':
+        try:
+            from resources.lib.scrapers.pirp import get_links
+
+            sLinks = get_links(sType, simdb_id, sMovieTitle, sSeason, sEpisode)
+            for item in sLinks:
+                sTitle = item[0].replace("."," ").replace("\n", "")
+                sTitle = ' '.join(re.findall(r'S\d{2}E\d{2}', sTitle)) + ' ' + re.sub(r'S\d{2}E\d{2}', '', sTitle).strip()
+                sDisplayTitle = f'File: {sTitle.lower()}\nQuality: [COLOR orange]{item[3]}[/COLOR] Size: [COLOR gold]{item[2]}[/COLOR]'          
                 sHosterUrl = item[1]
     
                 oHoster = cHosterGui().getHoster('torrent')
