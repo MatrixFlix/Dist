@@ -185,7 +185,7 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler = cOutputParameterHandler()
             for aEntry in aResult[1]:
         
-                sTitle =   f'[COLOR red]{aEntry[1]}[/COLOR]'
+                sTitle =   f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
                 siteUrl = URL_MAIN + aEntry[0]
                 sThumb = ""
 

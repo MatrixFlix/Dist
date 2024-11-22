@@ -1,13 +1,14 @@
 ﻿#-*- coding: utf-8 -*-
 
+import re
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.hosters.hoster import iHoster
 from resources.lib.comaddon import VSlog, dialog
 from resources.lib.util import Unquote
 from resources.lib.parser import cParser
-import re
+from resources.lib import random_ua
 
-UA = 'Mozilla/5.0 (iPad; CPU OS 17_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Mobile/15E148 Safari/604.1'
+UA = random_ua.get_phone_ua()
 
 class cHoster(iHoster):
 

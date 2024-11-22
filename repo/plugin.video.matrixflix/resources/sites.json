@@ -184,7 +184,7 @@
         "coolcima": {
             "label": "CoolCima",
             "active": "True",
-            "cloudflare": "False",
+            "cloudflare": "True",
             "url": "https://coooleg.store/"
         },
         "daily": {

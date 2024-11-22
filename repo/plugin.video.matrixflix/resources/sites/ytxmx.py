@@ -18,7 +18,7 @@ SITE_DESC = 'english vod'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_4k = (f'{URL_MAIN}/browse-movies/0/2160p/all/0/latest/0/all', 'showMovies')
+MOVIE_4K = (f'{URL_MAIN}/browse-movies/0/2160p/all/0/latest/0/all', 'showMovies')
 MOVIE_EN = (f'{URL_MAIN}/browse-movies/0/all/all/0/year/0/all', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}/browse-movies/0/all/animation/0/year/0/all', 'showMovies')
 MOVIE_GENRES = (True, 'moviesGenres')
@@ -35,7 +35,7 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', URL_SEARCH[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSearch', addons.VSlang(30078), 'search.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', MOVIE_4k[0])
+    oOutputParameterHandler.addParameter('siteUrl', MOVIE_4K[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', ' 4k أفلام', '4k.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])

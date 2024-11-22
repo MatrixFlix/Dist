@@ -20,7 +20,7 @@ MOVIE_EN = ('discover/movie?with_original_language=en', 'showMovies')
 KID_MOVIES = ('discover/movie?with_original_language=en&with_genres=16', 'showMovies')
 MOVIE_TOP = ('movie/top_rated', 'showMovies')
 MOVIE_POP = ('movie/popular', 'showMovies')
-MOVIE_4k = ('discover/movie?with_original_language=en', 'showMovies')
+MOVIE_4K = ('discover/movie?with_original_language=en', 'showMovies')
 MOVIE_GENRES = ('genre/movie/list', 'showGenreMovie')
 
 SERIE_EN = ('discover/tv?with_original_language=en', 'showSeries')
@@ -39,6 +39,9 @@ def load():
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', addons.VSlang(30425), 'comments.png', oOutputParameterHandler)
+
+    oOutputParameterHandler.addParameter('siteUrl', MOVIE_4K[0])
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', ' 4k أفلام', 'pop.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', KID_MOVIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام انيميشن', 'anim.png', oOutputParameterHandler)
@@ -77,6 +80,7 @@ def showSearchMovie():
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
         showMovies(sSearchText.replace(' ', '+'))
+        oGui.setEndOfDirectory()
         return
 
 def showSearchSerie():
@@ -85,6 +89,7 @@ def showSearchSerie():
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
         showSeries(sSearchText.replace(' ', '+'))
+        oGui.setEndOfDirectory()
         return
 
 def showMovies(sSearch=''):
@@ -223,7 +228,6 @@ def showSeries(sSearch=''):
 def showSeasons():
     oGui = cGui()
     grab = cTMDb()
-    addons = addon()
 
     oInputParameterHandler = cInputParameterHandler()
 
@@ -287,7 +291,6 @@ def showSeasons():
 
 def showSeriesEpisode():
     grab = cTMDb()
-    addons = addon()
 
     oInputParameterHandler = cInputParameterHandler()
     sUrl = oInputParameterHandler.getValue('siteUrl')

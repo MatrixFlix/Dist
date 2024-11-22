@@ -20,7 +20,7 @@ SITE_DESC = 'arabic vod'
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 MOVIE_EN = (f'{URL_MAIN}category/movies/english-movies/', 'showMovies')
-MOVIE_4k = (f'{URL_MAIN}Quality/4k/', 'showMovies')
+MOVIE_4K = (f'{URL_MAIN}Quality/4k/', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}category/movies/indian-movies/', 'showMovies')
 MOVIE_ASIAN = (f'{URL_MAIN}category/movies/asian-movies/', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category/anime-cartoon/cartoon/', 'showMovies')
@@ -59,7 +59,7 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أجنبية', 'agnab.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', MOVIE_4k[0])
+    oOutputParameterHandler.addParameter('siteUrl', MOVIE_4K[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', ' 4k أفلام', 'film.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ASIAN[0])

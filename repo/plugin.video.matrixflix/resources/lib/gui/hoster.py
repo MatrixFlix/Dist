@@ -259,7 +259,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly', 'playerwish', 'katomen', 'hlswish'] if x in sHostName), None)
+                            'wishonly', 'playerwish', 'katomen', 'hlswish', 'swishsrv'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -272,7 +272,7 @@ class cHosterGui:
         # Filelions Clone
         filelions = next((x for x in ['filelions', 'ajmidyadfihayh', 'alhayabambi', 'bazwatch', 'cilootv', 'motvy55', 'bazlions', 'lylxan',
                                 'fdewsdc.sbs', '5drama.vip', 'cdnlion-down', 'demonvideo', 'zidlions', 'vidhide', 'streamfile', 'vidnow', 'tuktukcinema29.buzz',
-                                'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide'] if x in sHostName), None)
+                                'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide', 'dhtpre'] if x in sHostName), None)
         if filelions:
             return self.getHoster("filelions")
 

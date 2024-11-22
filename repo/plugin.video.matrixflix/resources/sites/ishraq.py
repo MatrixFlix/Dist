@@ -154,15 +154,15 @@ def showMovies(sSearch = ''):
 
         oGui.addMovie(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-    if sHtmlContent.get('nextPageToken') is not None:
-        sNextPage = sHtmlContent.get('nextPageToken')
-
-        oOutputParameterHandler = cOutputParameterHandler()
-        oOutputParameterHandler.addParameter('sNextPage', sNextPage)
-        oOutputParameterHandler.addParameter('siteUrl', sUrl)
-        oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
-
     if not sSearch:
+        if sHtmlContent.get('nextPageToken') is not None:
+            sNextPage = sHtmlContent.get('nextPageToken')
+
+            oOutputParameterHandler = cOutputParameterHandler()
+            oOutputParameterHandler.addParameter('sNextPage', sNextPage)
+            oOutputParameterHandler.addParameter('siteUrl', sUrl)
+            oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
+
         oGui.setEndOfDirectory()
 
 def showSeriesList():
@@ -229,10 +229,12 @@ def showSeries(sSearch = ''):
             
         sTitle = aEntry['title'].replace(' - مترجم للعربية','').replace('الفيلم','').replace('الإيراني','').replace('(','').replace(')','').replace('القصير','').replace('4K','')
 
-        if not any(word in sTitle for word in ('الفيلم', 'الفلم', 'Deleted', 'Private')):
-            if 'مسلسل' in sTitle:
-                if not sSearch or Unquote(sSearch) in sTitle:
-                    pass
+        if 'الفيلم' in sTitle or 'الفلم' in sTitle or 'Deleted' in sTitle or 'Private' in sTitle:
+            continue
+        if sSearch:
+            if Unquote(sSearch) not in sTitle:
+                continue
+
         sTitle = sTitle.replace('المسلسل','').replace('مسلسل','')
         siteUrl = aEntry.get('url')
         sThumb = aEntry.get('thumbnails').replace("default", "hqdefault")
@@ -244,15 +246,15 @@ def showSeries(sSearch = ''):
 
         oGui.addTV(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-    if sHtmlContent.get('nextPageToken') is not None:
-        sNextPage = sHtmlContent.get('nextPageToken')
-
-        oOutputParameterHandler = cOutputParameterHandler()
-        oOutputParameterHandler.addParameter('sNextPage', sNextPage)
-        oOutputParameterHandler.addParameter('siteUrl', sUrl)
-        oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
- 
     if not sSearch:
+        if sHtmlContent.get('nextPageToken') is not None:
+            sNextPage = sHtmlContent.get('nextPageToken')
+
+            oOutputParameterHandler = cOutputParameterHandler()
+            oOutputParameterHandler.addParameter('sNextPage', sNextPage)
+            oOutputParameterHandler.addParameter('siteUrl', sUrl)
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
+ 
         oGui.setEndOfDirectory()
 		 
 def showLink():

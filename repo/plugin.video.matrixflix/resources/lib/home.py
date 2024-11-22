@@ -223,7 +223,7 @@ class cHome:
         oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_EN')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(30108)), 'agnab.png', oOutputParameterHandler)
 		
-        oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_4k')
+        oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_4K')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(33108)), '4k.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_IR')
