@@ -38,6 +38,7 @@ def showMovies():
     sUrl = oInputParameterHandler.getValue('siteUrl')
  
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.enableCache(False)
     sHtmlContent = oRequestHandler.request()
     oParser = cParser()
 
@@ -148,6 +149,10 @@ def showHosters():
 
             else:   
                 sHosterUrl = getHosterIframe(url, sUrl)   
+                from urllib.parse import urlparse
+                sOrigin = sHosterUrl.split('referer=')[1]
+                sOrigin = f"{urlparse(sOrigin).scheme}://{urlparse(sOrigin).netloc}"
+                sHosterUrl = f'{sHosterUrl}&origin={sOrigin}'
 
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
                 if oHoster:
