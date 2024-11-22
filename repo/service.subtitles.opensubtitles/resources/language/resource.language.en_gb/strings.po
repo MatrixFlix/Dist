@@ -12,20 +12,62 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#English
-
 msgctxt "#32001"
 msgid "Error searching for subtitles"
 msgstr ""
 
 msgctxt "#32002"
-msgid "Username"
+msgid "Plugin is not properly configured, insert valid OpenSubtitles.com username and password."
 msgstr ""
 
 msgctxt "#32003"
-msgid "Password"
+msgid "Unable to authenticate. Check your OpenSubtitles.com username and password."
 msgstr ""
 
 msgctxt "#32004"
+msgid "You have reached OpenSubtitles.com download limit. Get a VIP subscription or try again tomorrow."
+msgstr ""
+
+msgctxt "#32006"
+msgid "You have reached OpenSubtitles.com download limit for unauthenticated users. Create an account on opensubtitles.com and enter your credentials in addon settings, or try again tomorrow."
+msgstr ""
+
+msgctxt "#32101"
 msgid "Login Details"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Username"
+msgstr ""
+
+msgctxt "#32202"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32203"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Subtitle Options"
+msgstr ""
+
+msgctxt "#32211"
+msgid "Hearing Impaired"
+msgstr ""
+
+msgctxt "#32212"
+msgid "Foreign Parts Only"
+msgstr ""
+
+msgctxt "#32213"
+msgid "Machine Translated"
+msgstr ""
+
+msgctxt "#32214"
+msgid "Bad username. Make sure you have entered your username and not your email in the username field."
+msgstr ""
+
+msgctxt "#32215"
+msgid "AI Translated"
 msgstr ""

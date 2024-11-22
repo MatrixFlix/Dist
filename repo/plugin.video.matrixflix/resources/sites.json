@@ -168,7 +168,7 @@
         "cimalina": {
             "label": "CimaLina",
             "active": "True",
-            "url": "https://cimalina.site/"
+            "url": "https://cimalina.live/"
         },
         "cimanow": {
             "label": "CimaNow",
@@ -257,7 +257,7 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "cloudflare": "False",
+            "cloudflare": "True",
             "url": "https://halacima.vip/"
         },
         "hidaya": {
@@ -338,7 +338,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime215.shop/"
+            "url": "https://movtime220.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -405,7 +405,7 @@
         "taxielcima": {
             "label": "TaxiElCima",
             "active": "True",
-            "url": "https://a120.txcima.com/"
+            "url": "https://t.txcima.com/"
         },
         "tma": {
             "label": "tma",

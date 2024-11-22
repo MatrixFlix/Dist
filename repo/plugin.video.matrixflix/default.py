@@ -12,7 +12,7 @@ DEBUG = False
 
 if DEBUG:
 
-    import sys 
+    import sys
     sys.path.append('H:\Program Files\Kodi\system\Python\Lib\pysrc')
 
     try:
@@ -20,7 +20,7 @@ if DEBUG:
         pydevd.settrace('localhost', stdoutToServer=True, stderrToServer=True)
     except ImportError:
         try:
-            import pydevd 
+            import pydevd
             pydevd.settrace('localhost', stdoutToServer=True, stderrToServer=True)
         except ImportError:
             sys.stderr.write("Error: " + "You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
@@ -84,7 +84,7 @@ class main:
 
             if isFav(sSiteName, sFunction):
                 return
-            
+
             if isWatched(sSiteName, sFunction):
                 return
 
@@ -100,10 +100,10 @@ class main:
             if isHome(sSiteName, sFunction):
                 return
 
-            if isSearch(sSiteName, sFunction):
+            if isTrakt(sSiteName, sFunction):
                 return
 
-            if isTrakt(sSiteName, sFunction):
+            if isSearch(sSiteName, sFunction):
                 return
 
             if sSiteName == 'globalRun':
@@ -112,19 +112,21 @@ class main:
 
             if sSiteName == 'globalSources':
                 oGui = cGui()
-                aPlugins = oPluginHandler.getAvailablePlugins(force = (sFunction == 'globalSources'))
-                
+                aPlugins = oPluginHandler.getAvailablePlugins(force=(sFunction == 'globalSources'))
+
                 sitesManager = siteManager()
+
                 if len(aPlugins) == 0:
                     addons = addon()
                     addons.openSettings()
                     oGui.updateDirectory()
                 else:
                     for aPlugin in aPlugins:
-                        
+
                         sitename = aPlugin[0]
                         if not sitesManager.isActive(aPlugin[1]):
                             sitename = '[COLOR red][OFF] ' + sitename + '[/COLOR]'
+
                         oOutputParameterHandler = cOutputParameterHandler()
                         oOutputParameterHandler.addParameter('siteUrl', 'http://venom')
                         icon = 'sites/%s.png' % (aPlugin[1])
@@ -143,7 +145,7 @@ class main:
                 function = getattr(plugins, sFunction)
                 function()
             except Exception as e:
-                progress().VSclose() 
+                progress().VSclose()
                 VSlog('could not load site: ' + sSiteName + ' error: ' + str(e))
                 import traceback
                 traceback.print_exc()
@@ -183,6 +185,7 @@ def isHosterGui(sSiteName, sFunction):
         return True
     return False
 
+
 def isGui(sSiteName, sFunction):
     if sSiteName == 'cGui':
         oGui = cGui()
@@ -199,6 +202,7 @@ def isFav(sSiteName, sFunction):
         return True
     return False
 
+
 def isWatched(sSiteName, sFunction):
     if sSiteName == 'cWatched':
         plugins = __import__('resources.lib.watched', fromlist=['cWatched']).cWatched()
@@ -206,6 +210,7 @@ def isWatched(sSiteName, sFunction):
         function()
         return True
     return False
+
 
 def isViewing(sSiteName, sFunction):
     if sSiteName == 'cViewing':
@@ -241,15 +246,6 @@ def isHome(sSiteName, sFunction):
         return True
     return False
 
-def isSearch(sSiteName, sFunction):
-    if sSiteName == 'cSearch' or sSiteName == 'globalSearch':
-        oSearch = cSearch()
-        if sSiteName == 'globalSearch':
-            exec("oSearch.searchGlobal()")
-        else:
-            exec("oSearch." + sFunction + "()")
-        return True
-    return False
 
 def isTrakt(sSiteName, sFunction):
     if sSiteName == 'cTrakt':
@@ -258,6 +254,15 @@ def isTrakt(sSiteName, sFunction):
         function()
         return True
     return False
+
+
+def isSearch(sSiteName, sFunction):
+    if sSiteName == 'globalSearch':
+        oSearch = cSearch()
+        exec("oSearch.searchGlobal()")
+        return True
+    return False
+
 
 def _pluginSearch(plugin, sSearchText):
 
@@ -275,5 +280,6 @@ def _pluginSearch(plugin, sSearchText):
         VSlog(plugin['identifier'] + ': search failed')
 
     window(10101).setProperty('search', 'false')
+
 
 main()
