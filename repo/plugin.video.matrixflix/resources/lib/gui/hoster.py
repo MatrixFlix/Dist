@@ -539,7 +539,7 @@ class cHosterGui:
         if ('voodc' in sHostName):
             return self.getHoster('voodc')
 
-        if ('vk.com' in sHostName) or ('vkontakte' in sHostName) or ('vkcom' in sHostName) or ('vk.ru' in sHostName):
+        if ('vk.com' in sHostName) or ('vkontakte' in sHostName) or ('vkcom' in sHostName) or ('vk.ru' in sHostName) or ('vkvideo' in sHostName):
             return self.getHoster('vk')
 
         if ('megaup.net' in sHostName):
