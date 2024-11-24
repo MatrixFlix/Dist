@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.matrixflix" name="MatrixFlix" version="2024.11.24" provider-name="MatrixFlix Media">
+<addon id="plugin.video.matrixflix" name="MatrixFlix" version="2024.11.25" provider-name="MatrixFlix Media">
     <requires>
 
         <trycatch>
