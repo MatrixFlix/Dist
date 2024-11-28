@@ -43,7 +43,13 @@ class cHoster(iHoster):
         r = r = re.search(r'''sources:\s*\[{src:\s*["'](?P<url>[^"']+)''', sHtmlContent, re.DOTALL)
         if r:
             api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)
-        
+
+        else:
+            pattern = r'<a href="([^"]+)"[^>]*>\s*Download Now'
+            r = re.search(pattern, sHtmlContent)
+            if r:
+                api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)
+
         if api_call:
             return True, api_call
 
