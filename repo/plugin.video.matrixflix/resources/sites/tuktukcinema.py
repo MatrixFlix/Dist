@@ -20,16 +20,16 @@ SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_EN = (f'{URL_MAIN}category/movies-1/افلام-اجنبي/', 'showMovies')
-MOVIE_HI = (f'{URL_MAIN}category/movies-1/افلام-هندى/', 'showMovies')
-MOVIE_ASIAN = (f'{URL_MAIN}category/movies-1/افلام-اسيوي/', 'showMovies')
-MOVIE_TURK = (f'{URL_MAIN}category/movies-1/افلام-تركي/', 'showMovies')
+MOVIE_EN = (f'{URL_MAIN}category/movies-2/افلام-اجنبي/', 'showMovies')
+MOVIE_HI = (f'{URL_MAIN}category/movies-2/افلام-هندى/', 'showMovies')
+MOVIE_ASIAN = (f'{URL_MAIN}category/movies-2/افلام-اسيوي/', 'showMovies')
+MOVIE_TURK = (f'{URL_MAIN}category/movies-2/افلام-تركي/', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category/anime-6/افلام-انمي/', 'showMovies')
 
-SERIE_EN = (f'{URL_MAIN}category/series-9/مسلسلات-اجنبي/', 'showSeries')
-SERIE_HEND = (f'{URL_MAIN}category/series-9/مسلسلات-هندي/', 'showSeries')
-SERIE_ASIA = (f'{URL_MAIN}category/series-9/مسلسلات-أسيوي/', 'showSeries')
-SERIE_TR = (f'{URL_MAIN}category/series-9/مسلسلات-تركي/', 'showSeries')
+SERIE_EN = (f'{URL_MAIN}category/series-1/مسلسلات-اجنبي/', 'showSeries')
+SERIE_HEND = (f'{URL_MAIN}category/series-1/مسلسلات-هندي/', 'showSeries')
+SERIE_ASIA = (f'{URL_MAIN}category/series-1/مسلسلات-أسيوي/', 'showSeries')
+SERIE_TR = (f'{URL_MAIN}category/series-1/مسلسلات-تركي/', 'showSeries')
 ANIM_NEWS = (f'{URL_MAIN}category/anime-6/انمي-مترجم/', 'showSeries')
 
 DOC_NEWS = (f'{URL_MAIN}genre/وثائقي/?filter=movies', 'showMovies')

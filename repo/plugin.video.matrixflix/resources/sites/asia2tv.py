@@ -20,7 +20,7 @@ SITE_DESC = 'Asian Movies and TV Shows'
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 MOVIE_ASIAN = (f'{URL_MAIN}category/asian-movies/', 'showMovies')
-SERIE_ASIAN = (f'{URL_MAIN}category/asian-drama/', 'showSeries')
+SERIE_ASIA = (f'{URL_MAIN}category/asian-drama/', 'showSeries')
 SERIE_KR = (f'{URL_MAIN}category/asian-drama/korean/', 'showSeries')
 SERIE_CN = (f'{URL_MAIN}category/asian-drama/chinese-taiwanese/', 'showSeries')
 SERIE_JP = (f'{URL_MAIN}category/asian-drama/japanese/', 'showSeries')
@@ -48,8 +48,8 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ASIAN[0])
     oGui.addDir(SITE_IDENTIFIER, MOVIE_ASIAN[1], 'أفلام آسيوية', 'asia.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', SERIE_ASIAN[0])
-    oGui.addDir(SITE_IDENTIFIER, SERIE_ASIAN[1], 'مسلسلات آسيوية', 'asia.png', oOutputParameterHandler)
+    oOutputParameterHandler.addParameter('siteUrl', SERIE_ASIA[0])
+    oGui.addDir(SITE_IDENTIFIER, SERIE_ASIA[1], 'مسلسلات آسيوية', 'asia.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', SERIE_KR[0])
     oGui.addDir(SITE_IDENTIFIER, SERIE_KR[1], 'مسلسلات كورية', 'kr.png', oOutputParameterHandler)

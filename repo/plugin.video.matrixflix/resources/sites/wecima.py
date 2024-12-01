@@ -17,8 +17,8 @@ SITE_IDENTIFIER = 'wecima'
 SITE_NAME = 'Wecima'
 SITE_DESC = 'arabic vod'
  
-MAIN_URL = siteManager().getUrlMain(SITE_IDENTIFIER)
-URL_MAIN = random_ua.get_wecimaUrl(MAIN_URL)
+URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
+#URL_MAIN = random_ua.get_wecimaUrl(URL_MAIN)
 if addon().getSetting('Use_alternative') == "true":
     URL_MAIN = siteManager().getUrlMain2(SITE_IDENTIFIER)
 
@@ -27,23 +27,23 @@ MOVIE_POP = (f'{URL_MAIN}movies/top/', 'showMovies')
 MOVIE_CLASSIC = (f'{URL_MAIN}movies/old/', 'showMovies')
 MOVIE_FAM = (f'{URL_MAIN}mpaa/pg/', 'showMovies')
 MOVIE_EN = (f'{URL_MAIN}category/أفلام/10-movies-english-افلام-اجنبي/list/recent/', 'showMovies')
-MOVIE_PACK = (f'{URL_MAIN}category/افلام/10-movies-english-افلام-اجنبي/سلاسل-الافلام-الكاملة-full-pack/', 'showMovies')
+MOVIE_PACK = (f'{URL_MAIN}category/أفلام/10-movies-english-افلام-اجنبي/1-سلاسل-الافلام-الكاملة-full-pack/list/recent/', 'showMovies')
 MOVIE_AR = (f'{URL_MAIN}category/أفلام/افلام-عربي-arabic-movies/', 'showMovies')
-MOVIE_TURK = (f'{URL_MAIN}category/أفلام/افلام-تركى-turkish-films/list/recent/', 'showMovies')
+MOVIE_TURK = (f'{URL_MAIN}category/أفلام/1-افلام-تركى-turkish-films/list/recent/', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}category/أفلام/افلام-هندي-indian-movies/list/recent/', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category/افلام-كرتون/', 'showMovies')
 
-RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات/مسلسلات-رمضان-2024/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات/1-مسلسلات-رمضان-2024/list/', 'showSeries')
 
 SERIE_AR = (f'{URL_MAIN}category/مسلسلات/13-مسلسلات-عربيه-arabic-series/list/', 'showSeries')
-SERIE_EN = (f'{URL_MAIN}category/مسلسلات/5-series-english-مسلسلات-اجنبي/list/', 'showSeries')
-SERIE_HEND = (f'{URL_MAIN}category/مسلسلات/9-series-indian-مسلسلات-هندية/list/', 'showSeries')
-ANIM_NEWS = (f'{URL_MAIN}category/مسلسلات-كرتون/list/', 'showSeries')
-SERIE_ASIA = (f'{URL_MAIN}category/مسلسلات/مسلسلات-اسيوية/list/', 'showSeries')
-SERIE_TR = (f'{URL_MAIN}category/مسلسلات/8-مسلسلات-تركية-turkish-series/list/', 'showSeries')
+SERIE_EN = (f'{URL_MAIN}category/مسلسلات/6-series-english-مسلسلات-اجنبي/list/', 'showSeries')
+SERIE_HEND = (f'{URL_MAIN}category/مسلسلات/10-series-indian-مسلسلات-هندية/list/', 'showSeries')
+ANIM_NEWS = (f'{URL_MAIN}category/مسلسلات-كرتون/', 'showSeries')
+SERIE_ASIA = (f'{URL_MAIN}category/مسلسلات/1-مسلسلات-اسيوية/list/', 'showSeries')
+SERIE_TR = (f'{URL_MAIN}category/مسلسلات/10-مسلسلات-تركية-turkish-series/list/', 'showSeries')
 
-DOC_SERIES = (f'{URL_MAIN}category/مسلسلات/مسلسلات-وثائقية-documentary-series/list/', 'showSeries')
-DOC_NEWS = (f'{URL_MAIN}category/أفلام/افلام-وثائقية-documentary-films/list/recent/', 'showMovies')
+DOC_SERIES = (f'{URL_MAIN}category/مسلسلات/1-مسلسلات-وثائقية-documentary-series/list/', 'showSeries')
+DOC_NEWS = (f'{URL_MAIN}category/أفلام/1-افلام-وثائقية-documentary-films/list/recent/', 'showMovies')
 SPORT_WWE = (f'{URL_MAIN}category/مصارعة-حرة/', 'showMovies')
 
 URL_SEARCH = (f'{URL_MAIN}search/', 'showSeries')
@@ -208,10 +208,10 @@ def showMovies(sSearch = ''):
 
     sStart = '<div class="Grid--WecimaPosts">'
     sEnd = '<wecima'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+    sHtmlContent1 = oParser.abParse(sHtmlContent, sStart, sEnd)
 
-    sPattern = '<div class="Thumb--GridItem"><a href="([^<]+)" title="(.+?)">.+?image:url(.+?);"><div.+?class="year">(.+?)</span>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
+    sPattern = '<div class="Thumb--GridItem"><a href="([^<]+)"\s*title="(.+?)">.+?url\((.*?)\).+?class="year">(.+?)</span>'
+    aResult = oParser.parse(sHtmlContent1, sPattern)
     if aResult[0]:
         total = len(aResult[1])
         progress_ = progress().VScreate(SITE_NAME)
@@ -226,7 +226,7 @@ def showMovies(sSearch = ''):
             sTitle = cUtil().CleanMovieName(aEntry[1])
             siteUrl = aEntry[0].replace((aEntry[0].split('watch/')[0]), URL_MAIN)
             sDesc = ''
-            sThumb = aEntry[2].replace("(","").replace(")","")
+            sThumb = aEntry[2]
             sThumb = sThumb.replace(sThumb.split('wp-content/')[0], URL_MAIN)
             sYear = ''
             m = re.search('([0-9]{4})', sTitle)
@@ -245,6 +245,18 @@ def showMovies(sSearch = ''):
  
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
+            def modify_url_with_page_no(base_url, page_number):
+                if "?page_no=" not in base_url:
+                    sNextPage = f"{base_url}?page_no={page_number}"
+                else:
+                    current_page = int(base_url.split("?page_no=")[1])
+                    new_page_number = current_page + 1
+                    sNextPage = base_url.replace(f"?page_no={current_page}", f"?page_no={new_page_number}")
+
+                return sNextPage
+            if '/page/' in sNextPage:
+                page_number = 2
+                sNextPage = modify_url_with_page_no(sUrl, page_number)
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
             oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
@@ -316,7 +328,8 @@ def showSeries(sSearch = ''):
  
             sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
             siteUrl = aEntry[0]
-
+            if siteUrl.startswith('/'):
+                siteUrl = f'{URL_MAIN[:-1]}{siteUrl}'
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
 			
@@ -390,7 +403,8 @@ def showAnimes(sSearch = ''):
  
             sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
             siteUrl = aEntry[0]
-
+            if siteUrl.startswith('/'):
+                siteUrl = f'{URL_MAIN[:-1]}{siteUrl}'
             oOutputParameterHandler.addParameter('siteUrl',siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
 			
@@ -408,10 +422,13 @@ def showAnimes(sSearch = ''):
  
 def __checkForNextPage(sHtmlContent):
     oParser = cParser()
-    sPattern = '<li><a class="next page-numbers" href="(.+?)">'
+    sPattern = '<li><a class="next page-numbers" href="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:  
-        return aResult[1][0]
+        nUrl = aResult[1][0]
+        if nUrl.startswith('/'):
+            nUrl = f'{URL_MAIN[:-1]}{nUrl}'
+        return nUrl
 
     return False
   

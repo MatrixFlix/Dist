@@ -370,7 +370,7 @@
         "shoffree": {
             "label": "Shoffree",
             "active": "True",
-            "url": "https://shoffree.site/"
+            "url": "https://shoffree.store/"
         },
         "shoofmax": {
             "label": "ShoofMAX",
@@ -457,8 +457,8 @@
             "label": "Wecima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://wecima.media/",
-            "url2": "https://wecima.movie/"
+            "url": "https://wecima.movie/",
+            "url2": "https://t4cce4ma.shop/"
         },
         "witanime": {
             "label": "WitAnime",

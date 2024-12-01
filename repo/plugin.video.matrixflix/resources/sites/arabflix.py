@@ -150,7 +150,8 @@ def showMovies(sSearch = ''):
                                 
                 oGui.addMovie(SITE_IDENTIFIER, 'showLinks', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
     
-    oGui.setEndOfDirectory()
+    if not sSearch:
+        oGui.setEndOfDirectory()  
  
 def showSeries(sSearch = ''):
     oGui = cGui()
@@ -233,7 +234,8 @@ def showSeries(sSearch = ''):
 
                 oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
-    oGui.setEndOfDirectory()
+    if not sSearch:
+        oGui.setEndOfDirectory()  
 			
 def showSeasons():
     oGui = cGui()

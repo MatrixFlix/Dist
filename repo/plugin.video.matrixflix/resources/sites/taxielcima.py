@@ -35,7 +35,7 @@ SERIE_AR = (f'{URL_MAIN}مسلسلات-عربية/', 'showSeries')
 SPORT_WWE = (f'{URL_MAIN}عروض-المصارعة/', 'showMovies')
 ANIM_NEWS = (f'{URL_MAIN}مسلسلات-انمي/', 'showSeries')
 
-REPLAYTV_NEWS = (f'{URL_MAIN}عروض-تليفزيونية/', 'showMovies')
+REPLAYTV_NEWS = (f'{URL_MAIN}عروض-تليفزيونية/', 'showSeries')
 
 URL_SEARCH_MOVIES = (f'{URL_MAIN}?s=', 'showMovies')
 URL_SEARCH_SERIES = (f'{URL_MAIN}?s=', 'showSeries')

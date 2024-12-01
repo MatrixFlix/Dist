@@ -1,14 +1,17 @@
 ﻿#-*- coding: utf-8 -*-
 
+import re
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
-from resources.lib.comaddon import progress, siteManager, addon
+from resources.lib.comaddon import progress, siteManager, addon, VSlog
 from resources.lib.parser import cParser
 from resources.lib.util import cUtil
-import re
+from resources.lib import random_ua
+
+UA = random_ua.get_phone_ua()
  
 SITE_IDENTIFIER = 'lodynet'
 SITE_NAME = 'Lodynet'
@@ -16,18 +19,21 @@ SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_TURK = (f'{URL_MAIN}category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%aa%d8%b1%d9%83%d9%8a%d8%a9-%d9%85%d8%aa%d8%b1%d8%ac%d9%85/', 'showMovies')
-MOVIE_HI = (f'{URL_MAIN}category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D9%87%D9%86%D8%AF%D9%8A%D8%A9/', 'showMovies')
-MOVIE_ASIAN = (f'{URL_MAIN}category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%b3%d9%8a%d9%88%d9%8a%d8%a9-a/', 'showMovies')
-KID_MOVIES = (f'{URL_MAIN}category/%d8%a7%d9%86%d9%8a%d9%85%d9%8a/', 'showMovies')
+MOVIE_TURK = (f'{URL_MAIN}category/افلام-تركية-مترجم/', 'showMovies')
+MOVIE_HI = (f'{URL_MAIN}category/افلام-هندية/', 'showMovies')
+MOVIE_ASIAN = (f'{URL_MAIN}category/افلام-اسيوية-a/', 'showMovies')
+KID_MOVIES = (f'{URL_MAIN}category/انيمي/', 'showMovies')
 
-SERIE_TR = (f'{URL_MAIN}turkish-series-2b/', 'showSerie')
+SERIE_TR = (f'{URL_MAIN}category/مسلسلات-تركي/', 'showSerie')
 SERIE_TR_AR = (f'{URL_MAIN}dubbed-turkish-series-g/', 'showSerie')
-SERIE_HEND = (f'{URL_MAIN}bالمسلسلات-هندية-مترجمة/', 'showSerie')
-SERIE_HEND_AR = (f'{URL_MAIN}dubbed-indian-series-p4/', 'showSerie')
+SERIE_HEND = (f'{URL_MAIN}category/مسلسلات-هندية-مترجمة/', 'showSerie')
+SERIE_HEND_AR = (f'{URL_MAIN}dubbed-indian-series-p5/', 'showSerie')
 SERIE_ASIA = (f'{URL_MAIN}tag/new-asia/', 'showSerie')
-SERIE_PAK = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%a8%d8%a7%d9%83%d8%b3%d8%aa%d8%a7%d9%86%d9%8a%d8%a9/', 'showSerie')
-SERIE_LATIN = (f'{URL_MAIN}category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d9%85%d9%83%d8%b3%d9%8a%d9%83%d9%8a%d8%a9-a/', 'showSerie')
+SERIE_CN = (f'{URL_MAIN}category/مسلسلات-صينية-مترجمة/', 'showSerie')
+SERIE_KR = (f'{URL_MAIN}korean-series-a/', 'showSerie')
+SERIE_THAI = (f'{URL_MAIN}مشاهدة-مسلسلات-تايلندية/', 'showSerie')
+SERIE_PAK = (f'{URL_MAIN}category/المسلسلات-باكستانية/', 'showSerie')
+SERIE_LATIN = (f'{URL_MAIN}category/مسلسلات-مكسيكية-a/', 'showSerie')
 
 URL_SEARCH = (f'{URL_MAIN}search/', 'showMovies')
 URL_SEARCH_SERIES = (f'{URL_MAIN}search/', 'showSearchSerie')
@@ -38,8 +44,11 @@ def load():
     addons = addon()
 
     oOutputParameterHandler = cOutputParameterHandler()
-    oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearch', addons.VSlang(30330), 'search.png', oOutputParameterHandler)
+    oOutputParameterHandler.addParameter('siteUrl', 'http://')
+    oGui.addDir(SITE_IDENTIFIER, 'showSearch', addons.VSlang(30078), 'search.png', oOutputParameterHandler)
+
+    oOutputParameterHandler.addParameter('siteUrl', 'http://')
+    oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ASIAN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أسيوية', 'asia.png', oOutputParameterHandler)
@@ -51,7 +60,7 @@ def load():
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام هندية', 'hend.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', KID_MOVIES[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام كرتون', 'crtoon.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام كرتون', 'anim.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', SERIE_ASIA[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'مسلسلات أسيوية', 'asia.png', oOutputParameterHandler)
@@ -71,13 +80,13 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', SERIE_LATIN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSerie', 'مسلسلات لاتنية', 'latin.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}/category/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b5%d9%8a%d9%86%d9%8a%d8%a9-%d9%85%d8%aa%d8%b1%d8%ac%d9%85%d8%a9/')
+    oOutputParameterHandler.addParameter('siteUrl', SERIE_CN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSerie' ,'مسلسلات صينية', 'asia.png', oOutputParameterHandler)
     
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}/korean-series/')
+    oOutputParameterHandler.addParameter('siteUrl', SERIE_KR[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSerie' ,'مسلسلات كورية', 'asia.png', oOutputParameterHandler)
     
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}/%d9%85%d8%b4%d8%a7%d9%87%d8%af%d8%a9-%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%aa%d8%a7%d9%8a%d9%84%d9%86%d8%af%d9%8a%d8%a9/')
+    oOutputParameterHandler.addParameter('siteUrl', SERIE_THAI[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSerie' ,'مسلسلات تايلاندية', 'asia.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', URL_MAIN)
@@ -90,9 +99,19 @@ def showSearch():
     sSearchText = oGui.showKeyBoard()
     if sSearchText:
         sUrl = f'{URL_MAIN}search/{sSearchText}'
-        showSearchSerie(sUrl)
+        showMoviesSearch(sUrl)
         oGui.setEndOfDirectory()
         return	
+
+def showSeriesSearch():
+    oGui = cGui()
+ 
+    sSearchText = oGui.showKeyBoard()
+    if sSearchText:
+        sUrl = f'{URL_MAIN}search/{sSearchText}'
+        showSearchSerie(sUrl)
+        oGui.setEndOfDirectory()
+        return
 
 def showMoviesSearch(sSearch = ''):
     oGui = cGui()
@@ -316,7 +335,7 @@ def showSerie(sSearch = ''):
             if progress_.iscanceled():
                 break
  
-            sTitle = cUtil().CleanSeriesName(aEntry[1])
+            sTitle = (cUtil().CleanSeriesName(aEntry[1])).replace('حصرياً','').replace('التايلندي','').replace('التايلاندي','').replace('الصيني','').replace('الباكستاني','')
             siteUrl = aEntry[0]
             sThumb = re.sub(r'-\d*x\d*.','.', aEntry[2])
             sDesc = ""
@@ -392,43 +411,6 @@ def showEpisodes():
        
     oGui.setEndOfDirectory()
 	
-def showSeries():
-    oGui = cGui()
-    
-    oInputParameterHandler = cInputParameterHandler()
-    sUrl = oInputParameterHandler.getValue('siteUrl')
-    sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
-    sThumb = oInputParameterHandler.getValue('sThumb')
-
-    oParser = cParser() 
-    oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent = oRequestHandler.request()
-
-    sPattern = '<div class="movief"><a href="([^<]+)">([^<]+)</a></div>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-        oOutputParameterHandler = cOutputParameterHandler() 
-        for aEntry in aResult[1]:
-            sTitle = aEntry[1]
-            siteUrl = aEntry[0]
-			
-            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-            oOutputParameterHandler.addParameter('sMovieTitle', str(sTitle))
-            oOutputParameterHandler.addParameter('sThumb', sThumb)
-			
-            if 'seasons' in sUrl:
-                oGui.addEpisode(SITE_IDENTIFIER, 'showSeries', sTitle, '', sThumb, '', oOutputParameterHandler)
-            else:
-                oGui.addEpisode(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, '', oOutputParameterHandler)
-        
-        sNextPage = __checkForNextPage(sHtmlContent)
-        if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
-       
-        oGui.setEndOfDirectory()
- 
 def __checkForNextPage(sHtmlContent):
     oParser = cParser()
     sPattern = '<li><a class="next page-numbers" href="([^<]+)">'
@@ -447,14 +429,15 @@ def showHosters():
 
     oParser = cParser()    
     oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
        
-    sPattern = 'data-embed="([^"]+)'
+    sPattern = r"SwitchServer\(this, '([^']+)'\)\">([^<]+)<\/span>"
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         for aEntry in aResult[1]:
             
-            url = str(aEntry)
+            url = str(aEntry[0])
             if url.startswith('//'):
                url = 'http:' + url
             
@@ -464,15 +447,15 @@ def showHosters():
  
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-               oHoster.setDisplayName(sMovieTitle)
+               oHoster.setDisplayName(f'{sMovieTitle} [{aEntry[1]}]')
                oHoster.setFileName(sMovieTitle)
                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
-    sStart = '<div class="DownloadLinks">'
-    sEnd = '</div></div>'
+    sStart = '<div id="DownloadAreaMobile">'
+    sEnd = '<div id="SpaceBottomNotices">'
     sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
 
-    sPattern = '<a href="(.+?)" target='
+    sPattern = 'href="([^"]+)"'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         for aEntry in aResult[1]:

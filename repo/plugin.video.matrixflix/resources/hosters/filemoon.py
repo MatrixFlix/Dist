@@ -54,8 +54,6 @@ class cHoster(iHoster):
         except:
             VSlog('Failed to get iframe')
                 
-        api_call = False
-
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
@@ -63,7 +61,7 @@ class cHoster(iHoster):
                 sHtmlContent = cPacker().unpack(aEntry)
 
         headers = {'User-Agent': UA}
-        sPattern = 'sources:\s*\[\s*{\s*file:\s*"([^"]+)'
+        sPattern = r'sources:\s*\[\s*{\s*file:\s*"([^"]+)"'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             headers.update({

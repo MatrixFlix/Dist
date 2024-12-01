@@ -77,9 +77,6 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', KID_MOVIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام كرتون', 'crtoon.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}resent')
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'الأفلام المضاف حديثاً', 'film.png', oOutputParameterHandler)	
-
     oOutputParameterHandler.addParameter('siteUrl', SERIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات أجنبية', 'agnab.png', oOutputParameterHandler)
 
@@ -558,8 +555,9 @@ def showHosters():
 
         oRequestHandler = cRequestHandler(sUrl)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
-        oRequestHandler.addHeaderEntry('Referer', sUrl2)
-        oRequestHandler.addHeaderEntry('Host', urlHostName(URL_MAIN))
+        oRequestHandler.addHeaderEntry('Referer', f'https://{urlHostName(maction)}/')
+        oRequestHandler.addHeaderEntry('Origin', f'https://{urlHostName(maction)}')
+        oRequestHandler.addHeaderEntry('Host', urlHostName(sUrl))
         oRequestHandler.addParameters('key', mkey)
         oRequestHandler.setRequestType(1)
         sHtmlContent = oRequestHandler.request()
@@ -571,19 +569,20 @@ def showHosters():
             url = aEntry
             if '?url' in url:
                 url = url.split('?url=')[1]
-            if 'shofcd' in url:
+            if 'shofcd' in url or 'play.shoffree' in url:
                 try:
                     oRequestHandler = cRequestHandler(url)
                     oRequestHandler.addHeaderEntry('User-Agent', UA)
                     oRequestHandler.addHeaderEntry('Referer', sUrl.encode('utf-8'))
                     sHtmlContent = oRequestHandler.request() 
 
-                    sPattern =  '<div id="player">.+?src="([^"]+)' 
+                    sPattern = '<div id="player">.+?src="([^"]+)' 
                     aResult = oParser.parse(sHtmlContent,sPattern)
                     if aResult[0]:
                         nUrl = aResult[1][0] 
                         oRequestHandler = cRequestHandler(nUrl)
                         oRequestHandler.addHeaderEntry('User-Agent', UA)
+                        oRequestHandler.setTimeout(60)
                         oRequestHandler.addHeaderEntry('Referer', url.encode('utf-8'))
                         sHtmlContent = oRequestHandler.request() 
 

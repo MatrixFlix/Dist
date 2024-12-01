@@ -1,7 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
 import re
-import requests
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -9,7 +8,7 @@ from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, addon
 from resources.lib.parser import cParser
-from resources.lib.util import cUtil
+from resources.lib.util import cUtil, urlHostName
 from resources.lib.multihost import cMegamax
 from resources.lib import random_ua
 
@@ -255,50 +254,79 @@ def showLinks():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = 'method="post" action="([^"]+)' 
+    sPattern = '<form action="([^"]+)" method="POST".+?name="mov_name" value="([^"]+)".+?name="watch_fhd" value="([^"]+)".+?name="watch_hd" value="([^"]+)".+?name="watch_SD" value="([^"]+)".+?name="back_url" value="([^"]+)"' 
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
-        rURL = aResult[1][0]
+        for aEntry in aResult[1]:
+            sPost = aEntry[0]
+            sName = aEntry[1]
+            _fhd = aEntry[2]
+            _hd = aEntry[3]
+            _sd = aEntry[4]
+            _backUrl = aEntry[5]
 
-    sPattern = 'name="ur" value="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
+            oRequestHandler = cRequestHandler(sPost)
+            oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
+            oRequestHandler.addHeaderEntry('sec-fetch-dest', 'document')
+            oRequestHandler.addHeaderEntry('sec-fetch-mode', 'navigate')
+            oRequestHandler.addHeaderEntry('sec-fetch-site', 'cross-site')
+            oRequestHandler.addHeaderEntry('User-Agent', UA)
+            oRequestHandler.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded')
+            oRequestHandler.addHeaderEntry('Referer', f'https://{urlHostName(sPost)}/')
+            oRequestHandler.addHeaderEntry('Origin', f'https://{urlHostName(sPost)}')
+            oRequestHandler.addHeaderEntry('Host', urlHostName(sPost))
+            oRequestHandler.addParameters('mov_name', sName)
+            oRequestHandler.addParameters('watch_fhd', _fhd)
+            oRequestHandler.addParameters('watch_hd', _hd)
+            oRequestHandler.addParameters('watch_SD', _sd)
+            oRequestHandler.addParameters('back_url', _backUrl)
+            oRequestHandler.addParameters('submit', "")
+            oRequestHandler.setRequestType(1)
+            sHtmlContent0 = oRequestHandler.request()
+
+            sPattern = '<form action="([^"]+)" method="POST">.+?name="mov_name" value="([^"]+)".+?name="watch_fhd" value="([^"]+)".+?name="watch_hd" value="([^"]+)".+?name="watch_SD" value="([^"]+)".+?name="back_url" value="([^"]+)".+?type="submit" value="([^"]+)"' 
+            aResult = oParser.parse(sHtmlContent0,sPattern)
+            if aResult[0]:
+                for aEntry in aResult[1]:
+                    sPost = aEntry[0]
+                    sName = aEntry[1]
+                    _fhd = aEntry[2]
+                    _hd = aEntry[3]
+                    _sd = aEntry[4]
+                    _backUrl = aEntry[5]
+
+                    oRequestHandler = cRequestHandler(sPost)
+                    oRequestHandler.addHeaderEntry('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7')
+                    oRequestHandler.addHeaderEntry('sec-fetch-dest', 'document')
+                    oRequestHandler.addHeaderEntry('sec-fetch-mode', 'navigate')
+                    oRequestHandler.addHeaderEntry('sec-fetch-site', 'cross-site')
+                    oRequestHandler.addHeaderEntry('User-Agent', UA)
+                    oRequestHandler.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded')
+                    oRequestHandler.addHeaderEntry('Referer', f'https://{urlHostName(sPost)}/')
+                    oRequestHandler.addHeaderEntry('Origin', f'https://{urlHostName(sPost)}')
+                    oRequestHandler.addHeaderEntry('Host', urlHostName(sPost))
+                    oRequestHandler.addParameters('mov_name', sName)
+                    oRequestHandler.addParameters('watch_fhd', _fhd)
+                    oRequestHandler.addParameters('watch_hd', _hd)
+                    oRequestHandler.addParameters('watch_SD', _sd)
+                    oRequestHandler.addParameters('back_url', _backUrl)
+                    oRequestHandler.addParameters('submit', aEntry[6])
+                    oRequestHandler.setRequestType(1)
+                    sHtmlContent1 = oRequestHandler.request()
+
+    sPattern = 'data-ep-url="([^"]+)"\s*onclick="([^"]+)">(.+?)</a>' 
+    aResult = oParser.parse(sHtmlContent1,sPattern)
     if aResult[0]:
-        sRefer = aResult[1][0]
-
-    sPattern = 'name="wl" value="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    if aResult[0]:
-        sWatch = aResult[1][0]
-
-    sPattern = 'name="dl" value="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent,sPattern)
-    if aResult[0]:
-        sDown = aResult[1][0]
-
-    s = requests.Session()  
-    headers = {'User-Agent': UA,
-				'Referer': URL_MAIN,
-                'Origin': URL_MAIN.rsplit('/', 1)[0],
-				'Sec-Fetch-Site': 'cross-site',
-				'Sec-Fetch-Dest': 'document',
-				'Sec-Fetch-Mode': 'navigate',
-                'Upgrade-Insecure-Requests':'1'}
-    data = {'ur':sRefer,'wl':sWatch,'dl':sDown,'submit':'submit'}
-    r = s.post(rURL, headers=headers, data = data)
-    sHtmlContent1 = r.content.decode('utf8') 
-
-    sPattern = 'data-ep-url="([^"]+)">(.+?)</a>' 
-    aResult = re.findall(sPattern, sHtmlContent1)
-    if aResult:
         oOutputParameterHandler = cOutputParameterHandler()
-        for aEntry in aResult:
+        for aEntry in aResult[1]:
+
             if 'leech' in aEntry[0]:
                 continue
             
             url = aEntry[0].replace('/d/','/f/')
             if url.startswith('//'):
                 url = f'http:{url}'
-            sLabel = aEntry[1]
+            sLabel = aEntry[2]
             sHosterUrl = url
             if 'megamax' in sHosterUrl:
                 data = cMegamax().GetUrls(sHosterUrl)
@@ -323,7 +351,7 @@ def showLinks():
                     oHoster.setFileName(sMovieTitle)
                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
-    sStart = '<div class="tab-content"'
+    sStart = '<div class="panel-body">'
     sEnd = '<div class="container">'
     sHtmlContent0 = oParser.abParse(sHtmlContent, sStart, sEnd)
 

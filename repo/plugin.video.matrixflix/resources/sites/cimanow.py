@@ -21,17 +21,17 @@ SITE_DESC = 'arabic vod'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_EN = (f'{URL_MAIN}category/افلام-اجنبية/', 'showMovies')
+MOVIE_EN = (f'{URL_MAIN}category/الافلام/افلام-اجنبية/', 'showMovies')
 MOVIE_AR = (f'{URL_MAIN}category/%D8%A7%D9%81%D9%84%D8%A7%D9%85-%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9/', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}category/%d8%a7%d9%84%d8%a7%d9%81%d9%84%d8%a7%d9%85/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d9%87%d9%86%d8%af%d9%8a%d8%a9/', 'showMovies')
 MOVIE_TURK = (f'{URL_MAIN}category/%d8%a7%d9%84%d8%a7%d9%81%d9%84%d8%a7%d9%85/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%aa%d8%b1%d9%83%d9%8a%d8%a9/', 'showMovies')
-KID_MOVIES = (f'{URL_MAIN}category/افلام-انيميشن/', 'showMovies')
+KID_MOVIES = (f'{URL_MAIN}category/الافلام/افلام-انيميشن/', 'showMovies')
 
 SERIE_TR = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%aa%d8%b1%d9%83%d9%8a%d8%a9/', 'showSeries')
-RAMADAN_SERIES = (f'{URL_MAIN}category/رمضان-2024/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/المسلسلات/رمضان-2024/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a%d8%a9/', 'showSeries')
 SERIE_AR = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b9%d8%b1%d8%a8%d9%8a%d8%a9/', 'showSeries')
-ANIM_NEWS = (f'{URL_MAIN}category/مسلسلات-انيميشن/', 'showSeries')
+ANIM_NEWS = (f'{URL_MAIN}category/المسلسلات/مسلسلات-انيميشن/', 'showSeries')
 
 DOC_NEWS = (f'{URL_MAIN}?s=%D9%88%D8%AB%D8%A7%D8%A6%D9%82%D9%8A', 'showMovies')
 REPLAYTV_NEWS = (f'{URL_MAIN}category/%d8%a7%d9%84%d8%a8%d8%b1%d8%a7%d9%85%d8%ac-%d8%a7%d9%84%d8%aa%d9%84%d9%81%d8%b2%d9%8a%d9%88%d9%86%d9%8a%d8%a9/', 'showMovies')
