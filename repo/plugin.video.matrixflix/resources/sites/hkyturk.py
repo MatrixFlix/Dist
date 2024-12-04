@@ -22,7 +22,7 @@ URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 SERIE_TR = (f'{URL_MAIN}category/مسلسلات-تركية-مترجمة/', 'showSeries')
 SERIE_TR_AR = (f'{URL_MAIN}category/مسلسلات/مسلسلات-تركية-مدبلجة/', 'showSeries')
-MOVIE_TURK = (f'{URL_MAIN}movies/', 'showMovies')
+MOVIE_TURK = (f'{URL_MAIN}category/افلام-تركية/', 'showMovies')
 
 URL_SEARCH = (f'{URL_MAIN}search/', 'showSeries')
 URL_SEARCH_MOVIES = (f'{URL_MAIN}search/', 'showMovies')
@@ -116,10 +116,7 @@ def showMovies(sSearch = ''):
         progress_.VSclose(progress_)
 
     if not sSearch: 
-        sStart = '<div class="pagination">'
-        sEnd = '<div class="footer"'
-        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-        sPattern = 'href="([^"]+)" class=".+?">(.+?)</a>'
+        sPattern = r"href=[\'\"]([^\'\"]+)[\'\"]\s*class=[\'\"].+?[\'\"]\s*>(\d+)</a>"
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             for aEntry in aResult[1]:
@@ -131,19 +128,6 @@ def showMovies(sSearch = ''):
                 oOutputParameterHandler.addParameter('siteUrl', siteUrl)
 			
                 oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'next.png', oOutputParameterHandler)
-
-        sPattern = 'href="([^"]+)">(.+?)</a>'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0]:
-            for aEntry in aResult[1]:
-
-                sTitle =   f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
-                siteUrl = aEntry[0]
-
-                oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-                oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'next.png', oOutputParameterHandler) 
 
         oGui.setEndOfDirectory()
 
@@ -189,34 +173,18 @@ def showSeries2():
 
         progress_.VSclose(progress_)
  
-    sStart = '<div class="pagination">'
-    sEnd = '<div class="footer"'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-    sPattern = 'href="([^"]+)" class=".+?">(.+?)</a>'
+    sPattern = r"href=[\'\"]([^\'\"]+)[\'\"]\s*class=[\'\"].+?[\'\"]\s*>(\d+)</a>"
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
-            for aEntry in aResult[1]:
-            
-                sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
-                siteUrl = aEntry[0]
+        for aEntry in aResult[1]:
 
-                oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-                oGui.addDir(SITE_IDENTIFIER, 'showSeries2', sTitle, 'next.png', oOutputParameterHandler)
+            sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
+            siteUrl = aEntry[0]
 
-    sPattern = 'href="([^"]+)">(.+?)</a>'
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-            for aEntry in aResult[1]:
-            
-                sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
-                siteUrl = aEntry[0]
-
-                oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-                oGui.addDir(SITE_IDENTIFIER, 'showSeries2', sTitle, 'next.png', oOutputParameterHandler) 
+            oOutputParameterHandler = cOutputParameterHandler()
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+        
+            oGui.addDir(SITE_IDENTIFIER, 'showSeries2', sTitle, 'next.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -268,34 +236,18 @@ def showSeries(sSearch = ''):
         progress_.VSclose(progress_)
 
     if not sSearch: 
-        sStart = '<div class="pagination">'
-        sEnd = '<div class="footer"'
-        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-        sPattern = 'href="([^"]+)" class=".+?">(.+?)</a>'
+        sPattern = r"href=[\'\"]([^\'\"]+)[\'\"]\s*class=[\'\"].+?[\'\"]\s*>(\d+)</a>"
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             for aEntry in aResult[1]:
-            
+
                 sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
                 siteUrl = aEntry[0]
 
                 oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+                oOutputParameterHandler.addParameter('siteUrl', siteUrl)
 			
                 oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, 'next.png', oOutputParameterHandler)
-
-        sPattern = 'href="([^"]+)">(.+?)</a>'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0]:
-            for aEntry in aResult[1]:
-            
-                sTitle = f'[COLOR red]Page: {aEntry[1]}[/COLOR]'
-                siteUrl = aEntry[0]
-
-                oOutputParameterHandler = cOutputParameterHandler()
-                oOutputParameterHandler.addParameter('siteUrl',siteUrl)
-			
-                oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, 'next.png', oOutputParameterHandler) 
 
         oGui.setEndOfDirectory()
  

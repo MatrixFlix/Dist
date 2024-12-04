@@ -292,7 +292,11 @@ def showEps():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request() 
 
-    sPattern = '<a class href="([^"]+)" title="([^"]+)".+?class="numEp">([^<]+)</span>'
+    sStart = 'class="list-episodes"'
+    sEnd = 'class="container"'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+    sPattern = 'href="([^"]+)" title="([^"]+)".+?class="numEp">([^<]+)</span>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler() 

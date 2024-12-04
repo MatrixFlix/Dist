@@ -259,7 +259,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly', 'playerwish', 'katomen', 'hlswish', 'swishsrv', 'iplayerhls'] if x in sHostName), None)
+                            'wishonly', 'playerwish', 'katomen', 'hlswish', 'swishsrv', 'iplayerhls', 'hlsflast'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -336,7 +336,7 @@ class cHosterGui:
 
         # X-Video Clone
         xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online', 'miravd',
-                                   'mwdy', 'vidsp.net', 'mp4plus'] if x in sHostName), None)
+                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 
