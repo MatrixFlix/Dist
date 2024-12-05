@@ -263,7 +263,7 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "cloudflare": "True",
+            "cloudflare": "False",
             "url": "https://halacima.vip/"
         },
         "hidaya": {
