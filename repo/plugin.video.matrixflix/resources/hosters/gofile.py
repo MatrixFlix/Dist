@@ -31,11 +31,11 @@ class cHoster(iHoster):
         base_api = 'https://api.gofile.io'
         s = requests.session()
         sHtmlContent = s.post('{}/accounts'.format(base_api), headers=headers)
-        token = json.loads(sHtmlContent.content).get('data').get('token')
+        token = json.loads(sHtmlContent.content).get('data', {}).get('token')
         
-        sHtmlContent = s.get('https://{}/dist/js/alljs.js'.format(host), headers=headers).text
+        sHtmlContent = s.get('https://{}/dist/js/global.js'.format(host), headers=headers).text
         
-        wtoken = re.search(r'fetchData\s*=\s*{\s*wt:\s*"([^"]+)', sHtmlContent)
+        wtoken = re.search(r'wt\s*=\s*"([^"]+)', sHtmlContent)
         
         headers.update({"Authorization": "Bearer" + " " + token})
         content_url = '{}/contents/{}?wt={}&cache=true'.format(base_api, media_id, wtoken.group(1))

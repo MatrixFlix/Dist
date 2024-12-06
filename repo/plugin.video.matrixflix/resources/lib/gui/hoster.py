@@ -336,7 +336,7 @@ class cHosterGui:
 
         # X-Video Clone
         xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online', 'miravd',
-                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz'] if x in sHostName), None)
+                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz', 'vidker'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 
@@ -347,6 +347,9 @@ class cHosterGui:
                                         'buzzheavier', 'samaup', 'uplo.top'] if x in sHostName), None)
         if false_links:    
             return False
+
+        if ('.upn.one' in sHostName):
+            return self.getHoster('kinoger')
 
         if ('short.ink' in sHostName):
             return self.getHoster('shortlink')
