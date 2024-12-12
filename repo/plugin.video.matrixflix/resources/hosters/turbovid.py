@@ -100,6 +100,12 @@ class cHoster(iHoster):
             api_call = aResult[1][0]
             return True, api_call + '|' + urlEncode(headers4)
 
+        sPattern = "var data-hash\s*=\s*'([^']+)'"
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            api_call = aResult[1][0]
+            return True, api_call + '|' + urlEncode(headers4)
+
         sPattern = 'return decodeURIComponent\(escape\(r\)\)}\("([^,]+)",([^,]+),"([^,]+)",([^,]+),([^,]+),([^,\))]+)\)'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:

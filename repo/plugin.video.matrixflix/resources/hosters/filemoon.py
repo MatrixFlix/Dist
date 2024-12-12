@@ -40,11 +40,12 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
+        oRequest.addHeaderEntry('sec-fetch-dest', 'iframe')
         oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
         try:
-            sPattern = r'iframe src="(.*?)"'
+            sPattern = r'<iframe\s*src="([^"]+)'
             aResult = oParser.parse(sHtmlContent,sPattern)
             if aResult[0]:
                 oRequest = cRequestHandler(aResult[1][0])

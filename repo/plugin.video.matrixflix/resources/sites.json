@@ -88,7 +88,7 @@
         },
         "arbcinema": {
             "label": "Arbcinema",
-            "active": "True",
+            "active": "False",
             "url": "https://movi.arbcinema.com/"
         },
         "arblionz": {
@@ -226,7 +226,7 @@
         "egydead": {
             "label": "Egydead",
             "active": "True",
-            "url": "https://egydead.center/"
+            "url": "https://egydead.watch/"
         },
         "esseq": {
             "label": "Esseq",
@@ -344,7 +344,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime224.shop/"
+            "url": "https://movtime235.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -436,7 +436,7 @@
         "tuktukcinema": {
             "label": "Tuktukcinema",
             "active": "True",
-            "url": "https://www.tuktukcima.com/"
+            "url": "https://eg1.tuktuksu.cfd/"
         },
         "tvfun": {
             "label": "Tvfun",

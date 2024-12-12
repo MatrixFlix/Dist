@@ -84,6 +84,7 @@ def redirect_handler_factory(url):
                 if job_type == 'cloudflare':
                     decoded_result = base64.b64decode(token).decode('utf-8')
                     data = json.loads(decoded_result)
+                    expiry_timestamp = str(int(time.time() + (24 * 60 * 60)))
                     for cookie in data['cookie']:
                         if cookie['name'] == 'cf_clearance':
                             expiry_timestamp = cookie['expirationDate']
