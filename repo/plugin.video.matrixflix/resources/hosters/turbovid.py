@@ -94,13 +94,13 @@ class cHoster(iHoster):
 
             url2 = aResult[1][0]
 
-        sPattern = "var urlPlay = '([^']+)'"
+        sPattern = "urlPlay = '([^']+)'"
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             api_call = aResult[1][0]
             return True, api_call + '|' + urlEncode(headers4)
 
-        sPattern = "var data-hash\s*=\s*'([^']+)'"
+        sPattern = "data-hash\s*=\s*'([^']+)'"
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:
             api_call = aResult[1][0]

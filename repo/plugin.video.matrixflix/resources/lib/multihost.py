@@ -73,32 +73,39 @@ class cJheberg:
     
 # modif cloudflare
 def GetHtml(url, postdata=None):
+    import xbmcgui
+    Yes = xbmcgui.Dialog().yesno(
+        'موقع الملفات MultiUP محمي',
+        'هل تريد تجربة الحصول على الروابط قد يكون الأمر بطيئًا.. لا يُنصح بذلك..',
+        'إلغاء'
+        )
+    if Yes:
+        if 'download.jheberg.net/redirect' in url:
+            oRequest = cRequestHandler(url)
+            sHtmlContent = oRequest.request()
+            url = oRequest.getRealUrl()
+            return url
+        else:
+            sHtmlContent = ''
+            oRequest = cRequestHandler(url)
+            oRequest.setRequestType(1)
+            oRequest.addHeaderEntry('User-Agent', UA)
 
-    if 'download.jheberg.net/redirect' in url:
-        oRequest = cRequestHandler(url)
-        sHtmlContent = oRequest.request()
-        url = oRequest.getRealUrl()
-        return url
-    else:
-        sHtmlContent = ''
-        oRequest = cRequestHandler(url)
-        oRequest.setRequestType(1)
-        oRequest.addHeaderEntry('User-Agent', UA)
+            if postdata != None:
+                oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
+                oRequest.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+                oRequest.addHeaderEntry('Referer', 'https://download.jheberg.net/redirect/xxxxxx/yyyyyy/')
 
-        if postdata != None:
-            oRequest.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
-            oRequest.addHeaderEntry('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-            oRequest.addHeaderEntry('Referer', 'https://download.jheberg.net/redirect/xxxxxx/yyyyyy/')
+            elif 'download.jheberg.net' in url:
+                oRequest.addHeaderEntry('Host', 'download.jheberg.net')
+                oRequest.addHeaderEntry('Referer', url)
 
-        elif 'download.jheberg.net' in url:
-            oRequest.addHeaderEntry('Host', 'download.jheberg.net')
-            oRequest.addHeaderEntry('Referer', url)
+            oRequest.addParametersLine(postdata)
 
-        oRequest.addParametersLine(postdata)
+            sHtmlContent = oRequest.request()
 
-        sHtmlContent = oRequest.request()
-
-        return sHtmlContent
+            return sHtmlContent
+    return ' '
         
 class cMegamax:
     def __init__(self):

@@ -451,27 +451,71 @@ def showHosters():
                oHoster.setFileName(sMovieTitle)
                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
-    sStart = '<div id="DownloadAreaMobile">'
-    sEnd = '<div id="SpaceBottomNotices">'
-    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
-
-    sPattern = 'href="([^"]+)"'
+    sPattern = 'data-embed="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         for aEntry in aResult[1]:
-            
+
             url = str(aEntry)
             if url.startswith('//'):
                url = 'http:' + url
-            
+
             sHosterUrl = url
             if 'userload' in sHosterUrl:
                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
- 
+
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:
-                oHoster.setDisplayName(sMovieTitle)
-                oHoster.setFileName(sMovieTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+               oHoster.setDisplayName(sMovieTitle)
+               oHoster.setFileName(sMovieTitle)
+               cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+
+    if 'class="DownloadLinks">' in sHtmlContent:
+        sStart = '<div class="DownloadLinks">'
+        sEnd = '</div></div>'
+        sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+        sPattern = '<a href="(.+?)" target='
+        aResult = oParser.parse(sHtmlContent, sPattern)	
+        if aResult[0]:
+            for aEntry in aResult[1]:
+
+                url = str(aEntry)
+                if url.startswith('//'):
+                    url = 'http:' + url
+
+                sHosterUrl = url
+                if 'userload' in sHosterUrl:
+                    sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
+
+                oHoster = cHosterGui().checkHoster(sHosterUrl)
+                if oHoster:
+                    oHoster.setDisplayName(sMovieTitle)
+                    oHoster.setFileName(sMovieTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
+    else:
+        if 'id="DownloadAreaMobile"' in sHtmlContent:
+            sStart = '<div id="DownloadAreaMobile">'
+            sEnd = '<div id="SpaceBottomNotices">'
+            sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+            sPattern = 'href="([^"]+)"'
+            aResult = oParser.parse(sHtmlContent, sPattern)	
+            if aResult[0]:
+                for aEntry in aResult[1]:
+                    
+                    url = str(aEntry)
+                    if url.startswith('//'):
+                        url = 'http:' + url
+                    
+                    sHosterUrl = url
+                    if 'userload' in sHosterUrl:
+                        sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
+        
+                    oHoster = cHosterGui().checkHoster(sHosterUrl)
+                    if oHoster:
+                        oHoster.setDisplayName(sMovieTitle)
+                        oHoster.setFileName(sMovieTitle)
+                        cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 				                
     oGui.setEndOfDirectory()

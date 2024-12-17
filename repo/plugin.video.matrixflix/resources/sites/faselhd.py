@@ -140,13 +140,17 @@ def showWeek():
             if m:
                 sYear = str(m.group(0))
 
-            oOutputParameterHandler.addParameter('siteUrl',siteUrl)
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oOutputParameterHandler.addParameter('sYear', sYear)
             oOutputParameterHandler.addParameter('sDesc', sDesc)
-
-            oGui.addMovie(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            if 'anime/' in siteUrl:
+                oGui.addAnime(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            elif '/series' in siteUrl or '/season' in siteUrl:
+                oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            else:
+                oGui.addMovie(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
 
@@ -220,7 +224,6 @@ def showMovies(sSearch = ''):
 
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
             oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
@@ -229,6 +232,8 @@ def showMovies(sSearch = ''):
 
 def showSeries(sSearch = ''):
     oGui = cGui()
+    oOutputParameterHandler = cOutputParameterHandler()
+    
     if sSearch:
       sUrl = sSearch
     else:
@@ -239,13 +244,23 @@ def showSeries(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
+    sStart = '<div class="subHead">'
+    sEnd = '<div class="container">'
+    sHtmlContentX = oParser.abParse(sHtmlContent, sStart, sEnd)
+    oOutputParameterHandler.addParameter('sHtmlContentX', sHtmlContentX)
+    if not sSearch:
+        oGui.addDir(SITE_IDENTIFIER, 'showWeek', 'الاكثر مشاهدة هذا الاسبوع', 'history.png', oOutputParameterHandler)
+    
+    sStart = 'id="postList">'
+    sEnd = '</html>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
     sPattern = '<div class="postDiv">.+?<a href="([^"]+)".+?data-src="([^"]+)".+?alt="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)	
     itemList = []
     if aResult[0]:
         total = len(aResult[1])
         progress_ = progress().VScreate(SITE_NAME)
-        oOutputParameterHandler = cOutputParameterHandler() 
         for aEntry in aResult[1]:
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
@@ -270,7 +285,6 @@ def showSeries(sSearch = ''):
  
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
             oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
@@ -279,6 +293,8 @@ def showSeries(sSearch = ''):
 		
 def showAnimes(sSearch = ''):
     oGui = cGui()
+    oOutputParameterHandler = cOutputParameterHandler()
+
     if sSearch:
       sUrl = sSearch
     else:
@@ -291,18 +307,29 @@ def showAnimes(sSearch = ''):
     if isMatrix(): 
        sHtmlContent = str(sHtmlContent.encode('latin-1',errors='ignore'),'utf-8',errors='ignore')
 
+    sStart = '<div class="subHead">'
+    sEnd = '<div class="container">'
+    sHtmlContentX = oParser.abParse(sHtmlContent, sStart, sEnd)
+    oOutputParameterHandler.addParameter('sHtmlContentX', sHtmlContentX)
+    if not sSearch:
+        oGui.addDir(SITE_IDENTIFIER, 'showWeek', 'الاكثر مشاهدة هذا الاسبوع', 'history.png', oOutputParameterHandler)
+    
+    sStart = 'id="postList">'
+    sEnd = '</html>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
     sPattern = '<div class="postDiv">.+?<a href="([^"]+)".+?data-src="([^"]+)".+?alt="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
         progress_ = progress().VScreate(SITE_NAME)
-        oOutputParameterHandler = cOutputParameterHandler() 
         for aEntry in aResult[1]:
             progress_.VSupdate(progress_, total)
             if progress_.iscanceled():
                 break
  
-            sTitle = aEntry[2].replace("&#8217;","'").replace("مشاهدة","").replace("مترجم","").replace("فيلم","").replace("انمي","").replace("انمى","").replace("برنامج","")
+            sTitle = cUtil().CleanSeriesName(aEntry[2])
+            sTitle = re.sub(r"S\d{1,2}", "", sTitle.replace("Season ","")).strip()
             siteUrl = aEntry[0]
             sThumb = aEntry[1].replace("(","").replace(")","")
             sDesc = ""
@@ -312,13 +339,12 @@ def showAnimes(sSearch = ''):
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oOutputParameterHandler.addParameter('sDesc', sDesc)
 			
-            oGui.addTV(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addAnime(SITE_IDENTIFIER, 'showSeasons', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
  
         sNextPage = __checkForNextPage(sHtmlContent)
         if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', sNextPage)
             oGui.addDir(SITE_IDENTIFIER, 'showAnimes', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
@@ -346,7 +372,7 @@ def showSeasons():
             postid = aEntry[0]
             sSeason = aEntry[3].replace("موسم "," S")
             siteUrl = f'{URL_MAIN[:-1]}{postid}'
-            sTitle = ("%s %s") % (sMovieTitle, sSeason)         
+            sTitle = ("%s %s") % (cUtil().CleanSeriesName(aEntry[2]), sSeason)         
             sThumb = aEntry[1]
             sDesc = ""
 
@@ -410,7 +436,7 @@ def showEpisodes():
     sHtmlContent = oRequestHandler.request()
 
     if sHtmlContent:
-       sPattern = '<a href="([^<]+)>([^<]+)</a>' 
+       sPattern = r'<a href="([^"]+)"\s*>([^<]+)</a>'
        aResult = oParser.parse(sHtmlContent,sPattern)
        if aResult[0]:
             for aEntry in aResult[1]:
@@ -431,7 +457,7 @@ def showEpisodes():
                 oGui.addEpisode(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     else :
-       sPattern = '<a href="(.+?)">(.+?)</a>' 
+       sPattern = r'<a href="([^"]+)"\s*>([^<]+)</a>'
        aResult = oParser.parse(sHtmlContent2,sPattern)
        if aResult[0]:
             for aEntry in aResult[1]:
@@ -471,7 +497,7 @@ def showEpisodes1():
     sEnd = '<div class="postShare">'
     sHtmlContent1 = oParser.abParse(sHtmlContent, sStart, sEnd).replace('class="active">', ">")
 
-    sPattern = '<a href="([^<]+)".+?>([^<]+)</a>'
+    sPattern = r'<a href="([^"]+)"\s*>([^<]+)</a>'
     aResult = oParser.parse(sHtmlContent1, sPattern)
     if aResult[0]:  
         oOutputParameterHandler = cOutputParameterHandler()                     
@@ -534,7 +560,12 @@ def __checkForNextPage(sHtmlContent):
     aResult = oParser.parse(sHtmlContent, sPattern) 
     if aResult[0]:
         return aResult[1][0]
-
+    else:
+        sPattern = 'rel="next" href=["\']([^"\']+)["\']\s*/>'
+        aResult = oParser.parse(sHtmlContent, sPattern) 
+        if aResult[0]:
+            return aResult[1][0]
+        
     return False
 
 def decode_page(data):

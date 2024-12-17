@@ -496,20 +496,21 @@ def showHosters():
 
                     sHosterUrl = url
                     if 'multiup' in sHosterUrl:
-                        data = cMultiup().GetUrls(sHosterUrl)
-                        if data is not False:
-                            for item in data:
-                                sHosterUrl = item.split(',')[0].split('=')[1]
-                                sLabel = item.split(',')[1].split('=')[1]
+                        if '1080' in sQual:
+                            data = cMultiup().GetUrls(sHosterUrl)
+                            if data is not False:
+                                for item in data:
+                                    sHosterUrl = item.split(',')[0].split('=')[1]
+                                    sLabel = item.split(',')[1].split('=')[1]
 
-                                sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sQual}][/COLOR][COLOR orange] -{sLabel}[/COLOR]'     
-                                oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
-                                oOutputParameterHandler.addParameter('siteUrl', sUrl)
-                                oOutputParameterHandler.addParameter('sQual', sQual)
-                                oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
-                                oOutputParameterHandler.addParameter('sThumb', sThumb)
+                                    sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sQual}][/COLOR][COLOR orange] -{sLabel}[/COLOR]'     
+                                    oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
+                                    oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                                    oOutputParameterHandler.addParameter('sQual', sQual)
+                                    oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
+                                    oOutputParameterHandler.addParameter('sThumb', sThumb)
 
-                                oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
+                                    oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
 
                     oHoster = cHosterGui().checkHoster(sHosterUrl)
                     if oHoster:

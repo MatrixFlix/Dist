@@ -19,7 +19,7 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         oParser = cParser()
         self._url = self._url.replace('filemoon.sx','filemoon.in')
-
+        VSlog(self._url)
         if ('sub.info' in self._url):
             SubTitle = self._url.split('sub.info=')[1]
             oRequest0 = cRequestHandler(SubTitle)
@@ -40,21 +40,18 @@ class cHoster(iHoster):
 
         oRequest = cRequestHandler(self._url)
         oRequest.addHeaderEntry('User-Agent', UA)
-        oRequest.addHeaderEntry('sec-fetch-dest', 'iframe')
         oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 
-        try:
-            sPattern = r'<iframe\s*src="([^"]+)'
-            aResult = oParser.parse(sHtmlContent,sPattern)
-            if aResult[0]:
-                oRequest = cRequestHandler(aResult[1][0])
-                oRequest.addHeaderEntry('User-Agent', UA)
-                oRequest.addHeaderEntry('Referer', self._url)
-                sHtmlContent = oRequest.request()
-        except:
-            VSlog('Failed to get iframe')
-                
+        sPattern = r'<iframe\s*src="([^"]+)'
+        aResult = oParser.parse(sHtmlContent,sPattern)
+        if aResult[0]:
+            oRequest = cRequestHandler(aResult[1][0])
+            oRequest.addHeaderEntry('User-Agent', UA)
+            oRequest.addHeaderEntry('Referer', self._url)
+            oRequest.addHeaderEntry('sec-fetch-dest', 'iframe')
+            sHtmlContent = oRequest.request()
+               
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:

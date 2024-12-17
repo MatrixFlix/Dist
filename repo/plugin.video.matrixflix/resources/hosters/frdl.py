@@ -28,9 +28,11 @@ class cHoster(iHoster):
 
         sHtmlContent = Sgn.get(self._url, headers=headers).text
         data = helpers.get_hidden(sHtmlContent)
-        data.update(captcha_lib.do_captcha(sHtmlContent))
+        # Temporary Fix? Work?
+        data.update({'g-recaptcha-response':''})
+        # data.update(captcha_lib.do_captcha(sHtmlContent))
 
-        match = re.search(r'<span class="seconds">(\d+)</span>', sHtmlContent)
+        match = re.search(r'seconds\.html\((\d+)\);', sHtmlContent)
         if match:
             waitingseconds = int(match.group(1))+1
 

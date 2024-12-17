@@ -531,22 +531,22 @@ def showHosters():
         sUrl = sUrl.rsplit("/",1)[0] + '/single-movie?watch=1'
     oParser = cParser()
     oRequestHandler = cRequestHandler(sUrl)
-    sHtmlContent1 = oRequestHandler.request()
+    sHtmlContent = oRequestHandler.request()
 
     sPattern =  '<form action="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent1,sPattern)
+    aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         maction = aResult[1][0] 
 
-    sPattern =  'name="url" value="([^"]+)' 
-    aResult = oParser.parse(sHtmlContent1,sPattern)
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            murl = aEntry
+        sPattern =  'name="url" value="([^"]+)' 
+        aResult = oParser.parse(sHtmlContent,sPattern)
+        if aResult[0]:
+            for aEntry in aResult[1]:
+                murl = aEntry
 
-    sUrl2 = f'{maction}?id={murl}'
-    oRequestHandler = cRequestHandler(sUrl2)
-    sHtmlContent = oRequestHandler.request()
+                sUrl2 = f'{maction}?id={murl}'
+                oRequestHandler = cRequestHandler(sUrl2)
+                sHtmlContent = oRequestHandler.request()
 
     sPattern =  'name="key" value="([^"]+)' 
     aResult = oParser.parse(sHtmlContent,sPattern)
