@@ -71,10 +71,7 @@ class cHoster(iHoster):
             api_call = self._url
         else:
             videoID = self.__getIdFromUrl(self._url)
-            if sMode == 1:
-                api_call = 'plugin://plugin.video.youtube/play/?video_id=' + videoID
-            else:
-                api_call = 'plugin://plugin.video.invidious/?action=play_video&video_id=' + videoID
+            api_call = 'plugin://plugin.video.youtube/play/?video_id=' + videoID
 
         if api_call:
             return True, api_call
