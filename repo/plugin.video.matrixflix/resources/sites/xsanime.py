@@ -232,7 +232,7 @@ def showHosters():
                 url = f'http:{url}'
 								            
             sHosterUrl = url 
-            if 'megamax' in sHosterUrl:
+            if bool(re.search(r'mega.*max', sHosterUrl)):
                 data = cMegamax().GetUrls(sHosterUrl)
                 if data is not False:
                     for item in data:

@@ -363,7 +363,7 @@ def showHosters():
                url = 'http:' + url
 								
             sHosterUrl = url 
-            if 'megamax' in sHosterUrl or 'tuktukcimamulti' in sHosterUrl:
+            if bool(re.search(r'mega.*max', sHosterUrl)) or 'tuktukcimamulti' in sHosterUrl:
                 data = cMegamax().GetUrls(sHosterUrl)
                 for item in data:
                     sHosterUrl = item.split(',')[0].split('=')[1]
@@ -404,7 +404,7 @@ def showHosters():
                url = f'http:{url}'
 								
             sHosterUrl = url 
-            if 'megamax' in sHosterUrl or 'tuktukcimamulti' in sHosterUrl:
+            if bool(re.search(r'mega.*max', sHosterUrl)) or 'tuktukcimamulti' in sHosterUrl:
                 sHosterUrl = sHosterUrl.replace('download','iframe')
                 data = cMegamax().GetUrls(sHosterUrl)
                 for item in data:

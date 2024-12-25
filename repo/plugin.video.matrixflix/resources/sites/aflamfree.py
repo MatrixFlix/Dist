@@ -303,7 +303,7 @@ def showHosters():
     if aResult[0]:
         for aEntry in aResult[1]:
             sHosterUrl = aEntry
-            if any(sHost in sHosterUrl for sHost in ['vidtube', 'vidhidepro', 'updown']):
+            if any(sHost in sHosterUrl for sHost in ['vidtube', 'vidhidepro', 'updown', 'ma2d', 'katomen']):
                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)

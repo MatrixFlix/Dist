@@ -3,10 +3,11 @@
 from resources.hosters.hoster import iHoster
 from resources.lib.packer import cPacker
 from resources.lib.comaddon import dialog, VSlog
+from resources.lib import helpers
 import re
 import requests
 
-UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0'
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0'
 
 class cHoster(iHoster):
 
@@ -38,6 +39,6 @@ class cHoster(iHoster):
             api_call = aResult.group(1)
 
         if api_call:
-            return True, api_call + '|User-Agent=' + UA + '&Referer=' + self._url + '&Origin=' + self._url.rsplit('/', 1)[0]
+            return True, api_call + helpers.append_headers(headers)
 
         return False, False

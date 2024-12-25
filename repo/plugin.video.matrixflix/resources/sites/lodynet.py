@@ -28,7 +28,7 @@ SERIE_TR = (f'{URL_MAIN}category/مسلسلات-تركي/', 'showSerie')
 SERIE_TR_AR = (f'{URL_MAIN}dubbed-turkish-series-g/', 'showSerie')
 SERIE_HEND = (f'{URL_MAIN}category/مسلسلات-هندية-مترجمة/', 'showSerie')
 SERIE_HEND_AR = (f'{URL_MAIN}dubbed-indian-series-p5/', 'showSerie')
-SERIE_ASIA = (f'{URL_MAIN}tag/new-asia/', 'showSerie')
+SERIE_ASIA = (f'{URL_MAIN}tag/new-asia/', 'showMovies')
 SERIE_CN = (f'{URL_MAIN}category/مسلسلات-صينية-مترجمة/', 'showSerie')
 SERIE_KR = (f'{URL_MAIN}korean-series-a/', 'showSerie')
 SERIE_THAI = (f'{URL_MAIN}مشاهدة-مسلسلات-تايلندية/', 'showSerie')
@@ -154,7 +154,7 @@ def showMoviesSearch(sSearch = ''):
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oOutputParameterHandler.addParameter('sYear', sYear) 
 			
-            oGui.addTV(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
  
@@ -299,7 +299,10 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('sThumb', sThumb)
             oOutputParameterHandler.addParameter('sYear', sYear) 
 			
-            oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            if 'مسلسل' in aEntry[1]:
+                oGui.addTV(SITE_IDENTIFIER, 'showEpisodes', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            else:    
+                oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
         progress_.VSclose(progress_)
  

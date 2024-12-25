@@ -352,7 +352,10 @@ def showLinks():
 
     for aEntry in sHtmlContent["servers"]:
         sThumb = sHtmlContent["thumb"]
-        sHosterUrl = aEntry["url"] + f'?sub.info={subUrl}'
+        sHosterUrl = aEntry["url"]
+        if 'flixhq' in sHosterUrl:
+            sHosterUrl = sHosterUrl.split('&url=')[1].split('&headers')[0]
+        sHosterUrl = sHosterUrl + f'?sub.info={subUrl}'
         oHoster = cHosterGui().getHoster('aflix') 
         if oHoster:
             sDisplayTitle = sMovieTitle

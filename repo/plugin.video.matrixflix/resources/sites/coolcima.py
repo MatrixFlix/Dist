@@ -462,7 +462,7 @@ def showHosters():
     if aResult[0]:
                 oOutputParameterHandler = cOutputParameterHandler()
                 sHosterUrl = aResult[1][0]
-                if 'megamax' in sHosterUrl or 'lodcima' in sHosterUrl:
+                if bool(re.search(r'mega.*max', sHosterUrl)) or 'lodcima' in sHosterUrl:
                     data = cMegamax().GetUrls(sHosterUrl)
                     if data is not False:
                         for item in data:

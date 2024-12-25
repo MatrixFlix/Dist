@@ -406,7 +406,7 @@ def showHosters():
                 oOutputParameterHandler = cOutputParameterHandler()
                 sHosterUrl = aResult[1][0]
 
-                if 'megamax' in sHosterUrl or '/iframe/' in sHosterUrl:
+                if bool(re.search(r'mega.*max', sHosterUrl)) or '/iframe/' in sHosterUrl:
                     data = cMegamax().GetUrls(sHosterUrl)
                     if data is not False:
                         for item in data:
@@ -456,7 +456,7 @@ def showHosters():
                     oOutputParameterHandler = cOutputParameterHandler()
                     sHosterUrl = aResult[1][0]
 
-                    if 'megamax' in sHosterUrl or '/iframe/' in sHosterUrl:
+                    if bool(re.search(r'mega.*max', sHosterUrl)) or '/iframe/' in sHosterUrl:
                         data = cMegamax().GetUrls(sHosterUrl)
                         if data is not False:
                             for item in data:

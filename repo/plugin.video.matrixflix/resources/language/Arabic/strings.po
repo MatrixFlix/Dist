@@ -1500,3 +1500,7 @@ msgstr "امسح ذاكرة التخزين المؤقت لمكتبة الـ Requ
 msgctxt "#70027"
 msgid "Enable Requests Cache"
 msgstr "تمكين ذاكرة التخزين المؤقت لـ Requests"
+
+msgctxt "#70028"
+msgid "Youtube Player"
+msgstr "تشغيل اليوتيوب"

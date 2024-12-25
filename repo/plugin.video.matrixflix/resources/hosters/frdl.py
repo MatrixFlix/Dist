@@ -28,9 +28,7 @@ class cHoster(iHoster):
 
         sHtmlContent = Sgn.get(self._url, headers=headers).text
         data = helpers.get_hidden(sHtmlContent)
-        # Temporary Fix? Work?
-        data.update({'g-recaptcha-response':''})
-        # data.update(captcha_lib.do_captcha(sHtmlContent))
+        data.update(captcha_lib.do_captcha(sHtmlContent))
 
         match = re.search(r'seconds\.html\((\d+)\);', sHtmlContent)
         if match:
@@ -47,7 +45,7 @@ class cHoster(iHoster):
             api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)
 
         else:
-            pattern = r'<a href="([^"]+)"[^>]*>\s*Download Now'
+            pattern = r'<a href="([^"]+)"[^>]*type="button" class="btn[^"]*">'
             r = re.search(pattern, sHtmlContent)
             if r:
                 api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)

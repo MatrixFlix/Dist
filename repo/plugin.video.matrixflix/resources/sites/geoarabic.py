@@ -59,7 +59,7 @@ def showMovies(sSearch = ''):
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
  
-    sPattern = '<a href="([^<]+)"><img alt="([^<]+)" class="lazyload" data-src="([^<]+)" data-srcset.+?<span itemprop="keywords">([^<]+)</span></a>'
+    sPattern = '<a href="([^<]+)"><img alt=["\']([^"\']+)["\'] class=["\']lazyload["\'] data-src=["\']([^"\']+)["\'] data-srcset.+?<span itemprop=["\']keywords["\']>([^<]+)</span></a>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])

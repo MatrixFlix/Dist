@@ -1490,3 +1490,7 @@ msgstr "Effacer le cache des Requests"
 msgctxt "#70027"
 msgid "Enable Requests Cache"
 msgstr "Activer le cache des Requests"
+
+msgctxt "#70028"
+msgid "Youtube Player"
+msgstr "Lecteur YouTube"

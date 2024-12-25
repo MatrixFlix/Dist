@@ -458,7 +458,7 @@ def showLinks():
 
             sHosterUrl = aEntry[0]
 
-            if 'vidtube' in sHosterUrl or 'vidhidepro' in sHosterUrl or 'updown' in sHosterUrl:
+            if any(sHost in sHosterUrl for sHost in ['vidtube', 'vidhidepro', 'updown', 'ma2d', 'katomen']):
                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)
@@ -507,7 +507,7 @@ def showHosters():
     if aResult:
         sHosterUrl = aResult[1][0]
 
-        if 'vidtube' in sHosterUrl or 'vidhidepro' in sHosterUrl or 'updown' in sHosterUrl or 'StreamWish' in sHost:
+        if 'vidtube' in sHosterUrl or 'vidhidepro' in sHosterUrl or 'updown' in sHosterUrl or 'katomen' in sHosterUrl or 'StreamWish' in sHost:
             sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
 
         oHoster = cHosterGui().checkHoster(sHosterUrl)

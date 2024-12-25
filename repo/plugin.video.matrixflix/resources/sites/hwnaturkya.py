@@ -369,7 +369,7 @@ def showHosters():
                             if sHosterUrl.startswith('//'):
                                 sHosterUrl = f'http:{sHosterUrl}'
 
-                            if 'megamax' in sHosterUrl:
+                            if bool(re.search(r'mega.*max', sHosterUrl)):
                                 data = cMegamax().GetUrls(sHosterUrl)
                                 if data is not False:
                                     for item in data:

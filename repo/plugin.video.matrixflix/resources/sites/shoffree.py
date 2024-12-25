@@ -457,7 +457,7 @@ def showSeasons():
             oGui.addSeason(SITE_IDENTIFIER, 'showEps', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     else:
-        sPattern = '<a class="sku" href="(.+?)" title=.+?data-src="(.+?)" alt.+?class="episode" style="display: inline;">.+?<i>(.+?)</i></span>'
+        sPattern = '<a class="sku" href="(.+?)">(.+?)<em>(.+?)</em>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0] is True:
             oOutputParameterHandler = cOutputParameterHandler() 
@@ -465,7 +465,7 @@ def showSeasons():
 
                 sTitle = f'{sMovieTitle} E{aEntry[2].replace(" ","")}'
                 siteUrl = aEntry[0]
-                sThumb = aEntry[1].replace('/w342','/w500')
+                sThumb = sThumb
                 sDesc = ''
                 sHost = ''
 
@@ -490,7 +490,7 @@ def showEps():
     oRequestHandler = cRequestHandler(sUrl)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<a class="sku" href="(.+?)" title=.+?data-src="(.+?)" alt.+?class="episode" style="display: inline;">.+?<i>(.+?)</i></span>'
+    sPattern = '<a class="sku" href="(.+?)">(.+?)<em>(.+?)</em>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0] is True:
         oOutputParameterHandler = cOutputParameterHandler() 
@@ -498,7 +498,7 @@ def showEps():
 
             sTitle = f'{sMovieTitle} E{aEntry[2].replace(" ","")}'
             siteUrl = aEntry[0]
-            sThumb = aEntry[1].replace('/w342','/w500')
+            sThumb = sThumb
             sDesc = ''
             sHost = ''
 

@@ -185,7 +185,7 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://cmaty.shop/"
+            "url": "https://cmaty.store/"
         },
         "coolcima": {
             "label": "CoolCima",
@@ -252,7 +252,7 @@
         },
         "gateanime": {
             "label": "GateAnime",
-            "active": "True",
+            "active": "False",
             "url": "https://e.gateanime.com/"
         },
         "geoarabic": {
@@ -344,7 +344,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime235.shop/"
+            "url": "https://movtime244.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -359,7 +359,7 @@
         "sflix": {
             "label": "sFlix",
             "active": "True",
-            "url": "https://sflix.to"
+            "url": "https://sflix2.to"
         },
         "shahidu": {
             "label": "Shahid4u",
@@ -370,7 +370,7 @@
         "shoffree": {
             "label": "Shoffree",
             "active": "True",
-            "url": "https://shoffree.store/"
+            "url": "https://shoffree.cam/"
         },
         "shoofmax": {
             "label": "ShoofMAX",
@@ -441,7 +441,7 @@
         "tvfun": {
             "label": "Tvfun",
             "active": "True",
-            "url": "https://nov.tvfun.me/"
+            "url": "https://dec.tvfun.me/"
         },
         "tvnine": {
             "label": "Tv96",

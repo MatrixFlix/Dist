@@ -355,7 +355,7 @@ def showHosters():
     if aResult:
         sHosterUrl = aResult[1][0]
 
-        if 'vidtube' in sHosterUrl or 'vidhidepro' in sHosterUrl or 'updown' in sHosterUrl or 'StreamWish' in sHost:
+        if 'vidtube' in sHosterUrl or 'vidhidepro' in sHosterUrl or 'updown' in sHosterUrl or 'katomen' in sHosterUrl or 'StreamWish' in sHost:
             sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
 
         oHoster = cHosterGui().checkHoster(sHosterUrl)

@@ -21,7 +21,6 @@ SITE_DESC = 'arabic vod'
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 MOVIE_EN = (f'{URL_MAIN}category/افلام-اجنبي/', 'showMovies')
-MOVIE_AR = (f'{URL_MAIN}category/افلام-عربي/', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}category/افلام-هندي/', 'showMovies')
 MOVIE_ASIAN = (f'{URL_MAIN}category/افلام-اسيوية/', 'showMovies')
 MOVIE_TURK = (f'{URL_MAIN}category/الأفلام-التركية/', 'showMovies')
@@ -32,8 +31,6 @@ SERIE_DUBBED = (f'{URL_MAIN}category/مسلسلات-تركية-مدبلجة/', '
 SERIE_ASIA = (f'{URL_MAIN}category/مسلسلات-اسيوية/', 'showSeries')
 SERIE_HEND = (f'{URL_MAIN}category/مسلسلات-هندى/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/مسلسلات-اجنبي/', 'showSeries')
-SERIE_AR = (f'{URL_MAIN}category/مسلسلات-عربي/', 'showSeries')
-RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات-رمضان-2024/', 'showSeries')
 KID_CARTOON = (f'{URL_MAIN}category/مسلسلات-كرتون/', 'showSeries')
 
 SPORT_WWE = (f'{URL_MAIN}category/عروض-مصارعة/', 'showMovies')
@@ -56,15 +53,9 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
     oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', RAMADAN_SERIES[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'رمضان', 'rmdn.png', oOutputParameterHandler)
-
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أجنبية', 'agnab.png', oOutputParameterHandler)
    
-    oOutputParameterHandler.addParameter('siteUrl', MOVIE_AR[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام عربية', 'arab.png', oOutputParameterHandler)
- 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_ASIAN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أسيوية', 'asia.png', oOutputParameterHandler)
    
@@ -79,9 +70,6 @@ def load():
 
     oOutputParameterHandler.addParameter('siteUrl', SERIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات أجنبية', 'agnab.png', oOutputParameterHandler)
-
-    oOutputParameterHandler.addParameter('siteUrl', SERIE_AR[0])
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات عربية', 'arab.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', SERIE_TR[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'مسلسلات تركية', 'turk.png', oOutputParameterHandler)
@@ -471,8 +459,9 @@ def showHosters():
 
                     oGui.addLink(SITE_IDENTIFIER, 'showMegaLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
 
-        if 'ma2d' in sHosterUrl:
-            sHosterUrl = f'{sHosterUrl}|Referer={sReferme}' 
+        if any(sHost in sHosterUrl for sHost in ['vidtube', 'vidhidepro', 'updown', 'ma2d', 'katomen']):
+            sHosterUrl = f'{sHosterUrl}|Referer={sReferme}'
+
         oHoster = cHosterGui().checkHoster(sHosterUrl)
         if oHoster:
             oHoster.setDisplayName(sMovieTitle)

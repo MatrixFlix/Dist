@@ -315,7 +315,7 @@ class cHosterGui:
             return self.getHoster('chillx')
 
         # Mixdrop Clone
-        mixdrop = next((x for x in ['mixdroop', 'mdfx9dc8n', 'mdzsmutpcvykb'] if x in sHostName), None)
+        mixdrop = next((x for x in ['mixdroop', 'mdfx9dc8n', 'mdzsmutpcvykb', 'mxdrop'] if x in sHostName), None)
         if mixdrop:    
             return self.getHoster('mixdrop')
 
@@ -336,7 +336,7 @@ class cHosterGui:
 
         # X-Video Clone
         xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online', 'miravd',
-                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz', 'vidker'] if x in sHostName), None)
+                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz', 'vidker', 'filehd'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 
@@ -344,11 +344,11 @@ class cHosterGui:
         false_links = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload', 'vidhd', 'oktube', 'mdiaload', 'fikper', 'turbobit', '1fichier', 'multiup.io',
                                         'mega.nz', 'rapidgator', 'ddownload', 'bowfile', 'uptobox', 'uptostream', 'wahmi', 'doodrive', 'highload', 'anonfiles', 'jawcloud', 'dailyuploads',
                                         'videomega', 'prostream', 'fembed', 'filegage', 'streamlare', 'katfile', 'usersdrive', 'uploadbank', 'fastupload', 'fireload', 'vikingfile', 'workupload',
-                                        'buzzheavier', 'samaup', 'uplo.top'] if x in sHostName), None)
+                                        'buzzheavier', 'samaup', 'uplo.top', 'filespayout', 'send.cm', 'sbthe.com'] if x in sHostName), None)
         if false_links:    
             return False
 
-        if ('.upn.one' in sHostName):
+        if ('.upn.one' in sHostName) or ('.upns.online' in sHostName):
             return self.getHoster('kinoger')
 
         if ('short.ink' in sHostName):
@@ -470,9 +470,6 @@ class cHosterGui:
 
         if ('play.imovietime' in sHosterUrl):
             return self.getHoster('moviztime')
-
-        if ('send.cm' in sHosterUrl):
-            return self.getHoster('sendme')
 
         if ('shoffree' in sHostName) or ('egy-best' in sHostName) or ('site-panel.click' in sHostName) or ('anime4up' in sHostName) or ('anme4up7' in sHostName) or ('egybest' in sHostName):
             return self.getHoster('shoffree')
