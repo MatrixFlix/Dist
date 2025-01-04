@@ -296,7 +296,8 @@ class cHosterGui:
 
         # Voe Clone
         voe = next((x for x in ['voe', 'kathleenmemberhistory', 'timberwoodanotia', 'stevenimaginelittle', 'availedsmallest', 'monorhinouscassaba', 'jamiesamewalk',
-                                'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace', 'jamessoundcost'] if x in sHostName), None)
+                                'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace', 'jamessoundcost',
+                                'robertordercharacter'] if x in sHostName), None)
         if voe:
             return self.getHoster("voe")
 
