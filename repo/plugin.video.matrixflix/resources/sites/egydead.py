@@ -189,7 +189,7 @@ def showMovies(sSearch = ''):
             oOutputParameterHandler.addParameter('sYear', sYear) 
 
             if '/assembly/' in siteUrl:
-                oGui.addMoviePack(SITE_IDENTIFIER, 'showPacks', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+                oGui.addMoviePack(SITE_IDENTIFIER, 'showPacks', sTitle, sThumb, sDesc, oOutputParameterHandler)
             else:
                 oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         
@@ -237,7 +237,7 @@ def showPack(sSearch = ''):
             oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
             oOutputParameterHandler.addParameter('sThumb', sThumb)
 
-            oGui.addMoviePack(SITE_IDENTIFIER, 'showPacks', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addMoviePack(SITE_IDENTIFIER, 'showPacks', sTitle, sThumb, sDesc, oOutputParameterHandler)
         
         progress_.VSclose(progress_)
  

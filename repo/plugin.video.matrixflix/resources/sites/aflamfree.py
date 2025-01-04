@@ -148,7 +148,7 @@ def showMovies(sSearch = ''):
                 if progress_.iscanceled():
                     break
                 
-                sTitle = cUtil().CleanMovieName(aEntry[2])
+                sTitle = cUtil().CleanMovieName(aEntry[2]).replace(' و ','')
                 siteUrl = f'{aEntry[0]}/watch'
                 sThumb = re.sub(r'-\d+x\d{0,3}','', aEntry[1])  
                 sDesc = ''
@@ -183,7 +183,7 @@ def showMovies(sSearch = ''):
                 if progress_.iscanceled():
                     break
                 
-                sTitle = cUtil().CleanMovieName(aEntry[1])
+                sTitle = cUtil().CleanMovieName(aEntry[1]).replace(' و','')
                 siteUrl = aEntry[0]
                 sThumb = re.sub(r'-\d+x\d{0,3}','', aEntry[2])  
                 sDesc = ''

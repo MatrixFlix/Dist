@@ -290,21 +290,33 @@ def getHosterIframe(url, referer):
     if 'channel' in url:
          referer = url.split('channel')[0]
 
-    sPattern = '(\s*eval\s*\(\s*function(?:.|\s)+?{}\)\))'
-    aResult = re.findall(sPattern, sHtmlContent)
-    if aResult:
-        sstr = aResult[0]
-        if not sstr.endswith(';'):
-            sstr = sstr + ';'
-        sHtmlContent = cPacker().unpack(sstr)
+    pattern = r"(\s*eval\s*\(\s*function\(p,a,c,k,e(?:.|\s)+?)<\/script>"
+    matches = re.finditer(pattern, sHtmlContent)
 
-    sPattern = '(\s*eval\s*\(\s*function\(p,a,c,k,e(?:.|\s)+?)<\/script>'
-    aResult = re.findall(sPattern, sHtmlContent)
-    if aResult:
-        sstr = aResult[0]
-        if not sstr.endswith(';'):
-            sstr = sstr + ';'
-        sHtmlContent = cPacker().unpack(sstr)
+    second_match = None
+    for i, match in enumerate(matches, start=1):
+        if i == 2:
+            second_match = match
+            break
+
+    if second_match:
+        sHtmlContent = cPacker().unpack(second_match.group())
+    else:
+        sPattern = '(\s*eval\s*\(\s*function(?:.|\s)+?{}\)\))'
+        aResult = re.findall(sPattern, sHtmlContent)
+        if aResult:
+            sstr = aResult[0]
+            if not sstr.endswith(';'):
+                sstr = sstr + ';'
+            sHtmlContent = cPacker().unpack(sstr)
+
+        sPattern = '(\s*eval\s*\(\s*function\(p,a,c,k,e(?:.|\s)+?)<\/script>'
+        aResult = re.findall(sPattern, sHtmlContent)
+        if aResult:
+            sstr = aResult[0]
+            if not sstr.endswith(';'):
+                sstr = sstr + ';'
+            sHtmlContent = cPacker().unpack(sstr)
 
     sPattern = '.atob\("(.+?)"'
     aResult = re.findall(sPattern, sHtmlContent)

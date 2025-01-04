@@ -49,7 +49,7 @@ class cHoster(iHoster):
 
             for aEntry in d:
                 sHost = aEntry[0]
-                file_id = aEntry[1]
+                file_id = aEntry[1].replace('.html','')
                 if '/' in file_id:
                     file_id = file_id.split('/')[0]
                 sUrl = f'https://{sHost}/embed-{file_id}.html'

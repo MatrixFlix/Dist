@@ -1504,3 +1504,11 @@ msgstr "تمكين ذاكرة التخزين المؤقت لـ Requests"
 msgctxt "#70028"
 msgid "Youtube Player"
 msgstr "تشغيل اليوتيوب"
+
+msgctxt "#70029"
+msgid "Because you watched"
+msgstr "لأنك شاهدت"
+
+msgctxt "#70030"
+msgid "My Recommendations"
+msgstr "توصياتي"

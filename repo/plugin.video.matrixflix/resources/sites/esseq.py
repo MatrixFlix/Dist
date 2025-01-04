@@ -333,8 +333,8 @@ def showHosters():
                url =  f'https://app.videas.fr/embed/media/{url}'
             if 'tune' in host:
                url =  f'https://tune.pk/js/open/embed.js?vid={url}&userid=827492&_=1601112672793'
-            if 'estream' in host:
-               url =  f'https://arabveturk.sbs/embed-{url}.html'
+            if 'estream' in host or 'Turk' in host:
+               url =  f'https://arabveturk.com/embed-{url}.html'
             if 'now' in host:
                url =  f'https://extreamnow.org/embed-{url}.html'
             if 'box' in host:
@@ -353,7 +353,7 @@ def showHosters():
             sHosterUrl = url
             if 'userload' in sHosterUrl:
                 sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
-            if 'extreamnow' in sHosterUrl:
+            if 'extreamnow' in sHosterUrl or 'wish' in sHosterUrl or 'estream' in host or 'turk' in host:
                 sHosterUrl = f'{sHosterUrl}|Referer={m3url}'
 
             oHoster = cHosterGui().checkHoster(sHosterUrl)

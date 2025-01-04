@@ -85,6 +85,9 @@ class main:
             if isFav(sSiteName, sFunction):
                 return
 
+            if isRecommendations(sSiteName, sFunction):
+                return
+
             if isWatched(sSiteName, sFunction):
                 return
 
@@ -202,6 +205,13 @@ def isFav(sSiteName, sFunction):
         return True
     return False
 
+def isRecommendations(sSiteName, sFunction):
+    if sSiteName == 'cRecommendations':
+        plugins = __import__('resources.lib.recommendations', fromlist=['cRecommendations']).cRecommendations()
+        function = getattr(plugins, sFunction)
+        function()
+        return True
+    return False
 
 def isWatched(sSiteName, sFunction):
     if sSiteName == 'cWatched':

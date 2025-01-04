@@ -1494,3 +1494,11 @@ msgstr "Activer le cache des Requests"
 msgctxt "#70028"
 msgid "Youtube Player"
 msgstr "Lecteur YouTube"
+
+msgctxt "#70029"
+msgid "Because you watched"
+msgstr "Parce que vous avez regardé"
+
+msgctxt "#70030"
+msgid "My Recommendations"
+msgstr "Mes Recommandations"

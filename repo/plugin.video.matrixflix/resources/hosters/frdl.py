@@ -28,6 +28,7 @@ class cHoster(iHoster):
 
         sHtmlContent = Sgn.get(self._url, headers=headers).text
         data = helpers.get_hidden(sHtmlContent)
+        data.update({"download_free": "1"})
         data.update(captcha_lib.do_captcha(sHtmlContent))
 
         match = re.search(r'seconds\.html\((\d+)\);', sHtmlContent)

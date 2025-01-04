@@ -21,11 +21,14 @@ class cHoster(iHoster):
         
         oParser = cParser()
         oRequest = cRequestHandler(surl)
+        oRequest.addHeaderEntry('Referer', self._url)
         oRequest.enableCache(False)
         sHtmlContent = oRequest.request()
 		
         if ' can be watched as embed' in sHtmlContent:
             oRequest = cRequestHandler(self._url)
+            oRequest.addHeaderEntry('Referer', self._url)
+            oRequest.addHeaderEntry('Sec-Fetch-Dest', "iframe")
             sHtmlContent = oRequest.request()
 
         sPattern = 'sources: [{file:"(.+?)"}],'

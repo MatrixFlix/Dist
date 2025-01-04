@@ -207,7 +207,9 @@ class cHome:
         oOutputParameterHandler.addParameter('sCat', '1')
         oGui.addDir(SITE_IDENTIFIER, 'showSearchText', self.addons.VSlang(30078), 'search.png', oOutputParameterHandler)
 
-        oOutputParameterHandler = cOutputParameterHandler()
+        oOutputParameterHandler.addParameter('siteUrl', 'movies/Recommendations')
+        oGui.addDir('cRecommendations', 'showMoviesRecommendations', self.addons.VSlang(70030), 'recommend.png', oOutputParameterHandler)
+
         oOutputParameterHandler.addParameter('siteUrl', 'MOVIE_FAM')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30120), self.addons.VSlang(33107)), 'fam.png', oOutputParameterHandler)
 
@@ -293,6 +295,9 @@ class cHome:
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('sCat', '2')
         oGui.addDir(SITE_IDENTIFIER, 'showSearchText', self.addons.VSlang(30079), 'search.png', oOutputParameterHandler)
+
+        oOutputParameterHandler.addParameter('siteUrl', 'shows/Recommendations')
+        oGui.addDir('cRecommendations', 'showShowsRecommendations', self.addons.VSlang(70030), 'recommend.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'RAMADAN_SERIES')
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30121), self.addons.VSlang(70006)), 'rmdn.png', oOutputParameterHandler)

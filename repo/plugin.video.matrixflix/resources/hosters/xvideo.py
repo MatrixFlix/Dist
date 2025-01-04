@@ -67,6 +67,6 @@ class cHoster(iHoster):
             api_call = aResult[1][0] 
 
         if api_call:
-            return True, api_call + '|User-Agent=' + UA + '&Referer=' + sReferer 
+            return True, api_call + '|User-Agent=' + UA + '&Referer=' + sReferer + '&verifypeer=false'
 
         return False, False

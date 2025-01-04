@@ -1,5 +1,10 @@
 {
     "sites": {
+        "aflaam": {
+            "label": "Aflaam",
+            "active": "True",
+            "url": "https://aflaam.com/"
+        },
         "aflamfree": {
             "label": "Aflamfree",
             "active": "True",
@@ -344,7 +349,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime244.shop/"
+            "url": "https://movtime250.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -406,7 +411,7 @@
         "taxielcima": {
             "label": "TaxiElCima",
             "active": "True",
-            "url": "https://t.txcima.com/"
+            "url": "https://new.twoupon.com/"
         },
         "tma": {
             "label": "tma",

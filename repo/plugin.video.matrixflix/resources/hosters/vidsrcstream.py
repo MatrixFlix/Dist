@@ -41,7 +41,7 @@ class cHoster(iHoster):
                 encoded_inner_url = urllib.parse.quote(inner_url, safe='')
                 self._url = f'{main_url}soaper/{encoded_inner_url}'
                 
-            return True, f'{self._url}|Referer={referer}', SubTitle
+            return True, f'{self._url}|Referer={referer}&verifypeer=false', SubTitle
         
         headers = {'User-Agent': UA,
                    'Referer': referer

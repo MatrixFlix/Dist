@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # vStream https://github.com/Kodi-vStream/venom-xbmc-addons
-
 import copy
 import json
 import threading
@@ -8,7 +7,7 @@ import xbmc
 import xbmcplugin
 import sys
 import re
-import urllib.request as urllib2
+
 from resources.lib.tmdb import cTMDb
 from resources.lib.comaddon import listitem, addon, dialog, window, isNexus, progress, VSlog
 from resources.lib.gui.contextElement import cContextElement
@@ -16,8 +15,9 @@ from resources.lib.gui.guiElement import cGuiElement
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.handler.pluginHandler import cPluginHandler
-from resources.lib.util import QuotePlus
+from resources.lib.util import QuotePlus, cUtil
 from resources.lib.parser import cParser
+
 
 class cGui:
 
@@ -25,9 +25,9 @@ class cGui:
     CONTENT = 'addons'
     listing = []
     thread_listing = []
-    episodeListing = []
+    episodeListing = []  
     ADDON = addon()
-    displaySeason = addon().getSetting('display_season_title')
+    displaySeason = ADDON.getSetting('display_season_title')
 
     searchResults = {}
     searchResultsSemaphore = threading.Semaphore()
@@ -35,8 +35,9 @@ class cGui:
     def getEpisodeListing(self):
         return self.episodeListing
 
-    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler='', sMeta=0, sCat=None):
+    def addNewDir(self, Type, sId, sFunction, sLabel, sIcon, sThumbnail='', sDesc='', oOutputParameterHandler=cOutputParameterHandler(), sMeta=0, sCat=None):
         oGuiElement = cGuiElement()
+
         if Type != 'dir' and Type != 'link':
             cGui.CONTENT = Type
         if sCat is not None:
@@ -52,6 +53,7 @@ class cGui:
             oGuiElement.setPoster(sThumbnail)
 
         oGuiElement.setDescription(sDesc)
+
 
         oInputParameterHandler = None
         if Type == 'link':
@@ -69,19 +71,23 @@ class cGui:
             oOutputParameterHandler.addParameter('sMeta', sMeta)
             oGuiElement.setMeta(sMeta)
 
+
         oGuiElement.setTitle(sLabel)
 
-        if sCat and not oOutputParameterHandler.getValue('sTmdbId'):
-            if not sMeta:
-                if not oInputParameterHandler:
-                    oInputParameterHandler = cInputParameterHandler()
-                sMeta = int(oInputParameterHandler.getValue('sMeta'))
-            if 0 < sMeta < 7:
-                if not oInputParameterHandler:
-                    oInputParameterHandler = cInputParameterHandler()
-                sTmdbID = oInputParameterHandler.getValue('sTmdbId')
-                if sTmdbID:
-                    oOutputParameterHandler.addParameter('sTmdbId', sTmdbID)
+
+        sTmdbId = oOutputParameterHandler.getValue('sTmdbId')
+        if sCat and not sTmdbId:
+            if window(10101).getProperty('search') != 'true':
+                if not sMeta:
+                    if not oInputParameterHandler:
+                        oInputParameterHandler = cInputParameterHandler()
+                    sMeta = int(oInputParameterHandler.getValue('sMeta'))
+                if 0 < sMeta < 7:
+                    if not oInputParameterHandler:
+                        oInputParameterHandler = cInputParameterHandler()
+                    sTmdbId = oInputParameterHandler.getValue('sTmdbId')
+                    if sTmdbId:
+                        oOutputParameterHandler.addParameter('sTmdbId', sTmdbId)
 
         oOutputParameterHandler.addParameter('sFav', sFunction)
 
@@ -99,6 +105,9 @@ class cGui:
             oGuiElement.setFileName(sTitle)
         else:
             oGuiElement.setFileName(sLabel)
+
+        if sCat and not sThumbnail and not sTmdbId:
+            oGuiElement.getInfoLabel()
 
         try:
             return self.addFolder(oGuiElement, oOutputParameterHandler)
@@ -158,10 +167,15 @@ class cGui:
         oOutputParameterHandler.addParameter('movieFunc', sFunction)
         return self.addNewDir(cat, sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler, 0, 5)
 
-    def addMoviePack(self, sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler=''):
-        return self.addNewDir('sets', sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler, 3, 7)
+    def addMoviePack(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler=''):
+        return self.addNewDir('sets', sId, sFunction, sLabel, 'no-image.png', sThumbnail, sDesc, oOutputParameterHandler, 3, 7)
 
-    def addDir(self, sId, sFunction, sLabel, sIcon, oOutputParameterHandler='', sDesc=""):
+    def addGenre(self, sId, sFunction, sLabel, oOutputParameterHandler='', sDesc=""):
+        sIcon = 'genres/%s.png' % str(cUtil().formatUTF8(sLabel))
+        sIcon = sIcon.replace(' & ', '_').replace(' ', '_').replace("'", '_').replace("-", '_')
+        return self.addNewDir('dir', sId, sFunction, sLabel, sIcon, '', sDesc, oOutputParameterHandler, 0, None)
+
+    def addDir(self, sId, sFunction, sLabel, sIcon, oOutputParameterHandler=cOutputParameterHandler(), sDesc=""):
         return self.addNewDir('dir', sId, sFunction, sLabel, sIcon, '', sDesc, oOutputParameterHandler, 0, None)
 
     def addLink(self, sId, sFunction, sLabel, sThumbnail, sDesc, oOutputParameterHandler=''):
@@ -193,7 +207,7 @@ class cGui:
         if saisonUrl:
             oOutputParameterHandler.addParameter('saisonUrl', saisonUrl)
             oOutputParameterHandler.addParameter('nextSaisonFunc', oInputParameterHandler.getValue('nextSaisonFunc'))
-        else:
+        else: 
             oOutputParameterHandler.addParameter('saisonUrl', oInputParameterHandler.getValue('siteUrl'))
             oOutputParameterHandler.addParameter('nextSaisonFunc', oInputParameterHandler.getValue('function'))
 
@@ -206,7 +220,6 @@ class cGui:
         return self.addNewDir('episodes', sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler, 6, 8)
 
     def addPerson(self, sId, sFunction, sLabel, sIcon, sThumbnail, oOutputParameterHandler=''):
-        sThumbnail = ''
         sDesc = ''
         return self.addNewDir('artists', sId, sFunction, sLabel, sIcon, sThumbnail, sDesc, oOutputParameterHandler, 7, None)
 
@@ -219,14 +232,16 @@ class cGui:
         oGuiElement = cGuiElement()
         oGuiElement.setSiteName(sId)
         oGuiElement.setFunction(sFunction)
-        oGuiElement.setTitle('[COLOR teal]' + sLabel + ' >>>[/COLOR]')
+        
+        sDecoColor = self.ADDON.getSetting('deco_color')
+
+        oGuiElement.setTitle('[COLOR %s]%s >[/COLOR]' % (sDecoColor, sLabel))
         oGuiElement.setIcon('next.png')
         oGuiElement.setThumbnail(oGuiElement.getIcon())
         oGuiElement.setMeta(0)
-        oGuiElement.setCat(5)
 
         self.createContexMenuPageSelect(oGuiElement, oOutputParameterHandler)
-        self.createContexMenuViewBack(oGuiElement, oOutputParameterHandler)
+
         return self.addFolder(oGuiElement, oOutputParameterHandler)
 
     def addNone(self, sId):
@@ -262,23 +277,19 @@ class cGui:
                   'sYear': oGuiElement.setYear,
                   'sRes': oGuiElement.setRes}
 
-        for sParam, callback in params.items():
-            value = oOutputParameterHandler.getValue(sParam)
-            if value:
-                callback(value)
+        try: 
+            for sParam, callback in params.iteritems():
+                value = oOutputParameterHandler.getValue(sParam)
+                if value:
+                    callback(value)
+
+        except AttributeError: 
+            for sParam, callback in params.items():
+                value = oOutputParameterHandler.getValue(sParam)
+                if value:
+                    callback(value)
 
         oListItem = self.createListItem(oGuiElement)
-
-        sRes = oGuiElement.getRes()
-        if sRes:
-            if '2160' in sRes:
-                oListItem.addStreamInfo('video', {'width': 3840, 'height': 2160})
-            elif '1080' in sRes:
-                oListItem.addStreamInfo('video', {'width': 1920, 'height': 1080})
-            elif '720' in sRes:
-                oListItem.addStreamInfo('video', {'width': 1280, 'height': 720})
-            elif '480' in sRes:
-                oListItem.addStreamInfo('video', {'width': 720, 'height': 576})
 
         sCat = oGuiElement.getCat()
         if sCat:
@@ -292,7 +303,7 @@ class cGui:
         oListItem = self.__createContextMenu(oGuiElement, oListItem)
 
         if _isFolder is True:
-            if sCat:
+            if sCat: 
                 if oGuiElement.getMeta():
                     self.createContexMenuinfo(oGuiElement, oOutputParameterHandler)
                     self.createContexMenuba(oGuiElement, oOutputParameterHandler)
@@ -306,7 +317,6 @@ class cGui:
                         self.createContexMenuTMDB(oGuiElement, oOutputParameterHandler)
                 if sCat in (1, 2, 3, 4, 9):
                     self.createContexMenuSimil(oGuiElement, oOutputParameterHandler)
-                    self.createContexMenuParents(oGuiElement, oOutputParameterHandler)
                 if sCat != 6:
                     self.createContexMenuWatch(oGuiElement, oOutputParameterHandler)
         else:
@@ -335,6 +345,7 @@ class cGui:
         return oListItem
 
     def _createListItem(self, oGuiElement, oListItem=None):
+
         data = {key: val for key, val in oGuiElement.getItemValues().items() if val != ""}
 
         itemTitle = oGuiElement.getTitle()
@@ -365,12 +376,15 @@ class cGui:
                 pass
             
             if sMediaUrl:
-                data['plot'] = sMediaUrl
+                if self.ADDON.getSetting('display_info_file') == 'true':
+                    data['plot'] = sMediaUrl
         else:
             data['title'] = itemTitle
             if sMediaUrl:
-                data['tagline'] = sMediaUrl
+                if self.ADDON.getSetting('display_info_file') == 'true':
+                    data['tagline'] = sMediaUrl
             
+        sRes = oGuiElement.getRes()
         if ":" in str(data.get('duration')):
             data['duration'] = (sum(x * int(t) for x, t in zip([1, 60, 3600], reversed(data.get('duration', '').split(":")))))
 
@@ -388,9 +402,18 @@ class cGui:
 
         if not isNexus():
             oListItem.setInfo(oGuiElement.getType(), data)
-
+            if sRes:
+                if '2160' in sRes:
+                    oListItem.addStreamInfo('video', {'width': 3840, 'height': 2160})
+                elif '1080' in sRes:
+                    oListItem.addStreamInfo('video', {'width': 1920, 'height': 1080})
+                elif '720' in sRes:
+                    oListItem.addStreamInfo('video', {'width': 1280, 'height': 720})
+                elif '480' in sRes:
+                    oListItem.addStreamInfo('video', {'width': 720, 'height': 576})
         else:
             videoInfoTag = oListItem.getVideoInfoTag()
+
             videoInfoTag.setMediaType(data.get('mediatype', ''))
             videoInfoTag.setTitle(data.get('title', ""))
             videoInfoTag.setTvShowTitle(data.get('tvshowtitle', ''))
@@ -414,7 +437,28 @@ class cGui:
 
             videoInfoTag.setCast(data.get('cast', []))
 
-        oListItem.setArt({'poster': oGuiElement.getPoster(),
+            if sRes:
+                width = None
+                if '2160' in sRes:
+                    width = 3840
+                    height = 2160
+                elif '1080' in sRes:
+                    width = 1920
+                    height = 1080
+                elif '720' in sRes:
+                    width = 1280
+                    height = 720
+                elif '480' in sRes:
+                    width = 720
+                    height = 576
+                
+                if width:
+                    videoStreamDetail = xbmc.VideoStreamDetail(width=width, height=height)
+                    videoInfoTag.addVideoStream(videoStreamDetail)
+
+    
+        oListItem.setArt({
+                          'poster': oGuiElement.getPoster(),
                           'thumb': oGuiElement.getThumbnail(),
                           'icon': oGuiElement.getIcon(),
                           'fanart': oGuiElement.getFanart()})
@@ -534,7 +578,6 @@ class cGui:
 
         self.createSimpleMenu(oGuiElement, oOutputParameterHandler, 'cGui', oGuiElement.getTmdbId(), 'viewParents', self.ADDON.VSlang(33213))
 
-
     def createSimpleMenu(self, oGuiElement, oOutputParameterHandler, sFile, sName, sFunction, sTitle):
         oContext = cContextElement()
         oContext.setFile(sFile)
@@ -597,7 +640,7 @@ class cGui:
 
         total = len(self.thread_listing)
         if total > 0:
-            progress_ = progress().VScreate(addon().VSlang(30141))
+            progress_ = progress().VScreate(self.ADDON.VSlang(30141))
             for thread in self.thread_listing:
                 progress_.VSupdate(progress_, total)
                 thread.join(100)
@@ -625,12 +668,12 @@ class cGui:
                 elif cGui.CONTENT == 'files':
                     xbmc.executebuiltin('Container.SetViewMode(%s)' % self.ADDON.getSetting('default-view'))
 
-        del self.episodeListing[:]
+        del self.episodeListing[:] 
         self.episodeListing.extend(self.listing)
 
         del self.listing[:]
 
-    def updateDirectory(self):
+    def updateDirectory(self):  
         xbmc.executebuiltin('Container.Refresh')
         xbmc.sleep(600)
 
@@ -652,18 +695,18 @@ class cGui:
     def viewBack(self):
         sPluginPath = cPluginHandler().getPluginPath()
         oInputParameterHandler = cInputParameterHandler()
+        # sParams = oInputParameterHandler.getAllParameter()
         sId = oInputParameterHandler.getValue('sId')
         sTest = '%s?site=%s' % (sPluginPath, sId)
 
         xbmc.executebuiltin('Container.Update(%s, replace)' % sTest)
 
     def viewInfo(self):
-        if addon().getSetting('information-view') == "false":
+        if self.ADDON.getSetting('information-view') == "false":
             from resources.lib.config import WindowsBoxes
 
             oInputParameterHandler = cInputParameterHandler()
             sCleanTitle = oInputParameterHandler.getValue('sTitle') if oInputParameterHandler.exist('sTitle') else xbmc.getInfoLabel('ListItem.Title')
-            sCleanTitle = sCleanTitle.split('مدبلج')[0]
             sMeta = oInputParameterHandler.getValue('sMeta') if oInputParameterHandler.exist('sMeta') else xbmc.getInfoLabel('ListItem.Property(sMeta)')
             sYear = oInputParameterHandler.getValue('sYear') if oInputParameterHandler.exist('sYear') else xbmc.getInfoLabel('ListItem.Year')
             sUrl = oInputParameterHandler.getValue('siteUrl') if oInputParameterHandler.exist('siteUrl') else xbmc.getInfoLabel('ListItem.Property(siteUrl)')
@@ -675,7 +718,6 @@ class cGui:
         else:
             xbmc.executebuiltin('Action(Info)')
 
-		
     def viewParents(self):
         oGuiElement = cGuiElement()
         from resources.lib.handler.requestHandler import cRequestHandler
@@ -823,6 +865,7 @@ class cGui:
             sCleanTitle = oInputParameterHandler.getValue('sFileName') 
         else:
             sCleanTitle = oInputParameterHandler.getValue('sTitle') if oInputParameterHandler.exist('sTitle') else xbmc.getInfoLabel('ListItem.Title')
+            # sCleanTitle = cUtil().titleWatched(sCleanTitle)
             
         sCat = oInputParameterHandler.getValue('sCat') if oInputParameterHandler.exist('sCat') else xbmc.getInfoLabel('ListItem.Property(sCat)')
 
@@ -835,7 +878,6 @@ class cGui:
         sys.argv[2] = sTest
         sTest = sPluginPath + sTest
 
-        # Si lancé depuis la page Home de Kodi, il faut d'abord en sortir pour lancer la recherche
         if xbmc.getCondVisibility('Window.IsVisible(home)'):
             xbmc.executebuiltin('ActivateWindow(%d)' % 10025)
 
@@ -846,14 +888,15 @@ class cGui:
         from resources.lib.parser import cParser
         sPluginPath = cPluginHandler().getPluginPath()
         oInputParameterHandler = cInputParameterHandler()
+        # sParams = oInputParameterHandler.getAllParameter()
         sId = oInputParameterHandler.getValue('sId')
         sFunction = oInputParameterHandler.getValue('OldFunction')
         siteUrl = oInputParameterHandler.getValue('siteUrl')
 
-        if siteUrl.endswith('/'): 
+        if siteUrl.endswith('/'):
             urlSource = siteUrl.rsplit('/', 2)[0]
             endOfUrl = siteUrl.rsplit('/', 2)[1] + '/'
-        else:  
+        else:
             urlSource = siteUrl.rsplit('/', 1)[0]
             endOfUrl = siteUrl.rsplit('/', 1)[1]
 
@@ -953,6 +996,7 @@ class cGui:
         if not sTitle:
             sTitle = self.ADDON.VSlang(30019)
         numboard = dialogs.numeric(0, sTitle, sDefaultNum)
+        # numboard.doModal()
         if numboard is not None:
             return numboard
 

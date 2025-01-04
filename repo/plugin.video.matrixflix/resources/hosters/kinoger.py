@@ -33,7 +33,7 @@ class cHoster(iHoster):
 
         cipher = AES.new(key, AES.MODE_CBC, iv) 
         ddata = cipher.decrypt(edata) 
-        ddata = ddata.rstrip(b'\x07').rstrip(b'\x0e').decode('utf-8') 
+        ddata = ddata.rstrip(b'\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\x10').decode('utf-8') 
         ddata = json.loads(ddata)
 
         api_call = ddata.get('source')

@@ -272,7 +272,8 @@ class cHosterGui:
         # Filelions Clone
         filelions = next((x for x in ['filelions', 'ajmidyadfihayh', 'alhayabambi', 'bazwatch', 'cilootv', 'motvy55', 'bazlions', 'lylxan',
                                 'fdewsdc.sbs', '5drama.vip', 'cdnlion-down', 'demonvideo', 'zidlions', 'vidhide', 'streamfile', 'vidnow', 'tuktukcinema29.buzz',
-                                'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide', 'dhtpre', '6sfkrspw4u'] if x in sHostName), None)
+                                'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide', 'dhtpre', '6sfkrspw4u',
+                                'peytonepre'] if x in sHostName), None)
         if filelions:
             return self.getHoster("filelions")
 
@@ -325,7 +326,7 @@ class cHosterGui:
             return self.getHoster('mcloud')
 
         # Arabseed Clone
-        arabseed = next((x for x in ['reviewtech', 'reviewrate', 'seeeed', 'techinsider', 'gamezone.cam', 'gameshop4u'] if x in sHostName), None)
+        arabseed = next((x for x in ['reviewtech', 'reviewrate', 'seeeed', 'techinsider', 'gamezone.cam', 'gameshop4u', 'gamehub'] if x in sHostName), None)
         if arabseed:    
             return self.getHoster('arabseed')
 
@@ -348,7 +349,7 @@ class cHosterGui:
         if false_links:    
             return False
 
-        if ('.upn.one' in sHostName) or ('.upns.online' in sHostName):
+        if ('.upn.one' in sHostName) or ('.upns.online' in sHostName) or ('uns.bio' in sHostName):
             return self.getHoster('kinoger')
 
         if ('short.ink' in sHostName):
@@ -611,7 +612,7 @@ class cHosterGui:
         # Direct Links
         line_direct = next((x for x in ['hadara.ps', 'megaupload.', 'fansubs', 'us.archive.', 'ddsdd', 'ffsff', 'rrsrr', 'fbcdn.net', 'blogspot.com', 'videodelivery', 'bittube', 'amazonaws.com',
                                         '.googleusercontent.com', 'archive.org/download', 'iptvtree', 'ugeen', 'ak-download', 'nextcdn', 'akwam', 'onesav', 'akoams.com', '.vimeocdn.', 'bokracdn', 
-                                        'gcdn', 'alarabiya', 'kingfoot', 'livestream', 'myfiles.alldebrid.com', 'clientsportals'] if x in sHostName), None)
+                                        'gcdn', 'alarabiya', 'kingfoot', 'livestream', 'myfiles.alldebrid.com', 'clientsportals', 'workers.dev'] if x in sHostName), None)
         if line_direct:    
             return self.getHoster('direct_link')
 
