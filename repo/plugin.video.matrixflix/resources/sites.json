@@ -448,11 +448,6 @@
             "active": "True",
             "url": "https://dec.tvfun.me/"
         },
-        "tvnine": {
-            "label": "Tv96",
-            "active": "True",
-            "url": "https://www.s96.net/"
-        },
         "watanflix": {
             "label": "Watanflix",
             "active": "True",

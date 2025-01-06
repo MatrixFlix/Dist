@@ -12,7 +12,7 @@ from resources.lib.parser import cParser
 from resources.lib.util import Quote, cUtil
 from resources.lib import random_ua
 
-UA = random_ua.get_ua()
+UA = random_ua.get_pc_ua()
 
 SITE_IDENTIFIER = 'stardima'
 SITE_NAME = 'Stardima'
@@ -79,7 +79,7 @@ def showMoviesSearch(sSearch = ''):
     oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = 'class="thumbnail.+?<a href=([^<]+)>.+?data-src=(.+?)alt="(.+?)"><span class=movies>'
+    sPattern = 'class="thumbnail.+?href="([^"]+)"><img src="([^"]+)" alt="([^"]+)".+?class="movies">'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -105,7 +105,7 @@ def showMoviesSearch(sSearch = ''):
             oOutputParameterHandler.addParameter('sYear', sYear)
             oOutputParameterHandler.addParameter('sDesc', sDesc)
 			
-            oGui.addTV(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addMovie(SITE_IDENTIFIER, 'showHosters', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
         progress_.VSclose(progress_)
 
     sPattern = "<a href='([^<]+)' class=inactive>"
@@ -141,7 +141,7 @@ def showSeriesSearch(sSearch = ''):
     oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<div class="thumbnail.+?"><a href="(.+?)"><img src="(.+?)" alt="(.+?)" /><span class="tvshows">'		
+    sPattern = 'class="thumbnail.+?<a href="([^"]+)"><img src="([^"]+)" alt="([^"]+)".+?class="tvshows">'		
     aResult = oParser.parse(sHtmlContent, sPattern)	
     if aResult[0]:
         total = len(aResult[1])
@@ -203,7 +203,7 @@ def showMovies(sSearch = ''):
     oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<article id="post-.+?" class=.+?data-src="([^<]+)" alt="([^<]+)"><noscript><img src=".+?" alt=".+?"></noscript>.+?<a href="([^<]+)"><div'
+    sPattern = '<div class="poster">.+?data-src="([^"]+)" alt="([^"]+)".+?<a href="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -253,7 +253,7 @@ def showSeries(sSearch = ''):
     oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<article id="post-.+?src="(https.+?jpg)" alt="(.+?)">.+?<a href="(.+?)"><div class'
+    sPattern = '<div class="poster">.+?data-src="([^"]+)" alt="([^"]+)".+?<a href="([^"]+)'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         total = len(aResult[1])
@@ -303,7 +303,11 @@ def showEpisodes():
     oRequestHandler.addHeaderEntry('User-Agent', UA)
     sHtmlContent = oRequestHandler.request()
 
-    sPattern = '<img src=(.+?)></noscript>.+?numerando.+?>(.+?)</div>.+?episodiotitle.+?><a href=(.+?)>'
+    sStart = "class='episodios'"
+    sEnd = 'id="cast"'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+    sPattern = "data-src='([^']+)'.+?class='numerando'>(.+?)</div>.+?<a href='([^']+)'>(.+?)</a>"
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()
@@ -312,8 +316,8 @@ def showEpisodes():
             sEp = f'E{aEntry[1].split("-")[1].replace(" ","")}'
             sSea = f'S{aEntry[1].split("-")[0].replace(" ","")}'
             sTitle = f'{sMovieTitle} {sSea}{sEp}'
-            siteUrl = aEntry[2].replace("'","").replace('"',"")
-            sThumb =  aEntry[0].replace("'","").replace('"',"")
+            siteUrl = aEntry[2]
+            sThumb =  aEntry[0]
             sThumb = re.sub(r'-\d*x\d*.','.', sThumb)
             sDesc = ''
 			
