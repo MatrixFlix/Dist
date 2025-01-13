@@ -1005,6 +1005,14 @@ msgctxt "#31216"
 msgid "Trakt source"
 msgstr "Source Trakt"
 
+msgctxt "#31217"
+msgid "Activate scrobbling - Movies"
+msgstr "Activer le suivi de lecture des films"
+
+msgctxt "#31218"
+msgid "Activate scrobbling - TV Shows"
+msgstr "Activer le suivi de lecture des séries"
+
 msgctxt "#30400"
 msgid "Premium/Login"
 msgstr "Premium/Login"

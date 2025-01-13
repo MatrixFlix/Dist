@@ -12,6 +12,7 @@ from resources.lib.util import UnquotePlus
 SITE_IDENTIFIER = 'cViewing'
 SITE_NAME = 'Viewing'
 
+
 class cViewing:
 
     DIALOG = dialog()
@@ -33,9 +34,15 @@ class cViewing:
             meta['cat'] = sCat
 
         with cDb() as db:
-            if db.del_viewing(meta):
+            isdel = db.del_viewing(meta)
+
+            # suppression du point de reprise
+            db.del_resume(meta)
+
+            if isdel:
                 self.DIALOG.VSinfo(addon().VSlang(30072))
                 cGui().updateDirectory()
+            
             return True
 
     # Suppression d'un bookmark depuis un Widget
@@ -64,10 +71,10 @@ class cViewing:
 
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('sCat', '1')  # films
-        oGui.addDir(SITE_IDENTIFIER, 'getViewing', addons.VSlang(30120), 'films.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getViewing', addons.VSlang(30120), 'film.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('sCat', '4')  # saisons
-        oGui.addDir(SITE_IDENTIFIER, 'getViewing', '%s/%s' % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122)), 'series.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getViewing', '%s/%s' % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122)), 'mslsl.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('sCat', '5')  # Divers
         oGui.addDir(SITE_IDENTIFIER, 'getViewing', self.ADDON.VSlang(30410), 'buzz.png', oOutputParameterHandler)
@@ -130,6 +137,10 @@ class cViewing:
                     resumetime, totaltime = DB.get_resume(meta)
                     oOutputParameterHandler.addParameter('ResumeTime', resumetime)
                     oOutputParameterHandler.addParameter('TotalTime', totaltime)
+
+                    # if sTmdbId and resumetime == 0:
+                    #     if self.ADDON.getSetting('use_trakt_addon') == 'true':
+                    #         cTrakt().getPlayback(sTmdbId)
 
                     if cat == '1':
                         oListItem = oGui.addMovie(site, function, title, 'films.png', '', title, oOutputParameterHandler)

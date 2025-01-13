@@ -983,6 +983,14 @@ msgctxt "#31216"
 msgid "Trakt source"
 msgstr "مصدر Trakt"
 
+msgctxt "#31217"
+msgid "Activate scrobbling - Movies"
+msgstr "تفعيل التمرير - الأفلام"
+
+msgctxt "#31218"
+msgid "Activate scrobbling - TV Shows"
+msgstr "تفعيل التمرير - المسلسلات"
+
 msgctxt "#30400"
 msgid "Premium/Login"
 msgstr "برميوم / تسجيل الدخول"

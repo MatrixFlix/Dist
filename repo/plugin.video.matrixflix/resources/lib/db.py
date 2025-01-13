@@ -170,6 +170,10 @@ class cDb(object):
         disp = meta['disp']
         icon = 'icon.png'
 
+        # on ne garde l'historique que pour les films, séries, animes, doc, drama
+        if disp not in ('1', '2', '3', '5', '9'):
+            return
+        
         try:
             ex = 'INSERT INTO history (title, disp, icone) VALUES (?, ?, ?)'
             self.dbcur.execute(ex, (title, disp, icon))
@@ -185,8 +189,11 @@ class cDb(object):
                 VSlog('SQL ERROR INSERT, title = %s, %s' % (title, e))
             pass
 
-    def get_history(self):
-        sql_select = 'SELECT * FROM history ORDER BY addon_id DESC'
+    def get_history(self, cat = None):
+        if cat:
+            sql_select = 'SELECT * FROM history where disp = %s ORDER BY addon_id DESC' % cat
+        else:
+            sql_select = 'SELECT * FROM history ORDER BY addon_id DESC'
 
         try:
             self.dbcur.execute(sql_select)
@@ -225,7 +232,7 @@ class cDb(object):
         if not title:
             return
 
-        titleWatched = meta['titleWatched']
+        titleWatched = meta['titleWatched'].replace(' ', '')
         cat = meta['cat'] if 'cat' in meta else '1'
         siteurl = QuotePlus(meta['siteurl'])
         tmdbId = meta['tmdbId'] if 'tmdbId' in meta else ''
@@ -280,39 +287,11 @@ class cDb(object):
             meta['titleWatched'] = titleWatched
             self.insert_watched(meta)
 
-    def get_catWatched(self, cat, limit):
-        
-        sql_select = "SELECT tmdb_id, * FROM watched"
-
-        if cat:
-            sql_select += " where cat = '%s'" % cat
-
-        sql_select += " order by addon_id DESC"
-        
-        if limit:
-            sql_select += " limit %s" % limit
-
-        try:
-            self.dbcur.execute(sql_select)
-            matchedrow = self.dbcur.fetchall()
-            return matchedrow
-
-        except Exception as e:
-            if 'no such column' in str(e) or 'no column named' in str(e) or 'no such table' in str(e):
-                self.convertWatched()    # MAJ du modele de table
-                try:    # 2eme tentative
-                    self.dbcur.execute(sql_select)
-                    matchedrow = self.dbcur.fetchall()
-                    return matchedrow
-                except Exception as e:
-                    pass
-            VSlog('SQL ERROR : %s' % sql_select)
-        return None
-
     def get_watched(self, meta):
         title = meta['titleWatched']
         if not title:
             return False
+        title = title.replace(' ', '')
         cat = meta['cat'] if 'cat' in meta else '1'
 
         sql_select = "SELECT * FROM watched WHERE title_id = '%s'" % title
@@ -341,8 +320,17 @@ class cDb(object):
                     VSlog('SQL ERROR %s' % sql_select)
             return False
 
-    def get_allwatched(self):
-        sql_select = "SELECT tmdb_id, * FROM watched order by addon_id DESC"
+    def get_catWatched(self, cat, limit=''):
+        
+        sql_select = "SELECT tmdb_id, * FROM watched"
+
+        if cat:
+            sql_select += " where cat = '%s'" % cat
+
+        sql_select += " order by addon_id DESC"
+        
+        if limit:
+            sql_select += " limit %s" % limit
 
         try:
             self.dbcur.execute(sql_select)
@@ -367,7 +355,11 @@ class cDb(object):
         if not title:
             return
 
-        sql_select = "DELETE FROM watched WHERE title_id = '%s'" % title
+        tmdbId = meta['tmdbId'] if 'tmdbId' in meta else ''
+        if tmdbId:
+            sql_select = "DELETE FROM watched WHERE tmdb_id = '%s'" % tmdbId
+        else:
+            sql_select = "DELETE FROM watched WHERE title_id = '%s'" % title
         try:
             self.dbcur.execute(sql_select)
             self.db.commit()
@@ -416,7 +408,7 @@ class cDb(object):
     # ***********************************
 
     def insert_resume(self, meta):
-        title = self.str_conv(meta['titleWatched'])
+        title = self.str_conv(meta['titleWatched']).replace(' ', '')
         site = QuotePlus(meta['site'])
         point = meta['point']
         total = meta['total']
@@ -470,7 +462,6 @@ class cDb(object):
             return False, False
 
         sql_delete = "DELETE FROM resume WHERE title = '%s'" % QuotePlus(sTitleWatched)
-
         try:
             self.dbcur.execute(sql_delete)
             self.db.commit()
@@ -579,11 +570,11 @@ class cDb(object):
             return
 
         title = self.str_conv(meta['title'])
-        titleWatched = self.str_conv(meta['titleWatched'])
+        titleWatched = self.str_conv(meta['titleWatched']).replace(' ', '')
         siteurl = QuotePlus(meta['siteurl'])
         cat = meta['cat']
         saison = meta['season'] if 'season' in meta else ''
-        sTmdbId = meta['sTmdbId'] if 'sTmdbId' in meta else ''
+        sTmdbId = meta['tmdbId'] if 'tmdbId' in meta else ''
 
         # on enleve avant de remettre pour retrier
         ex = "DELETE FROM viewing WHERE title_id = '%s' and cat = '%s'" % (titleWatched, cat)

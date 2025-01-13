@@ -1,4 +1,5 @@
 ﻿from resources.lib.handler.requestHandler import cRequestHandler
+from resources.lib.util import urlHostName
 from resources.lib.parser import cParser
 from resources.hosters.hoster import iHoster
 from resources.lib.packer import cPacker
@@ -19,7 +20,7 @@ class cHoster(iHoster):
     def _getMediaLinkForGuest(self, autoPlay = False):
         VSlog(self._url)
         api_call = ''
-        sReferer = f'https://{self._url.split("/")[2]}'
+        sReferer = f'https://{urlHostName(self._url)}/'
 
         oRequest = cRequestHandler(self._url)
         oRequest.enableCache(False)
@@ -67,6 +68,6 @@ class cHoster(iHoster):
             api_call = aResult[1][0] 
 
         if api_call:
-            return True, api_call + '|User-Agent=' + UA + '&Referer=' + sReferer + '&verifypeer=false'
+            return True, f'{api_call}|User-Agent={UA}&Referer={sReferer}&verifypeer=false&Accept-Language=en-US,en;q=0.9'
 
         return False, False

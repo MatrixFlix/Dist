@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # https://github.com/Kodi-vStream/venom-xbmc-addons
+import xbmc
 
 from resources.lib.db import cDb
 from resources.lib.gui.gui import cGui
@@ -10,6 +11,7 @@ from resources.lib.util import UnquotePlus
 
 SITE_IDENTIFIER = 'cWatched'
 SITE_NAME = 'Watched'
+
 
 class cWatched:
 
@@ -24,13 +26,13 @@ class cWatched:
         oGui.addDir(SITE_IDENTIFIER, 'getWatched', addons.VSlang(30126), 'genres.png', oOutputParameterHandler)
 
         oOutputParameterHandler = cOutputParameterHandler()
-        oOutputParameterHandler.addParameter('sCat', '1')       # movies
-        oGui.addDir(SITE_IDENTIFIER, 'getWatched', addons.VSlang(30120), 'films.png', oOutputParameterHandler)
+        oOutputParameterHandler.addParameter('sCat', '1') 
+        oGui.addDir(SITE_IDENTIFIER, 'getWatched', addons.VSlang(30120), 'film.png', oOutputParameterHandler)
 
-        oOutputParameterHandler.addParameter('sCat', '4')       # seasons
-        oGui.addDir(SITE_IDENTIFIER, 'getWatched', '%s/%s' % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122)), 'series.png', oOutputParameterHandler)
+        oOutputParameterHandler.addParameter('sCat', '4') 
+        oGui.addDir(SITE_IDENTIFIER, 'getWatched', '%s/%s' % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122)), 'mslsl.png', oOutputParameterHandler)
 
-        oOutputParameterHandler.addParameter('sCat', '5')       # Divers
+        oOutputParameterHandler.addParameter('sCat', '5') 
         oGui.addDir(SITE_IDENTIFIER, 'getWatched', self.ADDON.VSlang(30410), 'buzz.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
@@ -42,7 +44,7 @@ class cWatched:
         catFilter = oInputParameterHandler.getValue('sCat')
 
         with cDb() as DB:
-            row = DB.get_allwatched()
+            row = DB.get_catWatched(catFilter)
             if not row:
                 oGui.setEndOfDirectory()
                 return
@@ -88,13 +90,13 @@ class cWatched:
                     oOutputParameterHandler.addParameter('sCat', cat)
 
                     if cat == '1':
-                        oGui.addMovie(site, function, title, 'films.png', '', title, oOutputParameterHandler)
+                        oGui.addMovie(site, function, title, 'film.png', '', title, oOutputParameterHandler)
                     elif cat == '4':
-                        oGui.addSeason(site, function, title, 'series.png', '', title, oOutputParameterHandler)
+                        oGui.addSeason(site, function, title, 'mslsl.png', '', title, oOutputParameterHandler)
                     elif cat == '5':
-                        oGui.addMisc(site, function, title, 'buzz.png', '', title, oOutputParameterHandler)
+                        oGui.addMisc(site, function, title, 'doc.png', '', title, oOutputParameterHandler)
                     else:
-                        continue 
+                        continue #
 
                 except Exception as e:
                     pass

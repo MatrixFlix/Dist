@@ -312,10 +312,10 @@ def showLinks():
                     oRequestHandler.addParameters('back_url', _backUrl)
                     oRequestHandler.addParameters('submit', aEntry[6])
                     oRequestHandler.setRequestType(1)
-                    sHtmlContent1 = oRequestHandler.request()
+                    sHtmlContent = oRequestHandler.request()
 
     sPattern = 'data-ep-url="([^"]+)"\s*onclick="([^"]+)">(.+?)</a>' 
-    aResult = oParser.parse(sHtmlContent1,sPattern)
+    aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         oOutputParameterHandler = cOutputParameterHandler()
         for aEntry in aResult[1]:

@@ -413,12 +413,8 @@ class cHome:
     def showUsers(self):
         oGui = cGui()
 
-        oOutputParameterHandler = cOutputParameterHandler()
-        oOutputParameterHandler.addParameter('siteUrl', 'http://')
-        oGui.addDir('themoviedb_org', 'showMyTmdb', 'TMDB', 'tmdb.png', oOutputParameterHandler)
-
-        oOutputParameterHandler.addParameter('siteUrl', 'http://')
-        oGui.addDir('cTrakt', 'getLoad', self.addons.VSlang(30214), 'trakt.png', oOutputParameterHandler)
+        oGui.addDir('themoviedb_org', 'showMyTmdb', 'TMDB', 'tmdb.png')
+        oGui.addDir('cTrakt', 'getLoad', self.addons.VSlang(30214), 'trakt.png')
 
         oGui.setEndOfDirectory()
 
@@ -447,18 +443,25 @@ class cHome:
     def showHistory(self):
         oGui = cGui()
 
+        oInputParameterHandler = cInputParameterHandler()
+        sCat = oInputParameterHandler.getValue('sCat')
+
         from resources.lib.db import cDb
         with cDb() as db:
-            row = db.get_history()
+            row = db.get_history(sCat)
 
         if row:
-            oGui.addText(SITE_IDENTIFIER, self.addons.VSlang(30416))
+            oGui.addText(SITE_IDENTIFIER, self.addons.VSlang(30416), '')
         else:
             oGui.addText(SITE_IDENTIFIER)
         oOutputParameterHandler = cOutputParameterHandler()
         for match in row:
             sTitle = match['title']
             sCat = match['disp']
+
+            # we only offer history for movies, series, anime, doc, drama
+            if int(sCat) not in (1, 2, 3, 5, 9):
+                continue 
 
             oOutputParameterHandler.addParameter('siteUrl', 'http://venom')
             oOutputParameterHandler.addParameter('searchtext', sTitle)
@@ -480,7 +483,7 @@ class cHome:
 
         if row:
             oOutputParameterHandler.addParameter('siteUrl', 'http://venom')
-            oGui.addDir(SITE_IDENTIFIER, 'delSearch', self.addons.VSlang(30413), 'search.png', oOutputParameterHandler)
+            oGui.addDir(SITE_IDENTIFIER, 'delSearch', self.addons.VSlang(30413), 'trash.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 

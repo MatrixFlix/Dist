@@ -37,7 +37,7 @@ class cHoster(iHoster):
         if (r2):
             api_call = r2.group(1)
             api_call = Unquote(api_call)
-            return True, api_call.replace(' ', '%20') + "|Referer=" + sReferer + '&User-Agent=' + UA
+            return True, api_call.replace(' ', '%20') + "|Referer=" + sReferer + '&User-Agent=' + UA + '&verifypeer=false'
 
         oParser = cParser()
         sPattern = ' src="([^<]+)" type="video/mp4" size="([^"]+)">'

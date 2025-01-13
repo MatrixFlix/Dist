@@ -51,6 +51,11 @@
             "active": "True",
             "url": "https://alwanfilm.com/"
         },
+        "anime3rb": {
+            "label": "Anime3rb",
+            "active": "True",
+            "url": "https://anime3rb.com/"
+        },
         "animeblkom": {
             "label": "Animeblkom",
             "active": "True",
@@ -196,7 +201,7 @@
             "label": "CoolCima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://colcim.store/"
+            "url": "https://colcimma.store/"
         },
         "daily": {
             "label": "Daily IPTV List",
@@ -349,7 +354,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime250.shop/"
+            "url": "https://movtime257.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -411,7 +416,7 @@
         "taxielcima": {
             "label": "TaxiElCima",
             "active": "True",
-            "url": "https://new.twoupon.com/"
+            "url": "https://t.txcima.com/"
         },
         "tma": {
             "label": "tma",
@@ -457,7 +462,7 @@
             "label": "Wecima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://wecima.movie/",
+            "url": "https://wecima.stream/",
             "url2": "https://t4cce4ma.shop/"
         },
         "witanime": {
@@ -468,7 +473,7 @@
         },
         "xsanime": {
             "label": "Xsanime",
-            "active": "True",
+            "active": "False",
             "url": "https://xsaniime.net/",
             "url2": "https://cdn3.xsanime.live/"
         },

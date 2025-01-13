@@ -81,11 +81,12 @@ class cHoster(iHoster):
                     qua.append(str(i[1]))
 
                 api_call = dialog().VSselectqual(qua, url) + helpers.append_headers(headers)
-
+        
+        VSlog(api_call)
         if api_call:
             if ('http' in SubTitle):
-                return True, unquote(api_call), SubTitle
+                return True, api_call, SubTitle
             else:
-                return True, unquote(api_call)
+                return True, api_call
 
         return False, False

@@ -997,6 +997,14 @@ msgctxt "#31216"
 msgid "Trakt source"
 msgstr ""
 
+msgctxt "#31217"
+msgid "Activate scrobbling - Movies"
+msgstr ""
+
+msgctxt "#31218"
+msgid "Activate scrobbling - TV Shows"
+msgstr ""
+
 msgctxt "#30361"
 msgid "Activate scrobbling"
 msgstr ""

@@ -215,7 +215,7 @@ class cHosterGui:
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
                             'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload', 'dailyuploads',
-                            'myvi', 'viewsb', 'yourvid', 'terabox', 'streamsilk', 'vixstream']
+                            'myvi', 'viewsb', 'yourvid', 'terabox', 'streamsilk', 'vixstream', 'vid3rb']
 
         val = next((x for x in supported_player if x in sHostName), None)
         if val:
@@ -273,7 +273,7 @@ class cHosterGui:
         filelions = next((x for x in ['filelions', 'ajmidyadfihayh', 'alhayabambi', 'bazwatch', 'cilootv', 'motvy55', 'bazlions', 'lylxan',
                                 'fdewsdc.sbs', '5drama.vip', 'cdnlion-down', 'demonvideo', 'zidlions', 'vidhide', 'streamfile', 'vidnow', 'tuktukcinema29.buzz',
                                 'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide', 'dhtpre', '6sfkrspw4u',
-                                'peytonepre'] if x in sHostName), None)
+                                'peytonepre', 'ryderjet'] if x in sHostName), None)
         if filelions:
             return self.getHoster("filelions")
 
@@ -290,7 +290,7 @@ class cHosterGui:
 
         # Filemoon Clone
         filemoon = next((x for x in ['filemoon', 'moonmov', 'allviid', 'all-vid', 'techradar', 'albrq', 'kerapoxy', 'kinoger', 'smdfs40r', '81u6xl9d',
-                                     '1azayf9w'] if x in sHostName), None)
+                                     '1azayf9w', 'ghbrisk'] if x in sHostName), None)
         if filemoon:
             return self.getHoster("filemoon")
 
@@ -307,7 +307,7 @@ class cHosterGui:
             return self.getHoster('vidlo')
 
         # Dood Clone
-        vidlo = next((x for x in ['DoodStream', 'dooood', 'flixeo', 'ds2play', 'dood', 'd0o0d', 'ds2video', 'do0od', 'd0000d', 'd000d'] if x in sHostName), None)
+        vidlo = next((x for x in ['DoodStream', 'dooood', 'flixeo', 'ds2play', 'dood', 'd0o0d', 'ds2video', 'do0od', 'd0000d', 'd000d', 'doood'] if x in sHostName), None)
         if vidlo:    
             return self.getHoster('dood')
 
@@ -338,7 +338,7 @@ class cHosterGui:
 
         # X-Video Clone
         xvideo = next((x for x in ['filerio', 'vod540', 'hd-cdn', 'anyvid', 'vod7', 'segavid', 'vidblue', 'arabveturk', 'filegram', 'tv30.online', 'miravd',
-                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz', 'vidker', 'filehd'] if x in sHostName), None)
+                                   'mwdy', 'vidsp.net', 'mp4plus', 'okprime', '1vid.xyz', 'vidker', 'filehd', 'egybestvid'] if x in sHostName), None)
         if xvideo:    
             return self.getHoster('xvideo')
 
@@ -346,7 +346,7 @@ class cHosterGui:
         false_links = next((x for x in ['nitroflare', 'tubeload.', 'Facebook', 'fastdrive', 'megaup.net', 'openload', 'vidhd', 'oktube', 'mdiaload', 'fikper', 'turbobit', '1fichier', 'multiup.io',
                                         'mega.nz', 'rapidgator', 'ddownload', 'bowfile', 'uptobox', 'uptostream', 'wahmi', 'doodrive', 'highload', 'anonfiles', 'jawcloud', 'dailyuploads',
                                         'videomega', 'prostream', 'fembed', 'filegage', 'streamlare', 'katfile', 'usersdrive', 'uploadbank', 'fastupload', 'fireload', 'vikingfile', 'workupload',
-                                        'buzzheavier', 'samaup', 'uplo.top', 'filespayout', 'send.cm', 'sbthe.com'] if x in sHostName), None)
+                                        'buzzheavier', 'samaup', 'uplo.top', 'filespayout', 'send.cm', 'sbthe.com', '10gb.vn'] if x in sHostName), None)
         if false_links:    
             return False
 

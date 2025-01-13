@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
 # https://github.com/Kodi-vStream/venom-xbmc-addons
-
 from resources.lib.comaddon import isMatrix
-import html.entities as htmlentitydefs
-import urllib.parse as urllib
-urlparse = urllib
+
+try:        # python 2
+    import htmlentitydefs
+    import urllib
+    import urlparse
+except ImportError:     # python 3
+    import html.entities as htmlentitydefs
+    import urllib.parse as urllib
+    urlparse = urllib
+
 import unicodedata
 import re
 import string
 
-
 class cUtil:
+
     def CheckOrd(self, label):
         count = 0
         try:
@@ -30,6 +36,7 @@ class cUtil:
     # percent : pourcentage de concordance, 75% = il faut au moins 3 mots sur 4
     # retourne True si pourcentage atteint
     def CheckOccurence(self, str1, str2, percent=75):
+        str1 = self.CleanName(str1)
         str2 = self.CleanName(str2)
         nbOccurence = nbWord = 0
         list2 = str2.split(' ')   # Comparaison mot à mot
@@ -71,12 +78,12 @@ class cUtil:
                     text = text.decode('utf8', 'ignore')    
                 except Exception as e:
                     pass
-
+                
             try:
                 text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore')
             except Exception as e:
                 pass
-
+            
             if bMatrix:
                 try:
                     text = text.decode('utf8', 'ignore')
@@ -84,6 +91,23 @@ class cUtil:
                     pass
         return text
 
+    def ASCIIDecode(self, string):
+        i = 0
+        l = len(string)
+        ret = ''
+        while i < l:
+            c = string[i]
+            if string[i:(i + 2)] == '\\x':
+                c = chr(int(string[(i + 2):(i + 4)], 16))
+                i += 3
+            if string[i:(i+2)] == '\\u':
+                c = chr(int(string[(i + 2):(i + 6)], 16))
+                i += 5
+            ret = ret + c
+            i += 1
+    
+        return ret
+    
     def unescape(self, text):
         # determine si conversion en unicode nécessaire        
         isStr = isinstance(text, str)
@@ -114,21 +138,19 @@ class cUtil:
         return re.sub('&#?\w+;', fixup, text)
 
     def titleWatched(self, title):
+
+        title = title.replace('²', ' 2').replace('³', ' 3').replace('⁴', ' 4')
+
         title = self.formatUTF8(title)
 
-        # cherche la saison et episode puis les balises [color]titre[/color]
-        # title, saison = self.getSaisonTitre(title)
-        # title, episode = self.getEpisodeTitre(title)
-        # supprimer les balises
-        title = re.sub(r'\[.*\]|\(.*\)', r'', str(title))
-        title = title.replace('VF', '').replace('VOSTFR', '').replace('FR', '')
-        # title = re.sub(r'[0-9]+?', r'', str(title))
-        title = title.replace('-', ' ')  # on garde un espace pour que Orient-express ne devienne pas Orientexpress pour la recherche tmdb
+        title = title.replace('[', '').replace(']', '')
+        title = title.replace('VF', '').replace('VOSTFR', '')
+        title = re.sub('(\W|_|^)FR(\W|_|$)', '', title)
+        title = title.replace('-', ' ') 
         title = title.replace('Season', '').replace('season', '').replace('Season', '').replace('Episode', '').replace('episode', '')
         title = re.sub('[^%s]' % (string.ascii_lowercase + string.digits), ' ', title.lower())
-        title = re.sub(' +', ' ', title) # vire espace double au milieu
-        # title = QuotePlus(title)
-        # title = title.decode('string-escape')
+        title = re.sub(' +', ' ', title) 
+
         return title
 
     def CleanName(self, name):

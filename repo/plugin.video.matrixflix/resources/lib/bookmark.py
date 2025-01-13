@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import xbmc
+
 from resources.lib.db import cDb
 from resources.lib.gui.gui import cGui
 from resources.lib.gui.guiElement import cGuiElement
@@ -33,7 +34,7 @@ class cFav:
             db.del_bookmark(siteUrl, sTitle, sCat, sAll)
         return True
 
-    # Suppression d'un bookmark depuis un Widget
+
     def delBookmarkMenu(self):
         if not self.DIALOG.VSyesno(self.ADDON.VSlang(30456)):
             return False
@@ -45,10 +46,10 @@ class cFav:
 
         return True
 
+
     def getBookmarks(self):
         oGui = cGui()
 
-        # Comptages des marque-pages
         with cDb() as db:
             row = db.get_bookmark()
 
@@ -59,24 +60,25 @@ class cFav:
         oOutputParameterHandler = cOutputParameterHandler()
         oOutputParameterHandler.addParameter('sCat', '1')
         total = compt[1] + compt[7]
-        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30120), str(total)), 'mark.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30120), str(total)), 'film.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('sCat', '2')
         total = compt[2] + compt[3] + compt[4] + compt[8] + compt[9]
-        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s/%s (%s)') % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122), str(total)), 'mark.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s/%s (%s)') % (self.ADDON.VSlang(30121), self.ADDON.VSlang(30122), str(total)), 'mslsl.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('sCat', '5')
         total = compt[5]
-        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30410), str(total)), 'mark.png', oOutputParameterHandler)
+        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30410), str(total)), 'doc.png', oOutputParameterHandler)
 
-        oOutputParameterHandler.addParameter('sCat', '6')
-        total = compt[6]
-        oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30332), str(total)), 'mark.png', oOutputParameterHandler)
+        # oOutputParameterHandler.addParameter('sCat', '6')
+        # total = compt[6]
+        # oGui.addDir(SITE_IDENTIFIER, 'getFav', ('%s (%s)') % (self.ADDON.VSlang(30332), str(total)), 'tv.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('sAll', 'true')
         oGui.addDir(SITE_IDENTIFIER, 'delBookmark', self.ADDON.VSlang(30209), 'trash.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
+
 
     def getFav(self):
         oGui = cGui()
@@ -208,8 +210,8 @@ class cFav:
             oGui.addDir(SITE_IDENTIFIER, 'delBookmark', self.ADDON.VSlang(30211), 'trash.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
-
         return
+
 
     def setBookmark(self):
         oInputParameterHandler = cInputParameterHandler()
@@ -242,7 +244,6 @@ class cFav:
         meta['icon'] = xbmc.getInfoLabel('ListItem.Art(thumb)')
         meta['fanart'] = xbmc.getInfoLabel('ListItem.Art(fanart)')
         try:
-            # Comptages des marque-pages
             with cDb() as db:
                 db.insert_bookmark(meta)
         except:
