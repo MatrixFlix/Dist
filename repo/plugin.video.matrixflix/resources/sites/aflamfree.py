@@ -20,7 +20,7 @@ SITE_DESC = 'arabic vod'
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
 MOVIE_EN = (f'{URL_MAIN}category/افلام-اجنبية/', 'showMovies')
-MOVIE_AR = (f'{URL_MAIN}category/افلام-عربية', 'showLive')
+MOVIE_AR = (f'{URL_MAIN}category/افلام-عربية', 'showMovies')
 MOVIE_ASIAN = (f'{URL_MAIN}category/افلام-اسيويه/', 'showMovies')
 MOVIE_HI = (f'{URL_MAIN}category/افلام-هنديه/', 'showMovies')
 MOVIE_TURK = (f'{URL_MAIN}category/افلام-تركية/', 'showMovies')

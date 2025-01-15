@@ -294,11 +294,12 @@ class cTMDb:
     def get_namebyid(self, mediaType, tmdbid):
     
         meta = self._call('%s/%s' % (mediaType, tmdbid))
-    
+
+        # Avoid local title (fixed search)
         if 'title' in meta:
-            return meta['title']
+            return meta['original_title']
         if 'name' in meta:
-            return meta['name']
+            return meta['original_name']
         return False
 
     def search_movie_name(self, name, year='', page=1):

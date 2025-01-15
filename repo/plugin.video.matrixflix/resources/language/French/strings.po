@@ -1510,3 +1510,11 @@ msgstr "Parce que vous avez regardé"
 msgctxt "#70030"
 msgid "My Recommendations"
 msgstr "Mes Recommandations"
+
+msgctxt "#70031"
+msgid "TMDB"
+msgstr "TMDB"
+
+msgctxt "#70032"
+msgid "Networks"
+msgstr "Diffuseurs"

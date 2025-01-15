@@ -802,7 +802,7 @@ msgid "Recommended"
 msgstr ""
 
 msgctxt "#30314"
-msgid "Box Office"
+msgid "BoxOffice"
 msgstr ""
 
 msgctxt "#30315"
@@ -1524,4 +1524,12 @@ msgstr ""
 
 msgctxt "#70030"
 msgid "My Recommendations"
+msgstr ""
+
+msgctxt "#70031"
+msgid "TMDB"
+msgstr "TMDB"
+
+msgctxt "#70032"
+msgid "Networks"
 msgstr ""

@@ -49,7 +49,7 @@ class cDownloadProgressBar(threading.Thread):
             self.__sUrl = kwargs['url']
             self.__fPath = kwargs['Dpath']
             if 'FastMode' in kwargs:
-                VSlog('Téléchargement en mode Turbo')
+                VSlog('Turbo mode download')
                 self.__bFastMode = True
 
         threading.Thread.__init__(self)
@@ -260,7 +260,7 @@ class cDownload:
         if aLink and aLink[0]:
             sUrl = aLink[1]
         else:
-            VSlog('Lien non resolvable ou protégé')
+            VSlog('Unresolvable or protected link')
             self.DIALOG.VSinfo(sTitle, self.ADDON.VSlang(30022), 5)
             return False
 
@@ -583,7 +583,7 @@ class cDownload:
 
             if sPath == '':
                 dialog = xbmcgui.Dialog()
-                sPath = dialog.browse(3, 'Dossier de sauvegarde', 'files', '', False, False)
+                sPath = dialog.browse(3, 'Backup folder', 'files', '', False, False)
                 self.ADDON.setSetting('download_folder', sPath)
             if sPath != '':
                 sDownloadPath = VSPath(sPath + '%s' % sTitle)
@@ -659,7 +659,7 @@ class cDownload:
 
                         # ok on attend un peu, et on lance le stream
                         tempo = 100
-                        progress_ = progress().VScreate('Préchargement ...')
+                        progress_ = progress().VScreate('Preloading ...')
 
                         while (tempo > 0):
                             # if canceled do nothing
@@ -682,7 +682,7 @@ class cDownload:
                         oPlayer.startPlayer()
 
                     else:
-                        self.DIALOG.VSinfo(self.ADDON.VSlang(30085), 'Erreur', 5)
+                        self.DIALOG.VSinfo(self.ADDON.VSlang(30085), 'Error', 5)
             else:
                 # notifier que la demande est prise en compte
                 self.DIALOG.VSinfo(self.ADDON.VSlang(30228), self.ADDON.VSlang(30083), 5)

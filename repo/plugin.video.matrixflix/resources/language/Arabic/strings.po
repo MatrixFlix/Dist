@@ -1520,3 +1520,11 @@ msgstr "لأنك شاهدت"
 msgctxt "#70030"
 msgid "My Recommendations"
 msgstr "توصياتي"
+
+msgctxt "#70031"
+msgid "TMDB"
+msgstr "TMDB"
+
+msgctxt "#70032"
+msgid "Networks"
+msgstr "الشبكات"
