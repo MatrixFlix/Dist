@@ -9,6 +9,7 @@ from resources.lib.handler.inputParameterHandler import cInputParameterHandler
 from resources.lib.handler.outputParameterHandler import cOutputParameterHandler
 from resources.lib.comaddon import addon
 from resources.sites.themoviedb_org import SITE_IDENTIFIER as SITE_TMDB
+from resources.sites.anilist_co import SITE_IDENTIFIER as SITE_ANILIST
 from resources.lib.trakt import SITE_IDENTIFIER as SITE_TRAKT
 
 SITE_IDENTIFIER = 'cHome'
@@ -453,13 +454,13 @@ class cHome:
         oGui.addDir(SITE_IDENTIFIER, 'callpluging', '%s (%s)' % (self.addons.VSlang(30122), self.addons.VSlang(30120)), 'film.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'discover/tv')
-        oGui.addDir(SITE_TMDB, 'showAnimesNews', self.addons.VSlang(30101), 'anime.png', oOutputParameterHandler)
+        oGui.addDir(SITE_ANILIST, 'showAnimesNews', '%s (%s)' % (self.addons.VSlang(30122), self.addons.VSlang(30101)), 'anime.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'discover/tv')
-        oGui.addDir(SITE_TMDB, 'showAnimes', self.addons.VSlang(30102), 'pop.png', oOutputParameterHandler)
+        oGui.addDir(SITE_ANILIST, 'showAnimesTrending', '%s (%s)' % (self.addons.VSlang(30122), self.addons.VSlang(70008)), 'pop.png', oOutputParameterHandler)
 
         oOutputParameterHandler.addParameter('siteUrl', 'discover/tv')
-        oGui.addDir(SITE_TMDB, 'showAnimesTop', self.addons.VSlang(30104), 'top.png', oOutputParameterHandler)
+        oGui.addDir(SITE_ANILIST, 'showAnimesTop', '%s (%s)' % (self.addons.VSlang(30122), self.addons.VSlang(70001)), 'top.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 

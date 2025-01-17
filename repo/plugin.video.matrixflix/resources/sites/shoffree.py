@@ -43,6 +43,7 @@ ANIM_MOVIES = (f'{URL_MAIN}movies?genre=40', 'showMovies')
 URL_SEARCH = (f'{URL_MAIN}search?query=', 'showMovies')
 URL_SEARCH_MOVIES = (f'{URL_MAIN}search?query=', 'showMovies')
 URL_SEARCH_SERIES = (f'{URL_MAIN}search?query=', 'showSeries')
+URL_SEARCH_ANIMS = (f'{URL_MAIN}search?query=', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
  
 def load():
@@ -54,7 +55,7 @@ def load():
     oGui.addDir(SITE_IDENTIFIER, 'showSearch', addons.VSlang(30078), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
-    oGui.addDir(SITE_IDENTIFIER, 'showSearchSeries', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
+    oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', RAMADAN_SERIES[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'رمضان', 'rmdn.png', oOutputParameterHandler)

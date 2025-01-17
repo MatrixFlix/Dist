@@ -43,8 +43,9 @@ DOC_SERIES = (f'{URL_MAIN}genre/وثائقي', 'showSeries')
 SPORT_WWE = (f'{URL_MAIN}category/عروض-مصارعة', 'showMovies')
 
 URL_SEARCH = (f'{URL_MAIN}search?s=', 'showMovies')
-URL_SEARCH_MOVIES = (f'{URL_MAIN}search?s=فيلم+', 'showMovies')
-URL_SEARCH_SERIES = (f'{URL_MAIN}search?s=مسلسل+', 'showSeries')
+URL_SEARCH_MOVIES = (f'{URL_MAIN}search?s=فيلم%20', 'showMovies')
+URL_SEARCH_SERIES = (f'{URL_MAIN}search?s=مسلسل%20', 'showSeries')
+URL_SEARCH_ANIMS = (f'{URL_MAIN}search?s=انمي%20', 'showSeries')
 FUNCTION_SEARCH = 'showMovies'
  
 def load():

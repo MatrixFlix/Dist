@@ -51,6 +51,11 @@
             "active": "True",
             "url": "https://alwanfilm.com/"
         },
+        "anilist_co": {
+            "label": "Anime database",
+            "active": "True",
+            "url": "https://graphql.anilist.co"
+        },
         "anime3rb": {
             "label": "Anime3rb",
             "active": "True",
@@ -195,7 +200,7 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://cmaty.store/"
+            "url": "https://cnimaty.online/"
         },
         "coolcima": {
             "label": "CoolCima",
@@ -375,7 +380,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shiid4u.net/"
+            "url": "https://sd4u.cam/"
         },
         "shoffree": {
             "label": "Shoffree",
@@ -462,7 +467,7 @@
             "label": "Wecima",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://wecima.stream/",
+            "url": "https://wecima.watch/",
             "url2": "https://t4cce4ma.shop/"
         },
         "witanime": {

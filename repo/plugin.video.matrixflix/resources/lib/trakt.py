@@ -397,7 +397,7 @@ class cTrakt:
                     oOutputParameterHandler.addParameter('siteUrl', siteUrl)
                     oOutputParameterHandler.addParameter('sCat', sCat)
                     oOutputParameterHandler.addParameter('sPage', sNextPage)
-                    oGui.addNext(SITE_IDENTIFIER, 'getLists', 'Page suivante', oOutputParameterHandler)
+                    oGui.addNext(SITE_IDENTIFIER, 'getLists', 'Next page >>', oOutputParameterHandler)
     
 
         if bNext:
