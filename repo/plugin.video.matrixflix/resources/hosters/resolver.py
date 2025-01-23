@@ -44,7 +44,7 @@ class cHoster(iHoster):
         else:
             SubTitle = ''
 
-        hmf = resolveurl.HostedMediaFile(url = self._url.replace('|','$'))
+        hmf = resolveurl.HostedMediaFile(url = self._url)
         if hmf.valid_url():
             stream_url = hmf.resolve()
             if stream_url:

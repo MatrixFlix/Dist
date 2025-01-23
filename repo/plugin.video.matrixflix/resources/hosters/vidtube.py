@@ -21,6 +21,7 @@ class cHoster(iHoster):
         sSession = requests.session()
         oParser = cParser()
 
+        sUrl = self._url
         if '|Referer=' in self._url:
             sReferer = self._url.split('|Referer=')[1]            
             sUrl = self._url.split('|Referer=')[0]
@@ -49,6 +50,7 @@ class cHoster(iHoster):
                 api_call = aResult[1][0] + '|User-Agent=' + UA + '&Referer=' + sUrl
 
         else:
+
             sHtmlContent = sSession.get(sUrl, headers=headers).text
 
             sPattern = "(\s*eval\s*\(\s*function(?:.|\s)+?)<\/script>"

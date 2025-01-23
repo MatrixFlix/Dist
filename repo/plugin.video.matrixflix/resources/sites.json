@@ -174,7 +174,7 @@
         "cdrama": {
             "label": "Cdrama",
             "active": "True",
-            "url": "https://cdrama.in/"
+            "url": "https://cdrama.io/"
         },
         "cinemabest": {
             "label": "CinemaBest",
@@ -279,7 +279,7 @@
             "label": "Halacima",
             "active": "True",
             "cloudflare": "True",
-            "url": "https://halacima.vip/"
+            "url": "https://halacima.watch/"
         },
         "hidaya": {
             "label": "Hidaya",
@@ -339,7 +339,7 @@
         "livetv": {
             "label": "Live TV",
             "active": "True",
-            "url": "https://livetv818.me/"
+            "url": "https://livetv819.me/"
         },
         "lodynet": {
             "label": "Lodynet",
@@ -359,7 +359,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime257.shop/"
+            "url": "https://movtime264.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -380,7 +380,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://sd4u.cam/"
+            "url": "https://shahid4u.day/"
         },
         "shoffree": {
             "label": "Shoffree",

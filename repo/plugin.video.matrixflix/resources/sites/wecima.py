@@ -181,7 +181,7 @@ def showPack():
                 continue 
 
             sTitle = aEntry[1]
-            siteUrl = aEntry[0].replace((aEntry[0].split('watch/')[0]), URL_MAIN)
+            siteUrl = aEntry[0].replace((aEntry[0].split('/watch/')[0]), URL_MAIN[:-1])
 			
             oOutputParameterHandler = cOutputParameterHandler()
             oOutputParameterHandler.addParameter('siteUrl', siteUrl)
@@ -224,7 +224,8 @@ def showMovies(sSearch = ''):
                 continue
 
             sTitle = cUtil().CleanMovieName(aEntry[1])
-            siteUrl = aEntry[0].replace((aEntry[0].split('watch/')[0]), URL_MAIN)
+            VSlog(aEntry[0])
+            siteUrl = aEntry[0].replace((aEntry[0].split('/watch/')[0]), URL_MAIN[:-1])
             sDesc = ''
             sThumb = aEntry[2]
             sThumb = sThumb.replace(sThumb.split('wp-content/')[0], URL_MAIN)
@@ -637,6 +638,7 @@ def showEps():
 def generate_links(total_episodes, base_link):
     initial_episodes = 60
     increment = 40
+    total_episodes = float(total_episodes)
     links = []
     episodes = initial_episodes
     while int(episodes) <= int(total_episodes):

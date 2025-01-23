@@ -153,6 +153,7 @@ class cPlayer(xbmc.Player):
         player_conf = self.ADDON.getSetting('playerPlay')
 
         kodiver = KodiVersion()
+        listitem = xbmcgui.ListItem(path=sUrl.encode('utf-8')) 
         if '.m3u8' in sUrl or '&ct=6&' in sUrl:
             if kodiver < 21:
                 listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
@@ -173,9 +174,12 @@ class cPlayer(xbmc.Player):
             mime_type = None
 
         if mime_type: 
+            if any(ext in sUrl for ext in ['.m3u8', '&ct=6&', '.mpd']):
+                listitem.setProperty('inputstream', 'inputstream.adaptive')
+            
             addonManager().enableAddon('inputstream.adaptive')
-            listitem = xbmcgui.ListItem(path=sUrl.encode('utf-8')) 
             listitem.setMimeType(mime_type) 
+            listitem.setContentLookup(False) 
 
             if '|' in sUrl:
                 strhdr = sUrl.split('|')[1]

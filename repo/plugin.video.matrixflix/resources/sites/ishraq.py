@@ -1,6 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
 
-import requests
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -17,7 +16,7 @@ SITE_IDENTIFIER = 'ishraq'
 SITE_NAME = 'Ishraq Production'
 SITE_DESC = 'farsi vod'
 
-URL_MAIN = 'https://api.youtubemultidownloader.com/playlist'
+URL_MAIN = '' #'https://api.youtubemultidownloader.com/playlist'
 
 MOVIE_IR = ('https://www.youtube.com/playlist?list=PLLHL37krqjBSFg_3CxMWe6G-jmyi5K2sX', 'showMovies')
 SERIE_IR = ('https://www.youtube.com/@ISHRAQ_Production/playlists', 'showSeriesList')
@@ -119,49 +118,44 @@ def showMovies(sSearch = ''):
     else:    
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
-    sNextPage = oInputParameterHandler.getValue('sNextPage')
-    if sNextPage is False:
-        sNextPage = ''
-
     if not sSearch:
         if 'PLLHL37krqjBSk7ugG5v3_DeB_mVWMEAOQ' not in sUrl:
             oOutputParameterHandler.addParameter('siteUrl', 'https://www.youtube.com/playlist?list=PLLHL37krqjBSk7ugG5v3_DeB_mVWMEAOQ')
             oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'افلام ايرانية قصيرة', 'film.png', oOutputParameterHandler) 
 
-    params = {
-        'url': sUrl,
-        'nextPageToken': sNextPage,
-    }
+    oParser = cParser() 
+    oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.addHeaderEntry('user-agent', UA)
+    sHtmlContent = oRequestHandler.request().decode("unicode_escape")
 
-    sHtmlContent = requests.get(URL_MAIN, params=params).json()
-   
-    for aEntry in sHtmlContent.get('items'):
+    sStart = 'var ytInitialData = '
+    sEnd = '</script>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
+
+    sPattern = 'playlistVideoRenderer.+?"videoId":"([^"]+)".+?"url":"([^"]+)".+?"text":"([^"]+)"'
+    aResult = oParser.parse(sHtmlContent, sPattern)	
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler() 
+        for aEntry in aResult[1]:
             
-        sTitle = aEntry.get('title').replace(' - مترجم للعربية','').replace('الفيلم','').replace('الإيراني','').replace('(','').replace(')','').replace('القصير','').replace('4K','')
-        if 'مسلسل' in sTitle or 'Deleted' in sTitle or 'Private' in sTitle:
-            continue
-        if sSearch:
-            if Unquote(sSearch) not in sTitle:
+            sTitle = str(aEntry[2].encode('latin-1'),'utf-8')
+            sTitle = sTitle.replace('المسلسل','').replace('مسلسل','').replace(' - مترجم للعربية','').replace('الفيلم','').replace('الإيراني','').replace('(','').replace(')','').replace('4K','')
+            if 'مسلسل' in sTitle or 'Deleted' in sTitle or 'Private' in sTitle:
                 continue
-                
-        siteUrl = aEntry.get('url')
-        sThumb = aEntry.get('thumbnails').replace("default", "hqdefault")
-        sDesc = ''
+            if sSearch:
+                if Unquote(sSearch) not in sTitle:
+                    continue
+            siteUrl = f'https://www.youtube.com/watch?v={aEntry[0]}'
+            sThumb = aEntry[1]
+            sDesc = ''
+            
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
 
-        oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-        oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-        oOutputParameterHandler.addParameter('sThumb', sThumb)
-
-        oGui.addMovie(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            oGui.addMovie(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     if not sSearch:
-        if sHtmlContent.get('nextPageToken') is not None:
-            sNextPage = sHtmlContent.get('nextPageToken')
-
-            oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('sNextPage', sNextPage)
-            oOutputParameterHandler.addParameter('siteUrl', sUrl)
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
 
         oGui.setEndOfDirectory()
 
@@ -214,46 +208,39 @@ def showSeries(sSearch = ''):
     else:
         sUrl = oInputParameterHandler.getValue('siteUrl')
 
-    sNextPage = oInputParameterHandler.getValue('sNextPage')
-    if sNextPage is False:
-        sNextPage = ''
+    oParser = cParser() 
+    oRequestHandler = cRequestHandler(sUrl)
+    oRequestHandler.addHeaderEntry('user-agent', UA)
+    sHtmlContent = oRequestHandler.request().decode("unicode_escape")
 
-    params = {
-        'url': sUrl,
-        'nextPageToken': sNextPage,
-    }
+    sStart = 'var ytInitialData = '
+    sEnd = '</script>'
+    sHtmlContent = oParser.abParse(sHtmlContent, sStart, sEnd)
 
-    sHtmlContent = requests.get(URL_MAIN, params=params).json()
-   
-    for aEntry in sHtmlContent.get('items'):
+    sPattern = 'playlistVideoRenderer.+?"videoId":"([^"]+)".+?"url":"([^"]+)".+?"text":"([^"]+)"'
+    aResult = oParser.parse(sHtmlContent, sPattern)	
+    if aResult[0]:
+        oOutputParameterHandler = cOutputParameterHandler() 
+        for aEntry in aResult[1]:
             
-        sTitle = aEntry['title'].replace(' - مترجم للعربية','').replace('الفيلم','').replace('الإيراني','').replace('(','').replace(')','').replace('القصير','').replace('4K','')
-
-        if 'الفيلم' in sTitle or 'الفلم' in sTitle or 'Deleted' in sTitle or 'Private' in sTitle:
-            continue
-        if sSearch:
-            if Unquote(sSearch) not in sTitle:
+            sTitle = str(aEntry[2].encode('latin-1'),'utf-8')
+            sTitle = sTitle.replace('المسلسل','').replace('مسلسل','').replace('الحلقة','E').replace('|','')
+            if 'Deleted' in sTitle or 'Private' in sTitle:
                 continue
-
-        sTitle = sTitle.replace('المسلسل','').replace('مسلسل','')
-        siteUrl = aEntry.get('url')
-        sThumb = aEntry.get('thumbnails').replace("default", "hqdefault")
-        sDesc = ''
-
-        oOutputParameterHandler.addParameter('siteUrl', siteUrl)
-        oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
-        oOutputParameterHandler.addParameter('sThumb', sThumb)
-
-        oGui.addTV(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
+            if sSearch:
+                if Unquote(sSearch) not in sTitle:
+                    continue
+            siteUrl = f'https://www.youtube.com/watch?v={aEntry[0]}'
+            sThumb = aEntry[1]
+            sDesc = ''
+            
+            oOutputParameterHandler.addParameter('siteUrl', siteUrl)
+            oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+            oOutputParameterHandler.addParameter('sThumb', sThumb)
+            
+            oGui.addTV(SITE_IDENTIFIER, 'showLink', sTitle, '', sThumb, sDesc, oOutputParameterHandler)
 
     if not sSearch:
-        if sHtmlContent.get('nextPageToken') is not None:
-            sNextPage = sHtmlContent.get('nextPageToken')
-
-            oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('sNextPage', sNextPage)
-            oOutputParameterHandler.addParameter('siteUrl', sUrl)
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
  
         oGui.setEndOfDirectory()
 		 

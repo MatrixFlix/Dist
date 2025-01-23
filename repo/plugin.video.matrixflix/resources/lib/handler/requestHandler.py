@@ -368,12 +368,14 @@ class cRequestHandler:
 	                            "X-RapidAPI-Host": "scrappey-com.p.rapidapi.com"
                                 }
 
-                            json_response = post(url, json=payload, headers=headers)          
+                            json_response = post(url, json=payload, headers=headers)  
                             if json_response:
                                 response = json_response.json()
                                 if 'solution' in response:
-   
                                     sContent = response['solution']['response']
+                            else:
+                                if json_response.status_code in [429]:
+                                    dialog().VSerror("لقد تجاوزت الحصة الشهرية للطلبات ، استخدم رقمك الخاص")
                             
                         except:
                             dialog().VSerror("%s (%s)" % ("فشلت عملية تجاوز الحماية", f'"scrappey" {urlHostName(self.__sUrl)}'))

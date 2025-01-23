@@ -2,6 +2,7 @@
 from resources.lib.packer import cPacker
 from resources.lib.comaddon import VSlog
 from resources.lib import helpers, random_ua
+from resources.lib.util import urlHostName
 import re
 import requests
 
@@ -38,6 +39,7 @@ class cHoster(iHoster):
         if aResult:
             api_call = aResult.group(1)
 
+        headers.update({"Referer": f'https://{urlHostName(self._url)}/'})
         if api_call:
             return True, api_call + helpers.append_headers(headers)
 

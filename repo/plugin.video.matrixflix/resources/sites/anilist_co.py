@@ -67,22 +67,22 @@ def showAnimesNews():
 
 def showAnimesTop():
     variables = {
-                'sort': 'SCORE_DESC',
-                'page': 1
+                "sort": "SCORE_DESC",
+                "page": 1
                 }
     showAnimes(variables)
 
 def showAnimesTrending():
     variables = {
-                'sort': 'TRENDING_DESC',
-                'page': 1
+                "sort": "TRENDING_DESC",
+                "page": 1
                 }
     showAnimes(variables)
 
 def showAnimesPop():
     variables = {
-                'sort': 'POPULARITY_DESC',
-                'page': 1 
+                "sort": "POPULARITY_DESC",
+                "page": 1
                 }
     showAnimes(variables)
 
@@ -102,16 +102,14 @@ def showAnimes(term=''):
 
     if term == '':
         term = {
-                'sort': 'TRENDING_DESC',
-                'page': 1 
+                "sort": "TRENDING_DESC",
+                "page": 1 
                 }
 
     iPage = 1
     if oInputParameterHandler.exist('page'):
         iPage = oInputParameterHandler.getValue('page')
-        import ast
-        term = ast.literal_eval(term)
-        term.update({'page': iPage}) 
+        term.update({"page": iPage}) 
 
     result = _call(term)
 

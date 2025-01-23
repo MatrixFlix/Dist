@@ -215,7 +215,8 @@ class cHosterGui:
                             'turbovid', 'soundcloud', 'mixcloud', 'ddlfr', 'vupload', 'dwfull', 'vidzstore', 'pdj', 
                             'dustreaming', 'onlystream', 'upstream', 'vudeo', 'vidia', 'vidbem', 'vido', 'onevideo', 
                             'sibnet', 'userload', 'aparat', 'abcvideo', 'streamvid', 'darkibox', 'hexupload', 'dailyuploads',
-                            'myvi', 'viewsb', 'yourvid', 'terabox', 'streamsilk', 'vixstream', 'vid3rb']
+                            'myvi', 'viewsb', 'yourvid', 'terabox', 'streamsilk', 'vixstream', 'vid3rb', 'bigwarp',
+                            'forafile']
 
         val = next((x for x in supported_player if x in sHostName), None)
         if val:
