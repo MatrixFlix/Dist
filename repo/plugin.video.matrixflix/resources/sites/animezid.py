@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 
-import re	
+import re, base64, json
 from resources.lib.gui.hoster import cHosterGui
 from resources.lib.gui.gui import cGui
 from resources.lib.handler.inputParameterHandler import cInputParameterHandler
@@ -417,48 +417,49 @@ def showHosters():
     aResult = oParser.parse(sHtmlContent,sPattern)
     if aResult[0]:
         m3url = aResult[1][0]
+        if '?url=' in m3url or '?post=' in m3url:
+            url_tmp = m3url.split('?url=' if '?url=' in m3url else '?post=')[1].replace('%3D','=')
+
+            hostersData = json.loads(base64.b64decode(url_tmp).decode('utf8',errors='ignore'))
+            m3url = hostersData["watchUrl"]
+        
         oRequestHandler = cRequestHandler(m3url)
         oRequestHandler.addHeaderEntry('User-Agent', UA)
         oRequestHandler.addHeaderEntry('referer', URL_MAIN)
-        sHtmlContent = oRequestHandler.request() 
+        sHtmlContent = oRequestHandler.request()
 
-    sPattern = 'data-server=.+?iframe src=["\']([^"\']+)'
-    aResult = oParser.parse(sHtmlContent, sPattern)	
-    if aResult[0]:
-        oOutputParameterHandler = cOutputParameterHandler()
-        for aEntry in aResult[1]:
-        
-            url = aEntry.replace("+","")
-            if url.startswith('//'):
-                url = f'https:{url}'
+        patterns = ['data-embed=["\']([^"\']+)', 'data-server=.+?iframe src=["\']([^"\']+)']
+        for sPattern in patterns:
+            aResult = oParser.parse(sHtmlContent, sPattern)
+            if aResult[0]:
+                oOutputParameterHandler = cOutputParameterHandler()
+                for aEntry in aResult[1]:
+                    url = aEntry.replace("+", "")
+                    if url.startswith('//'):
+                        url = f'https:{url}'
+                    sHosterUrl = url
+                    
+                    if bool(re.search(r'mega.*max', sHosterUrl)) or bool(re.search(r'mega.*zid', sHosterUrl)):
+                        data = cMegamax().GetUrls(sHosterUrl)
+                        if data:
+                            for item in data:
+                                sHosterUrl, sQual, sLabel = [part.split('=')[1] for part in item.split(',')]
+                                sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sQual}][/COLOR][COLOR orange] - {sLabel}[/COLOR]'
+                                oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
+                                oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                                oOutputParameterHandler.addParameter('sQual', sQual)
+                                oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
+                                oOutputParameterHandler.addParameter('sThumb', sThumb)
+                                oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)
+                    else:
+                        if 'bestx' in sHosterUrl:
+                            sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
+                        oHoster = cHosterGui().checkHoster(sHosterUrl)
+                        if oHoster:
+                            oHoster.setDisplayName(sMovieTitle)
+                            oHoster.setFileName(sMovieTitle)
+                            cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
-            sHosterUrl = url
-            if 'megamax' in sHosterUrl or 'megazid' in sHosterUrl:
-                data = cMegamax().GetUrls(sHosterUrl)
-                if data is not False:
-                    for item in data:
-                        sHosterUrl = item.split(',')[0].split('=')[1]
-                        sQual = item.split(',')[1].split('=')[1]
-                        sLabel = item.split(',')[2].split('=')[1]
-
-                        sDisplayTitle = ('%s [COLOR coral] [%s][/COLOR][COLOR orange] - %s[/COLOR]') % (sMovieTitle, sQual, sLabel)      
-                        oOutputParameterHandler.addParameter('sHosterUrl', sHosterUrl)
-                        oOutputParameterHandler.addParameter('siteUrl', sUrl)
-                        oOutputParameterHandler.addParameter('sQual', sQual)
-                        oOutputParameterHandler.addParameter('sMovieTitle', sMovieTitle)
-                        oOutputParameterHandler.addParameter('sThumb', sThumb)
-
-                        oGui.addLink(SITE_IDENTIFIER, 'showLinks', sDisplayTitle, sThumb, sDisplayTitle, oOutputParameterHandler)			
-					            
-            else:
-                if 'bestx' in sHosterUrl:
-                    sHosterUrl = f'{sHosterUrl}|Referer={URL_MAIN}'
-                oHoster = cHosterGui().checkHoster(sHosterUrl)
-                if oHoster:
-                    oHoster.setDisplayName(sMovieTitle)
-                    oHoster.setFileName(sMovieTitle)
-                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
-               
     sPattern = 'target="_blank" href="(.+?)"><span>(.+?)</span>'
     aResult = oParser.parse(sHtmlContent, sPattern)
     if aResult[0]:
@@ -470,7 +471,7 @@ def showHosters():
             sTitle = f'{sMovieTitle} [{aEntry[1]}]'									
             
             sHosterUrl = url 
-            if 'megamax' in sHosterUrl:
+            if bool(re.search(r'mega.*max', sHosterUrl)) or bool(re.search(r'mega.*zid', sHosterUrl)):
                 continue
             oHoster = cHosterGui().checkHoster(sHosterUrl)
             if oHoster:

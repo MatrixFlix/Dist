@@ -29,14 +29,14 @@ KID_MOVIES = (f'{URL_MAIN}category.php?cat=animation-movies', 'showMovies')
 
 DOC_NEWS = (f'{URL_MAIN}category.php?cat=aflam-wthaaeqe', 'showMovies')
 
-SERIE_TR = (f'{URL_MAIN}category.php?cat=moslslat-turkya', 'showSeries')
+SERIE_TR = (f'{URL_MAIN}category.php?cat=mslslat-trkeh', 'showSeries')
 SERIE_DUBBED = (f'{URL_MAIN}category.php?cat=modablaja-series', 'showSeries')
 SERIE_ASIA = (f'{URL_MAIN}category.php?cat=asia-series', 'showSeries')
 SERIE_HEND = (f'{URL_MAIN}category.php?cat=hindia-series', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category.php?cat=moslslat-agnabya', 'showSeries')
-SERIE_AR = (f'{URL_MAIN}category.php?cat=moslslat-arabia', 'showSeries')
+SERIE_AR = (f'{URL_MAIN}category.php?cat=mslslat-arbeh', 'showSeries')
 RAMADAN_SERIES = (f'{URL_MAIN}category.php?cat=mslslat-rmdtan-2024', 'showSeries')
-ANIM_NEWS = (f'{URL_MAIN}category.php?cat=animation-series', 'showSeries')
+ANIM_NEWS = (f'{URL_MAIN}category.php?cat=mslslat-anme', 'showSeries')
 
 URL_SEARCH_MOVIES = (f'{URL_MAIN}search.php?keywords=', 'showMovies')
 URL_SEARCH_SERIES = (f'{URL_MAIN}search.php?keywords=', 'showSeries')
