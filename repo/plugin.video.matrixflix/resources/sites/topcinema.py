@@ -19,15 +19,15 @@ SITE_DESC = 'arabic vod'
  
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
 
-MOVIE_EN = (f'{URL_MAIN}category/افلام-اجنبي/', 'showMovies')
+MOVIE_EN = (f'{URL_MAIN}category/افلام-اجنبي-2/', 'showMovies')
 MOVIE_ASIAN = (f'{URL_MAIN}category/افلام-اسيوي/', 'showMovies')
 MOVIE_NETFLIX = (f'{URL_MAIN}netflix-movies/', 'showMovies')
 MOVIE_PACK = (f'{URL_MAIN}movies-collections/', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category/افلام-انمي/', 'showMovies')
 
-SERIE_EN = (f'{URL_MAIN}category/مسلسلات-اجنبي/', 'showSeries')
+SERIE_EN = (f'{URL_MAIN}category/مسلسلات-اجنبي-5/', 'showSeries')
 SERIE_NETFLIX = (f'{URL_MAIN}netflix-series/?cat=7', 'showSeries')
-SERIE_ASIA = (f'{URL_MAIN}category/مسلسلات-اسيوية/', 'showSeries')
+SERIE_ASIA = (f'{URL_MAIN}category/مسلسلات-اسيوية-4/', 'showSeries')
 ANIM_NEWS = (f'{URL_MAIN}category/مسلسلات-انمي/', 'showSeries')
 
 URL_SEARCH = (f'{URL_MAIN}?s=', 'showMovies')

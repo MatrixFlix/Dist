@@ -16,14 +16,14 @@ SITE_DESC = 'Torrent Hosters'
 
 URL_MAIN = 'https://www.themoviedb.org/'
 
-MOVIE_EN = ('discover/movie?with_original_language=en', 'showMovies')
-KID_MOVIES = ('discover/movie?with_original_language=en&with_genres=16', 'showMovies')
+MOVIE_EN = ('discover/movie', 'showMovies')
+KID_MOVIES = ('discover/movie?with_genres=16', 'showMovies')
 MOVIE_TOP = ('movie/top_rated', 'showMovies')
 MOVIE_POP = ('movie/popular', 'showMovies')
-MOVIE_4K = ('discover/movie?with_original_language=en', 'showMovies')
+MOVIE_4K = ('discover/movie', 'showMovies')
 MOVIE_GENRES = ('genre/movie/list', 'showGenreMovie')
 
-SERIE_EN = ('discover/tv?with_original_language=en', 'showSeries')
+SERIE_EN = ('discover/tv', 'showSeries')
 
 URL_SEARCH_MOVIES = ('https://api.themoviedb.org/3/search/movie?include_adult=false&query=', 'showMovies')
 URL_SEARCH_SERIES = ('https://api.themoviedb.org/3/search/tv?include_adult=false&query=', 'showSeries')

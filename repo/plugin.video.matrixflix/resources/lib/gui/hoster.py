@@ -298,7 +298,7 @@ class cHosterGui:
         # Voe Clone
         voe = next((x for x in ['voe', 'kathleenmemberhistory', 'timberwoodanotia', 'stevenimaginelittle', 'availedsmallest', 'monorhinouscassaba', 'jamiesamewalk',
                                 'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace', 'jamessoundcost',
-                                'robertordercharacter'] if x in sHostName), None)
+                                'robertordercharacter', 'maxfinishseveral'] if x in sHostName), None)
         if voe:
             return self.getHoster("voe")
 
@@ -401,6 +401,9 @@ class cHosterGui:
               
         if ('vanfem' in sHostName):
             return self.getHoster('fembed')
+
+        if ('asjp1j93c1' in sHostName):
+            return self.getHoster('forafile')
 
         if ('vidtube' in sHostName) or ('vtbe' in sHostName):
             return self.getHoster('vidtube')

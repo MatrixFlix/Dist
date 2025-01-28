@@ -101,11 +101,6 @@
             "url": "https://aradramatv.com/",
             "url2": "LzIxMi40NTEuNjMyLjI5MS8vOnNwdHRo"
         },
-        "arbcinema": {
-            "label": "Arbcinema",
-            "active": "False",
-            "url": "https://movi.arbcinema.com/"
-        },
         "arblionz": {
             "label": "Arblionz",
             "active": "True",
@@ -200,7 +195,7 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://cnimaty.online/"
+            "url": "https://cnemmaty.store/"
         },
         "coolcima": {
             "label": "CoolCima",
@@ -246,7 +241,7 @@
         "esseq": {
             "label": "Esseq",
             "active": "True",
-            "url": "https://3sktr.tv/",
+            "url": "https://keesat.org/",
             "url2": "https://eshqee.net/"
         },
         "faselhd": {
@@ -264,11 +259,6 @@
             "label": "Freebox",
             "active": "True",
             "url": "https://iptv-org.github.io/"
-        },
-        "gateanime": {
-            "label": "GateAnime",
-            "active": "False",
-            "url": "https://e.gateanime.com/"
         },
         "geoarabic": {
             "label": "Geoarabic",
@@ -359,7 +349,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime264.shop/"
+            "url": "https://movtime267.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -370,6 +360,11 @@
             "label": "QFilm",
             "active": "True",
             "url": "https://www.qfilm.tv/"
+        },
+        "sanime": {
+            "label": "ShahidAnime",
+            "active": "True",
+            "url": "https://shahiid-anime.net/"
         },
         "sflix": {
             "label": "sFlix",
@@ -385,7 +380,7 @@
         "shoffree": {
             "label": "Shoffree",
             "active": "True",
-            "url": "https://shoffree.cam/"
+            "url": "https://shoffree.space/"
         },
         "shoofmax": {
             "label": "ShoofMAX",
@@ -475,12 +470,6 @@
             "active": "True",
             "url": "https://witanime.cyou/",
             "url2": "https://witanime.quest/"
-        },
-        "xsanime": {
-            "label": "Xsanime",
-            "active": "False",
-            "url": "https://xsaniime.net/",
-            "url2": "https://cdn3.xsanime.live/"
         },
         "yallalive": {
             "label": "Yallalive",

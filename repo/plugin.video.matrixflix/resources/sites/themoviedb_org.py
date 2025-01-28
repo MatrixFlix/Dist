@@ -841,9 +841,7 @@ def showSeries(sSearch='', term=''):
     oGui = cGui()
 
     try:
-        total = len(result)
-
-        if total > 0:
+        if len(result)>3:
             for i in result['results']:
 
                 i = grab._format(i, '', "tvshow")
