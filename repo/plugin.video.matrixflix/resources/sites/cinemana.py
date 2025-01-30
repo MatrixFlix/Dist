@@ -435,6 +435,7 @@ def showLinks():
     oRequestHandler.addHeaderEntry('Referer', sUrl)
     oRequestHandler.addParameters('post_id', sId)
     oRequestHandler.addParameters('server', Serv)
+    oRequestHandler.enableCache(False)
     oRequestHandler.setRequestType(1)
     sHtmlContent = oRequestHandler.request()
 
@@ -449,6 +450,7 @@ def showLinks():
             oRequestHandler = cRequestHandler(sHosterUrl)
             oRequestHandler.addHeaderEntry('User-Agent', UA)
             oRequestHandler.addHeaderEntry('Referer', sUrl)
+            oRequestHandler.setTimeout(120)
             sHtmlContent = oRequestHandler.request()
 
             sPattern =  'source\s*src=["\']([^"\']+)["\']'
