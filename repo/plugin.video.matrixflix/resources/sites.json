@@ -171,11 +171,6 @@
             "active": "True",
             "url": "https://cdrama.io/"
         },
-        "cinemabest": {
-            "label": "CinemaBest",
-            "active": "True",
-            "url": "https://a.cinma.best/"
-        },
         "cimacity": {
             "label": "CimaCity",
             "active": "True",
@@ -190,6 +185,16 @@
             "label": "CimaNow",
             "active": "True",
             "url": "https://cimanow.cc/"
+        },
+        "cinemana": {
+            "label": "Cinemana",
+            "active": "True",
+            "url": "https://cinemana.vip/"
+        },
+        "cinemabest": {
+            "label": "CinemaBest",
+            "active": "True",
+            "url": "https://a.cinma.best/"
         },
         "cinematy": {
             "label": "Cinematy",

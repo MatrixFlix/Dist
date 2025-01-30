@@ -259,13 +259,25 @@ def showMovies(sSearch = ''):
         
         progress_.VSclose(progress_)
  
-        sNextPage = __checkForNextPage(sHtmlContent, sUrl)
-        if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showMovies', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
- 
     if not sSearch:
+        sPattern = r"updateQuery\('page', (\d+)\)"
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            oOutputParameterHandler = cOutputParameterHandler() 
+            for aEntry in sorted(list(set(aResult[1]))):
+ 
+                sTitle = f'[COLOR red]Page: {aEntry}[/COLOR]'
+                if '?page=' in sUrl:
+                    sUrl = sUrl.split('?page=')[0]
+                    sUrl = f'{sUrl}?page={aEntry}'
+                else:
+                    sUrl = f'{sUrl}?page={aEntry}'
+
+                oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+			
+                oGui.addDir(SITE_IDENTIFIER, 'showMovies', sTitle, 'next.png', oOutputParameterHandler)
+
         oGui.setEndOfDirectory()
 
 def showSeries(sSearch = ''):
@@ -329,13 +341,25 @@ def showSeries(sSearch = ''):
 
         progress_.VSclose(progress_)
  
-        sNextPage = __checkForNextPage(sHtmlContent, sUrl)
-        if sNextPage:
-            oOutputParameterHandler = cOutputParameterHandler()
-            oOutputParameterHandler.addParameter('siteUrl', sNextPage)
-            oGui.addDir(SITE_IDENTIFIER, 'showSeries', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
- 
     if not sSearch:
+        sPattern = r"updateQuery\('page', (\d+)\)"
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0]:
+            oOutputParameterHandler = cOutputParameterHandler() 
+            for aEntry in sorted(list(set(aResult[1]))):
+ 
+                sTitle = f'[COLOR red]Page: {aEntry}[/COLOR]'
+                if '?page=' in sUrl:
+                    sUrl = sUrl.split('?page=')[0]
+                    sUrl = f'{sUrl}?page={aEntry}'
+                else:
+                    sUrl = f'{sUrl}?page={aEntry}'
+
+                oOutputParameterHandler.addParameter('siteUrl', sUrl)
+                oOutputParameterHandler.addParameter('sMovieTitle', sTitle)
+			
+                oGui.addDir(SITE_IDENTIFIER, 'showSeries', sTitle, 'next.png', oOutputParameterHandler)
+
         oGui.setEndOfDirectory()
 
 def showSeasons():
@@ -537,19 +561,3 @@ def showLinks():
         cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
     oGui.setEndOfDirectory()
-
-def __checkForNextPage(sHtmlContent, sUrl):
-    oParser = cParser()
-    sPattern = 'class="page-link cursor-normal".+?style="background-color.+?onclick="(.+?)">.+?class="fa-solid fa-backward"></i>' 
-    aResult = oParser.parse(sHtmlContent, sPattern)
-    if aResult[0]:
-        for aEntry in aResult[1]:
-            if '?page=' in sUrl:
-                sUrl = sUrl.split('?page=')[0]
-                aResult = sUrl+'?page='+aEntry.replace(')','').replace("updateQuery('page', ","")
-            else:
-                aResult = sUrl+'?page='+aEntry.replace(')','').replace("updateQuery('page', ","")
-            
-            return aResult
-
-    return False 
