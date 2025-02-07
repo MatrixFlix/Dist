@@ -326,6 +326,11 @@
             "active": "True",
             "url": "https://www.live-kora.io/"
         },
+        "linkbox": {
+            "label": "Telebox",
+            "active": "True",
+            "url": "https://www.linkbox.cloud/"
+        },
         "livetv": {
             "label": "Live TV",
             "active": "True",
