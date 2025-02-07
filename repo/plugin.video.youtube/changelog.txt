@@ -11,6 +11,7 @@
 - Improve handling of playlists feeds in My Subscriptions
 - Reprioritise clients and avoid re-authenticating requests if authentication already provided #1076
 - Prevent trying to open a fallback window when opening new search window #1070
+- Workarounds for race condition preventing window opening on search input #1070
 
 ### Changed
 - Various improvements to thread handling and cache usage in My Subscriptions #1072

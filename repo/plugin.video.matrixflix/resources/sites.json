@@ -7,12 +7,12 @@
         },
         "aflamfree": {
             "label": "Aflamfree",
-            "active": "True",
+            "active": "False",
             "url": "https://aflamfree.one/"
         },
         "aflamtop": {
             "label": "AflamTOP",
-            "active": "True",
+            "active": "False",
             "url": "https://aflam.top/"
         },
         "akoam": {
@@ -76,7 +76,7 @@
         "animezid": {
             "label": "Animezid",
             "active": "True",
-            "cloudflare": "True",
+            "cloudflare": "False",
             "url": "https://animezid.show/"
         },
         "arabflix": {
@@ -200,7 +200,7 @@
             "label": "Cinematy",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://cnemmaty.store/"
+            "url": "https://cinematy.watch/"
         },
         "coolcima": {
             "label": "CoolCima",
@@ -241,7 +241,7 @@
         "egydead": {
             "label": "Egydead",
             "active": "True",
-            "url": "https://egydead.watch/"
+            "url": "https://egydead.fyi/"
         },
         "esseq": {
             "label": "Esseq",
@@ -326,11 +326,6 @@
             "active": "True",
             "url": "https://www.live-kora.io/"
         },
-        "linkbox": {
-            "label": "Telebox",
-            "active": "True",
-            "url": "https://www.linkbox.to"
-        },
         "livetv": {
             "label": "Live TV",
             "active": "True",
@@ -354,7 +349,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime267.shop/"
+            "url": "https://movtime275.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -451,7 +446,7 @@
         "tuktukcinema": {
             "label": "Tuktukcinema",
             "active": "True",
-            "url": "https://eg1.tuktuksu.cfd/"
+            "url": "https://tuk.tuktuksu.cfd/"
         },
         "tvfun": {
             "label": "Tvfun",

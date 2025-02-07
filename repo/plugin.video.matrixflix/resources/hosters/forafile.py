@@ -30,6 +30,16 @@ class cHoster(iHoster):
         oRequestHandler.enableCache(False)
         sHtmlContent = oRequestHandler.request()
 
+        sPattern = 'IFRAME SRC="([^"]+)'
+        aResult = oParser.parse(sHtmlContent, sPattern)
+        if aResult[0] is True:
+            sURL = aResult[1][0]
+
+            oRequestHandler = cRequestHandler(sURL)
+            oRequestHandler.addHeaderEntry('User-Agent', UA)
+            oRequestHandler.addHeaderEntry('Referer', self._url)
+            sHtmlContent = oRequestHandler.request()
+
         sPattern = '(eval\(function\(p,a,c,k,e(?:.|\s)+?)</script>'
         aResult = oParser.parse(sHtmlContent, sPattern)
         if aResult[0]:

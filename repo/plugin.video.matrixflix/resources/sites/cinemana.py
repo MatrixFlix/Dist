@@ -459,13 +459,13 @@ def showLinks():
                 sHosterUrl = f'{aResult[1][0]}|Referer={sUrl}'
                 if sHosterUrl.startswith('//'):
                     sHosterUrl = f'http:{sHosterUrl}'
-
-            sPattern =  'iframe.+?src=["\']([^"\']+)["\']'
-            aResult = oParser.parse(sHtmlContent, sPattern)
-            if aResult[0]:
-                sHosterUrl = aResult[1][0]
-                if sHosterUrl.startswith('//'):
-                    sHosterUrl = f'http:{sHosterUrl}'
+            else:
+                sPattern =  'iframe.+?src=["\']([^"\']+)["\']'
+                aResult = oParser.parse(sHtmlContent, sPattern)
+                if aResult[0]:
+                    sHosterUrl = aResult[1][0]
+                    if sHosterUrl.startswith('//'):
+                        sHosterUrl = f'http:{sHosterUrl}'
 
             if 'userload' in sHosterUrl:
                 sHosterUrl = f'{sHosterUrl}|Referer={sUrl}'

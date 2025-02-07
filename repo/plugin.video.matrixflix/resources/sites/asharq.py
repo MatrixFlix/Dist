@@ -44,7 +44,7 @@ def showMovies():
 
         oOutputParameterHandler = cOutputParameterHandler()  
         for aEntry in sectionsHTML["components"]:
-            if aEntry["slug"] == '':
+            if aEntry["slug"] == '' or aEntry["slug"] is None:
                 continue
             sectionURL = f'{URL_MAIN}/components/{aEntry["slug"]}'
             sectionTitle = '[COLOR orange]' + u'\u2193' + aEntry["title"] + '[/COLOR]'

@@ -39,11 +39,11 @@ from .utils import to_unicode
 
 
 class AbstractProvider(object):
-    RESULT_CACHE_TO_DISC = 'cache_to_disc'  # (bool)
-    RESULT_FALLBACK = 'fallback'  # (bool)
-    RESULT_FORCE_PLAY = 'force_play'  # (bool)
-    RESULT_FORCE_RESOLVE = 'force_resolve'  # (bool)
-    RESULT_UPDATE_LISTING = 'update_listing'  # (bool)
+    RESULT_CACHE_TO_DISC = 'result_cache_to_disc'  # (bool)
+    RESULT_FALLBACK = 'result_fallback'  # (bool)
+    RESULT_FORCE_PLAY = 'result_force_play'  # (bool)
+    RESULT_FORCE_RESOLVE = 'result_force_resolve'  # (bool)
+    RESULT_UPDATE_LISTING = 'result_update_listing'  # (bool)
 
     # map for regular expression (path) to method (names)
     _dict_path = {}
@@ -278,6 +278,8 @@ class AbstractProvider(object):
                 context.log_debug('Rerouting - Fallback route not required')
                 return False, {self.RESULT_FALLBACK: False}
 
+        container = None
+        position = None
         refresh = params.get('refresh', 0)
         if refresh:
             if refresh < 0:
@@ -290,9 +292,6 @@ class AbstractProvider(object):
               and path.rstrip('/') == current_path.rstrip('/')):
             context.log_error('Rerouting - Unable to reroute to current path')
             return False
-        else:
-            container = None
-            position = None
 
         result = None
         try:
@@ -430,19 +429,34 @@ class AbstractProvider(object):
             query = None
             #  came from page 1 of search query by '..'/back
             #  user doesn't want to input on this path
-            old_path = context.get_infolabel('Container.FolderPath')
+            fallback = True
+            old_path, old_params = context.parse_uri(
+                context.get_infolabel('Container.FolderPath')
+            )
+            old_uri = context.create_uri(old_path, old_params)
             if (not params.get('refresh', 0) > 0
                     and context.is_plugin_folder()
-                    and context.is_plugin_path(old_path,
+                    and context.is_plugin_path(old_uri,
                                                PATHS.SEARCH,
                                                partial=True)):
-                old_path, old_params = context.parse_uri(old_path)
+
                 query = old_params.get('q')
-                if not query and old_path.startswith((
-                        context.create_path(PATHS.SEARCH, 'input'),
-                        context.create_path(PATHS.SEARCH, 'query'),
-                )):
-                    query = False
+                if not query:
+                    fallback = ui.pop_property(provider.RESULT_FALLBACK)
+                    if fallback:
+                        history_blacklist = (
+                            context.create_path(PATHS.SEARCH, 'input'),
+                            context.create_path(PATHS.SEARCH, 'query'),
+                            context.create_path(PATHS.SEARCH, 'list'),
+                        )
+                    else:
+                        fallback = old_uri
+                        history_blacklist = (
+                            context.create_path(PATHS.SEARCH, 'input'),
+                            context.create_path(PATHS.SEARCH, 'query'),
+                        )
+                    if old_path.startswith(history_blacklist):
+                        query = False
 
             if query:
                 query = to_unicode(query)
@@ -454,14 +468,38 @@ class AbstractProvider(object):
                     query = input_query
 
             if query:
-                return UriItem(context.create_uri(
-                    (PATHS.SEARCH, 'query'),
-                    dict(params, q=query),
-                    window={'replace': False, 'return': True},
-                )), {provider.RESULT_FALLBACK: False}
+                # Race conditions with other addons creating busy dialogs can
+                # prevent opening a new window
+                # fallback = old_uri
+                # ui.set_property(provider.RESULT_FALLBACK, fallback)
+                # return UriItem(context.create_uri(
+                #     (PATHS.SEARCH, 'query'),
+                #     dict(params, q=query),
+                #     window={'replace': False, 'return': True},
+                # )), {provider.RESULT_FALLBACK: False}
+
+                # Alternate method is faster/smoother but means that history is
+                # not properly modified to prevent navigating back to input
+                # dialog
+                context.set_params(q=query)
+                context.set_path(PATHS.SEARCH, 'query')
+                result, options = provider.on_search_run(context, query=query)
+                if not options:
+                    options = {provider.RESULT_CACHE_TO_DISC: False}
+                fallback = options.setdefault(
+                    provider.RESULT_FALLBACK,
+                    context.get_uri() if result else old_uri,
+                )
+                if fallback:
+                    ui.set_property(provider.RESULT_FALLBACK, fallback)
             else:
-                command = 'list'
-                context.set_path(PATHS.SEARCH, command)
+                fallback = ui.pop_property(provider.RESULT_FALLBACK) or fallback
+                result = False
+                options = {
+                    provider.RESULT_CACHE_TO_DISC: False,
+                    provider.RESULT_FALLBACK: fallback,
+                }
+            return result, options
 
         context.set_content(CONTENT.LIST_CONTENT,
                             category_label=localize('search'))

@@ -335,7 +335,7 @@ class Provider(AbstractProvider):
             listing = True
 
         if not uri:
-            return False
+            return False, None
 
         url_resolver = UrlResolver(context)
         resolved_url = url_resolver.resolve(uri)
@@ -557,11 +557,9 @@ class Provider(AbstractProvider):
         listitem_channel_id = context.get_listitem_property(CHANNEL_ID)
 
         client = provider.get_client(context)
-        localize = context.localize
         create_uri = context.create_uri
         function_cache = context.get_function_cache()
         params = context.get_params()
-        ui = context.get_ui()
 
         command = re_match.group('command')
         identifier = re_match.group('identifier')
@@ -833,11 +831,17 @@ class Provider(AbstractProvider):
         if query.startswith(('https://', 'http://')):
             return self.on_uri2addon(provider=self, context=context, uri=query)
         if context.is_plugin_path(query):
-            return UriItem(query), {self.RESULT_CACHE_TO_DISC: False}
+            return UriItem(query), {
+                self.RESULT_CACHE_TO_DISC: False,
+                self.RESULT_FALLBACK: False,
+            }
 
         result = self._search_channel_or_playlist(context, query)
         if result:  # found a channel or playlist matching search query
-            return result, {self.RESULT_CACHE_TO_DISC: False}
+            return result, {
+                self.RESULT_CACHE_TO_DISC: False,
+                self.RESULT_FALLBACK: False,
+            }
         result = []
 
         context.set_params(category_label=query)

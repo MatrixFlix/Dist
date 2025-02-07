@@ -291,7 +291,7 @@ class cHosterGui:
 
         # Filemoon Clone
         filemoon = next((x for x in ['filemoon', 'moonmov', 'allviid', 'all-vid', 'techradar', 'albrq', 'kerapoxy', 'kinoger', 'smdfs40r', '81u6xl9d',
-                                     '1azayf9w', 'ghbrisk'] if x in sHostName), None)
+                                     '1azayf9w', 'ghbrisk', 'bf0skv'] if x in sHostName), None)
         if filemoon:
             return self.getHoster("filemoon")
 
@@ -313,7 +313,7 @@ class cHosterGui:
             return self.getHoster('dood')
 
         # Chillx Clone
-        chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx', 'boosterx'] if x in sHostName), None)
+        chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx'] if x in sHostName), None)
         if chillx:    
             return self.getHoster('chillx')
 
