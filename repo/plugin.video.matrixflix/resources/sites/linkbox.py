@@ -111,48 +111,56 @@ def showContent():
     sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
     sCount = 0
-    data = sHtmlContent.get("data", {}).get("list", [])
+    data = sHtmlContent.get("data")
+    if data and isinstance(data, dict):
+        data = data.get("list", [])
+    else:
+        data = []
 
-    oOutputParameterHandler.addParameter('spid', pid) 
-    oOutputParameterHandler.addParameter('siteUrl',shareToken)
-    oGui.addDir(SITE_IDENTIFIER, 'showGroupSearch', '[COLOR yellow] Search Files within Group [/COLOR]', 'search.png', oOutputParameterHandler) 
+    if not data:
+        oGui.addText(SITE_IDENTIFIER, '[COLOR orange]لم يتم العثور على نتائج ، ربما تم حظره بسبب شكوى انتهاك حقوق النشر[/COLOR]')
 
-    for aEntry in data:
-
-        sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
-        sType = aEntry.get('type', '')
-        pid = aEntry.get('id', '')
-        spid = aEntry.get('pid', '')
-        sThumb = 'host.png'
-        link = aEntry.get('url', '')
-        size = int(aEntry.get('size', 0) / 1024**2)
-        sCount += 1
-
+    else:
         oOutputParameterHandler.addParameter('spid', pid) 
-        oOutputParameterHandler.addParameter('sTitle', sTitle)            
-        oOutputParameterHandler.addParameter('sThumb', sThumb) 
         oOutputParameterHandler.addParameter('siteUrl',shareToken)
-        
-        if sType =='dir':
-            oGui.addDir(SITE_IDENTIFIER, 'showContent', sTitle, sThumb, oOutputParameterHandler)
-            
-        if sCount + 1 > ListCount:
-            page = page + 1
-            oOutputParameterHandler.addParameter('page', page)
+        oGui.addDir(SITE_IDENTIFIER, 'showGroupSearch', '[COLOR yellow] Search Files within Group [/COLOR]', 'search.png', oOutputParameterHandler) 
+
+        for aEntry in data:
+
+            sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
+            sType = aEntry.get('type', '')
+            pid = aEntry.get('id', '')
+            spid = aEntry.get('pid', '')
+            sThumb = 'host.png'
+            link = aEntry.get('url', '')
+            size = int(aEntry.get('size', 0) / 1024**2)
+            sCount += 1
+
+            oOutputParameterHandler.addParameter('spid', pid) 
+            oOutputParameterHandler.addParameter('sTitle', sTitle)            
+            oOutputParameterHandler.addParameter('sThumb', sThumb) 
             oOutputParameterHandler.addParameter('siteUrl',shareToken)
-            oOutputParameterHandler.addParameter('spid', spid) 
-            oGui.addDir(SITE_IDENTIFIER, 'showContent', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
+            
+            if sType =='dir':
+                oGui.addDir(SITE_IDENTIFIER, 'showContent', sTitle, sThumb, oOutputParameterHandler)
+                
+            if sCount + 1 > ListCount:
+                page = page + 1
+                oOutputParameterHandler.addParameter('page', page)
+                oOutputParameterHandler.addParameter('siteUrl',shareToken)
+                oOutputParameterHandler.addParameter('spid', spid) 
+                oGui.addDir(SITE_IDENTIFIER, 'showContent', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
 
-        if sType in ['video', 'audio']:
-            icon = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
-            sHosterUrl = link.replace('<nil>', '')
-            sDisplayTitle = f"{sTitle} [COLOR yellow]({size}MB)[/COLOR]"
+            if sType in ['video', 'audio']:
+                icon = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
+                sHosterUrl = link.replace('<nil>', '')
+                sDisplayTitle = f"{sTitle} [COLOR yellow]({size}MB)[/COLOR]"
 
-            oHoster = cHosterGui().getHoster('direct_link')        
-            if oHoster:
-                oHoster.setDisplayName(sDisplayTitle)
-                oHoster.setFileName(sTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, icon)              
+                oHoster = cHosterGui().getHoster('direct_link')        
+                if oHoster:
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, icon)              
 
     oGui.setEndOfDirectory()
 
@@ -174,28 +182,39 @@ def GetSearch(sSearch = ''):
     sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
     sCount = 0
-    data = sHtmlContent.get("data", {}).get("list", [])
-    for aEntry in data:
-        
-        sCount += 1
-        sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
-        sThumb = 'host.png'
-        siteUrl = aEntry.get('url', '').replace('/f/', '/s/')
-        if '/s/' in siteUrl:
-            shareToken, pid = (siteUrl.split('/s/')[1].split('?pid=') + [''])[:2]
-        
-        if sCount > ListCount:
-            page += 1
+    data = sHtmlContent.get("data")
+    if data and isinstance(data, dict):
+        data = data.get("list", [])
+    else:
+        data = []
 
-        pid = aEntry.get('id', '')
+    if not data:
+        oGui.addText(SITE_IDENTIFIER, '[COLOR orange]لم يتم العثور على نتائج[/COLOR]')
 
-        oOutputParameterHandler.addParameter('page',page)
-        oOutputParameterHandler.addParameter('spid', pid) 
-        oOutputParameterHandler.addParameter('sTitle', sTitle)            
-        oOutputParameterHandler.addParameter('sThumb', sThumb) 
-        oOutputParameterHandler.addParameter('siteUrl',shareToken)
+    else:
+        for aEntry in data:
+            
+            sCount += 1
+            sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
+            sThumb = 'host.png'
+            siteUrl = aEntry.get('url', '').replace('/f/', '/s/')
+            if '/s/' in siteUrl:
+                shareToken, pid = (siteUrl.split('/s/')[1].split('?pid=') + ['0'])[:2]
+            elif '?pid=' in siteUrl:
+                pid = siteUrl.split('?pid=')[0] or '0'
+            else:
+                pid = aEntry.get('id', '0')
 
-        oGui.addDir(SITE_IDENTIFIER, 'showContent', sTitle, sThumb, oOutputParameterHandler)            
+            if sCount > ListCount:
+                page += 1
+
+            oOutputParameterHandler.addParameter('page',page)
+            oOutputParameterHandler.addParameter('spid', pid) 
+            oOutputParameterHandler.addParameter('sTitle', sTitle)            
+            oOutputParameterHandler.addParameter('sThumb', sThumb) 
+            oOutputParameterHandler.addParameter('siteUrl',shareToken)
+
+            oGui.addDir(SITE_IDENTIFIER, 'showContent', sTitle, sThumb, oOutputParameterHandler)            
  
     oGui.setEndOfDirectory()
 
@@ -223,43 +242,52 @@ def showGroupSearch(sSearchText = ''):
     sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
     sCount = 0
-    data = sHtmlContent.get("data", {}).get("list", [])
-    for aEntry in data:
+    data = sHtmlContent.get("data")
+    if data and isinstance(data, dict):
+        data = data.get("list", [])
+    else:
+        data = []
 
-        sCount += 1
-        pid = aEntry.get('id', '')
-        spid = 0
-        sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
-        sType = aEntry.get('type', '')
-        sThumb = 'host.png'
-        siteUrl = aEntry.get('url', '')
-        sSize = int(aEntry.get('size', 0) / 1024**2)
-        shareToken = shareToken
+    if not data:
+        oGui.addText(SITE_IDENTIFIER, '[COLOR orange]لم يتم العثور على نتائج[/COLOR]')
 
-        oOutputParameterHandler.addParameter('spid', pid) 
-        oOutputParameterHandler.addParameter('sTitle', sTitle)            
-        oOutputParameterHandler.addParameter('sThumb', sThumb) 
-        oOutputParameterHandler.addParameter('siteUrl', shareToken)
-            
-        if sCount + 1 > ListCount:
-            page = page + 1
-            oOutputParameterHandler.addParameter('page', page)
+    else:
+        for aEntry in data:
+
+            sCount += 1
+            pid = aEntry.get('id', '')
+            spid = 0
+            sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
+            sType = aEntry.get('type', '')
+            sThumb = 'host.png'
+            siteUrl = aEntry.get('url', '')
+            sSize = int(aEntry.get('size', 0) / 1024**2)
+            shareToken = shareToken
+
+            oOutputParameterHandler.addParameter('spid', pid) 
+            oOutputParameterHandler.addParameter('sTitle', sTitle)            
+            oOutputParameterHandler.addParameter('sThumb', sThumb) 
             oOutputParameterHandler.addParameter('siteUrl', shareToken)
-            oOutputParameterHandler.addParameter('spid', spid) 
-            oOutputParameterHandler.addParameter('sSearchText', sSearchText) 
-            
-            oGui.addDir(SITE_IDENTIFIER, 'showGroupSearchNext', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
+                
+            if sCount + 1 > ListCount:
+                page = page + 1
+                oOutputParameterHandler.addParameter('page', page)
+                oOutputParameterHandler.addParameter('siteUrl', shareToken)
+                oOutputParameterHandler.addParameter('spid', spid) 
+                oOutputParameterHandler.addParameter('sSearchText', sSearchText) 
+                
+                oGui.addDir(SITE_IDENTIFIER, 'showGroupSearchNext', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
 
-        elif sType in ['video', 'audio']:
-            sThumb = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
+            elif sType in ['video', 'audio']:
+                sThumb = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
 
-            sHosterUrl = clean_html_tags(siteUrl)
-            sDisplayTitle = f'{sTitle} [COLOR yellow]({str(sSize)}MB)[/COLOR]'
-            oHoster = cHosterGui().getHoster('direct_link')        
-            if oHoster:
-                oHoster.setDisplayName(sDisplayTitle)
-                oHoster.setFileName(sTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)         
+                sHosterUrl = clean_html_tags(siteUrl)
+                sDisplayTitle = f'{sTitle} [COLOR yellow]({str(sSize)}MB)[/COLOR]'
+                oHoster = cHosterGui().getHoster('direct_link')        
+                if oHoster:
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)         
  
     oGui.setEndOfDirectory()
 
@@ -286,39 +314,48 @@ def showGroupSearchNext(sSearchText = ''):
     sHtmlContent = oRequestHandler.request(jsonDecode=True)
 
     sCount = 0
-    data = sHtmlContent.get("data", {}).get("list", [])
-    for aEntry in data:
+    data = sHtmlContent.get("data")
+    if data and isinstance(data, dict):
+        data = data.get("list", [])
+    else:
+        data = []
 
-        sCount += 1
-        sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
-        sType = aEntry.get('type','')
-        sThumb  = 'host.png'
-        spid = 0       
+    if not data:
+        oGui.addText(SITE_IDENTIFIER, '[COLOR orange]لم يتم العثور على نتائج[/COLOR]')
 
-        siteUrl  = aEntry.get('url','')
-        sSize = int(aEntry.get('size', 0) / 1024**2)
-        shareToken = shareToken
+    else:    
+        for aEntry in data:
 
-        if sCount + 1 > ListCount:
-            page = page + 1
-            oOutputParameterHandler.addParameter('page', page)
-            oOutputParameterHandler.addParameter('siteUrl', shareToken)
-            oOutputParameterHandler.addParameter('spid', spid) 
-            oOutputParameterHandler.addParameter('sSearchText', sSearchText) 
+            sCount += 1
+            sTitle = re.sub(r"[^\w\s]", "", clean_html_tags(aEntry.get('name', ''))).replace('mp4', '')
+            sType = aEntry.get('type','')
+            sThumb  = 'host.png'
+            spid = 0       
 
-            oGui.addDir(SITE_IDENTIFIER, 'showGroupSearchNext', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
+            siteUrl  = aEntry.get('url','')
+            sSize = int(aEntry.get('size', 0) / 1024**2)
+            shareToken = shareToken
 
-        elif sType in ['video', 'audio']:
-            sThumb = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
+            if sCount + 1 > ListCount:
+                page = page + 1
+                oOutputParameterHandler.addParameter('page', page)
+                oOutputParameterHandler.addParameter('siteUrl', shareToken)
+                oOutputParameterHandler.addParameter('spid', spid) 
+                oOutputParameterHandler.addParameter('sSearchText', sSearchText) 
 
-            sHosterUrl = clean_html_tags(siteUrl)
-            sDisplayTitle = f'{sTitle} [COLOR yellow]({str(sSize)}MB)[/COLOR]'
+                oGui.addDir(SITE_IDENTIFIER, 'showGroupSearchNext', '[COLOR teal]Next >>>[/COLOR]', 'next.png', oOutputParameterHandler)
 
-            oHoster = cHosterGui().getHoster('direct_link')        
-            if oHoster:
-                oHoster.setDisplayName(sDisplayTitle)
-                oHoster.setFileName(sTitle)
-                cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)          
+            elif sType in ['video', 'audio']:
+                sThumb = aEntry.get('cover', '').split('&x-image-process', 1)[0] if '&x-image-process' in aEntry.get('cover', '') else aEntry.get('cover', '')
+
+                sHosterUrl = clean_html_tags(siteUrl)
+                sDisplayTitle = f'{sTitle} [COLOR yellow]({str(sSize)}MB)[/COLOR]'
+
+                oHoster = cHosterGui().getHoster('direct_link')        
+                if oHoster:
+                    oHoster.setDisplayName(sDisplayTitle)
+                    oHoster.setFileName(sTitle)
+                    cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)          
  
     oGui.setEndOfDirectory()
 
