@@ -16,7 +16,6 @@ class cMultiup:
         self.list = []
 
     def GetUrls(self, url):
-        VSlog(url)
         sHtmlContent = GetHtml(url)
         sPattern = '<form action="([^"]+)'
         result = re.findall(sPattern, sHtmlContent)
@@ -113,44 +112,48 @@ class cMegamax:
         self.list = []
         
     def GetUrls(self, url):
-        sHosterUrl = url.replace('download','iframe').replace(' ','')
-        if 'leech' in sHosterUrl or '/e/' in sHosterUrl:
-            return False
-        oRequestHandler = cRequestHandler(sHosterUrl)
-        oRequestHandler.enableCache(False)
-        sHtmlContent = oRequestHandler.request()
-        sHtmlContent = sHtmlContent.replace('&quot;','"')
-        oParser = cParser()
-        
-        sVer = ''
-        sPattern = '"version":"([^"]+)'
-        aResult = oParser.parse(sHtmlContent, sPattern)
-        if aResult[0]:
-            for aEntry in (aResult[1]):
-                sVer = aEntry
+        try:
+            sHosterUrl = url.replace('download','iframe').replace(' ','')
+            if 'leech' in sHosterUrl or '/e/' in sHosterUrl:
+                return False
+            oRequestHandler = cRequestHandler(sHosterUrl)
+            oRequestHandler.enableCache(False)
+            sHtmlContent = oRequestHandler.request()
+            sHtmlContent = sHtmlContent.replace('&quot;','"')
+            oParser = cParser()
+            
+            sVer = ''
+            sPattern = '"version":"([^"]+)'
+            aResult = oParser.parse(sHtmlContent, sPattern)
+            if aResult[0]:
+                for aEntry in (aResult[1]):
+                    sVer = aEntry
 
-        s = requests.Session()            
-        headers = {'Referer':sHosterUrl,
-                                'Sec-Fetch-Mode':'cors',
-                                'X-Inertia':'true',
-                                'X-Inertia-Partial-Component':'files/mirror/video',
-                                'X-Inertia-Partial-Data':'streams',
-                                'X-Inertia-Version':sVer}
+            s = requests.Session()            
+            headers = {'Referer':sHosterUrl,
+                                    'Sec-Fetch-Mode':'cors',
+                                    'X-Inertia':'true',
+                                    'X-Inertia-Partial-Component':'files/mirror/video',
+                                    'X-Inertia-Partial-Data':'streams',
+                                    'X-Inertia-Version':sVer}
 
-        r = s.get(sHosterUrl, headers=headers).json()
-        
-        for key in r['props']['streams']['data']:
-            sQual = key['label'].replace(' (source)','')
-            for sLink in key['mirrors']:
-                sHosterUrl = sLink['link']
-                sLabel = sLink['driver'].capitalize()
-                if sHosterUrl.startswith('//'):
-                    sHosterUrl = 'https:' + sHosterUrl
-        
-                self.list.append(f'url={sHosterUrl}, qual={sQual}, label={sLabel}')
-                                 
-        return self.list 
-    
+            r = s.get(sHosterUrl, headers=headers).json()
+            
+            for key in r['props']['streams']['data']:
+                sQual = key['label'].replace(' (source)','')
+                for sLink in key['mirrors']:
+                    sHosterUrl = sLink['link']
+                    sLabel = sLink['driver'].capitalize()
+                    if sHosterUrl.startswith('//'):
+                        sHosterUrl = 'https:' + sHosterUrl
+            
+                    self.list.append(f'url={sHosterUrl}, qual={sQual}, label={sLabel}')
+                                    
+            return self.list 
+        except:
+            VSlog('Error to retrieve links')
+            return []
+
 class cVidNet:
     def __init__(self):
         self.name = "Vidsrc.net"

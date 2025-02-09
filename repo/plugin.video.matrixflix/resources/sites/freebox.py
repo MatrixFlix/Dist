@@ -17,7 +17,7 @@ SITE_NAME = '[COLOR orange]Free TV[/COLOR]'
 SITE_DESC = 'Watch Livetelevision'
 
 URL_MAIN = siteManager().getUrlMain(SITE_IDENTIFIER)
-URL_WEB = 'https://bit.ly/sports4kuhd'
+URL_WEB = 'https://bit.ly/alxstream'
 
 TV_GROUPS = ('http://venom/', 'showGroups')
 
@@ -208,7 +208,12 @@ def parseM3U(sUrl=None):
     for line in inf:
         line = line.strip()
         if line.startswith('#EXTINF:'):
-            length, title = line.split('#EXTINF:')[1].split(',', 1)
+            parts = line.split('#EXTINF:')[1].split(',', 1)
+            if len(parts) == 2:
+                length, title = parts
+            else:
+                length = parts[0]
+                title = ''
             try:
                 licon = line.split('#EXTINF:')[1].partition('tvg-logo=')[2]
                 icon = licon.split('"')[1]

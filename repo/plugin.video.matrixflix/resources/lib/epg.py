@@ -21,7 +21,7 @@ class cePg:
         if text:
             self.TextBoxes(sTitle, text)
         else:
-            dialog().VSinfo('Impossible de trouver le guide tv')
+            dialog().VSinfo('Unable to find tv guide')
 
 
     def getEpg(self, sTitle, sTime, noTextBox=False):

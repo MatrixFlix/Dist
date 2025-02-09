@@ -351,7 +351,7 @@ class cHosterGui:
         if false_links:    
             return False
 
-        if ('.upn.one' in sHostName) or ('.upns.online' in sHostName) or ('uns.bio' in sHostName):
+        if ('.upn.one' in sHostName) or ('.upns.online' in sHostName) or ('uns.bio' in sHostName) or ('wasuytm' in sHostName):
             return self.getHoster('kinoger')
 
         if ('short.ink' in sHostName):
@@ -420,11 +420,14 @@ class cHosterGui:
         if ('lanesh' in sHosterUrl):
             return self.getHoster('lanesh')
 
-        if ('lulustream' in sHosterUrl) or ('luluvdo' in sHostName) or ('luluvid' in sHostName) or ('lulu.st' in sHostName) or ('732eg54de642sa' in sHostName):
+        if ('lulustream' in sHosterUrl) or ('luluvdo' in sHostName) or ('luluvid' in sHostName) or ('lulu.st' in sHostName) or ('732eg54de642sa' in sHostName) or ('goodstream') in sHostName:
             return self.getHoster('lulustream')
 
         if ('rubystream' in sHosterUrl) or ('tuktukmulti' in sHostName) or ('stmruby' in sHostName) or ('streamruby' in sHostName) or ('rubystm' in sHostName) or ('rubyvid' in sHostName):
             return self.getHoster('rubystream')
+
+        if ('they.tube' in sHostName):
+            return self.getHoster('theytube')
 
         if ('asiawiki' in sHostName):
             return self.getHoster('asiadtv')

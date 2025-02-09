@@ -41,7 +41,7 @@ class cHoster(iHoster):
         _r = Sgn.post(self._url, data, headers=headers)
         sHtmlContent = _r.content.decode('utf8',errors='ignore')
 
-        r = r = re.search(r'''sources:\s*\[{src:\s*["'](?P<url>[^"']+)''', sHtmlContent, re.DOTALL)
+        r = re.search(r'''sources:\s*\[{src:\s*["'](?P<url>[^"']+)''', sHtmlContent, re.DOTALL)
         if r:
             api_call = urllib_parse.quote(r.group(1), '/:?=&') + helpers.append_headers(headers)
 

@@ -7,12 +7,12 @@
         },
         "aflamfree": {
             "label": "Aflamfree",
-            "active": "False",
+            "active": "True",
             "url": "https://aflamfree.one/"
         },
         "aflamtop": {
             "label": "AflamTOP",
-            "active": "False",
+            "active": "True",
             "url": "https://aflam.top/"
         },
         "akoam": {
@@ -76,7 +76,7 @@
         "animezid": {
             "label": "Animezid",
             "active": "True",
-            "cloudflare": "False",
+            "cloudflare": "True",
             "url": "https://animezid.show/"
         },
         "arabflix": {
@@ -380,7 +380,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shahid4u.day/"
+            "url": "https://shahed4u.diy/"
         },
         "shoffree": {
             "label": "Shoffree",

@@ -100,7 +100,7 @@ class Stormwall(object):
         if not self.CheckIfActive(htmlcontent):
             return htmlcontent
         elif "recaptcha3key" in htmlcontent:
-            dialog().VSok('Recaptcha active, reessayer plus tard')
+            dialog().VSok('Recaptcha active, try again later')
             return htmlcontent
 
         # on cherche le nouveau cookie
