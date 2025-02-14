@@ -313,9 +313,9 @@ class cHosterGui:
             return self.getHoster('dood')
 
         # Chillx Clone
-        chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx'] if x in sHostName), None)
-        if chillx:    
-            return self.getHoster('chillx')
+        # chillx = next((x for x in ['chillx', 'vectorx', 'boltx', 'bestx'] if x in sHostName), None)
+        # if chillx:    
+        #    return self.getHoster('chillx')
 
         # Mixdrop Clone
         mixdrop = next((x for x in ['mixdroop', 'mdfx9dc8n', 'mdzsmutpcvykb', 'mxdrop'] if x in sHostName), None)

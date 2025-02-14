@@ -347,7 +347,7 @@ def showLinks():
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
                 if oHoster:
                     sDisplayTitle = f'{sMovieTitle} [COLOR coral] [{sLabel}][/COLOR]'   
-                    oHoster.setDisplayName(sMovieTitle)
+                    oHoster.setDisplayName(sDisplayTitle)
                     oHoster.setFileName(sMovieTitle)
                     cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 

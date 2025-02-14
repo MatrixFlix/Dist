@@ -354,12 +354,28 @@ class cRequestHandler:
                             if method == 'GET':
                                 payload = {
 	                                "cmd": "request.get",
-	                                "url": convert_url(self.__sUrl)
+	                                "url": convert_url(self.__sUrl),
+                                    'browser': [
+                                        {
+                                            'name': 'chrome',
+                                            'minVersion': 131,
+                                            'maxVersion': 131,
+                                        },
+                                    ],
+                                    'noDriver': True,
                                     }
                             else:
                                 payload = {
 	                                "cmd": "request.post",
 	                                "url": convert_url(self.__sUrl),
+                                    'browser': [
+                                        {
+                                            'name': 'chrome',
+                                            'minVersion': 131,
+                                            'maxVersion': 131,
+                                        },
+                                    ],
+                                    'noDriver': True,
                                     "postData": ', '.join([f"{key}={value}" for key, value in _request.data.items()])
                                     }
                             headers = {

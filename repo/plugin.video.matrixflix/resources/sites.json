@@ -273,8 +273,8 @@
         "halacima": {
             "label": "Halacima",
             "active": "True",
-            "cloudflare": "True",
-            "url": "https://halacima.watch/"
+            "cloudflare": "False",
+            "url": "https://halacima.world/"
         },
         "hidaya": {
             "label": "Hidaya",
@@ -354,7 +354,7 @@
         "moviztime": {
             "label": "MovizTime",
             "active": "True",
-            "url": "https://movtime275.shop/"
+            "url": "https://movtime280.shop/"
         },
         "newmirror": {
             "label": "newmirror",
@@ -380,7 +380,7 @@
             "label": "Shahid4u",
             "active": "True",
             "cloudflare": "False",
-            "url": "https://shahed4u.diy/"
+            "url": "https://shahid44u.cam/"
         },
         "shoffree": {
             "label": "Shoffree",
