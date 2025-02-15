@@ -271,31 +271,15 @@ class cRequestHandler:
                     bypass = addon().getSetting('cloudbypass')
                     RapidApi_Key = addon().getSetting('rapidapi')
                     
-                    # Try by FlareSolverr
+                    # Try by CloudScraper
                     if bypass == '0':
-                    
-                        json_response = False
-                        CLOUDPROXY_ENDPOINT='http://' + addon().getSetting('ipaddress') + ':8191/v1'
-
-                        if method == 'GET':
-                            data = {"cmd": 'request.%s' % method.lower(), "url": self.__sUrl, "maxTimeout": 40000}
-                        else:    
-                            data = {"cmd": 'request.%s' % method.lower(), "url": self.__sUrl, "postData": _request.data, "maxTimeout": 40000}
-                        json_response = False
                         try:
-                            json_response = post(CLOUDPROXY_ENDPOINT, headers={"Content-Type": "application/json"}, json=data)
-                                
-                            if json_response:
-                                response = json_response.json()
-                                if 'solution' in response:
-                                    if self.__sUrl != response['solution']['url']:
-                                        self.__sRealUrl = response['solution']['url']
-    
-                                    sContent = response['solution']['response']
-                                    UA = response['solution']['userAgent']
-                                    cookie = response['solution']['cookies']
-                                    random_ua.set_ua(UA)
-                                    random_ua.savecookies(cookie)
+                            from cloudscraper2 import CloudScraper
+                            scraper = CloudScraper.create_scraper()
+                            headers = {
+                                    "User-Agent": UA
+                                }
+                            sContent = scraper.get(self.__sUrl, headers=self.s.headers).text
                                         
                         except:
                             dialog().VSerror("%s (%s)" % ("ScrapeNinja جرب استخدام ، (Cloudflare) الصفحة ربما محمية بواسطة ", urlHostName(self.__sUrl)))

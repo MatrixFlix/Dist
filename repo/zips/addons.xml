@@ -27,7 +27,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2025.02.14" provider-name="MatrixFlix Media">
+</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2025.02.15" provider-name="MatrixFlix Media">
     <requires>
 
         <trycatch>
@@ -43,6 +43,8 @@
         <import addon="script.module.pyqrcode" />
         <import addon="script.kodi.loguploader" />
         <import addon="script.module.requests" />
+        <import addon="script.module.requests-toolbelt" />
+        <import addon="script.module.cloudscraper" version="0.0.0" />
         <import addon="plugin.video.youtube" version="2.0.0" />
         <import addon="script.module.resolveurl" version="5.1.0" />
         <import addon="script.module.requests-cache" version="0.5.2" />
@@ -247,6 +249,44 @@
             <icon>icon.png</icon>
         </assets>
     </extension>
+</addon><addon id="script.module.cloudscraper" name="CloudScraper2" version="1.2.60" provider-name="venomous">
+  <requires>
+    
+    <import addon="script.module.requests" />
+  </requires>
+  <extension point="xbmc.python.module" library="lib" />
+  <extension point="xbmc.python.pluginsource" library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">cloudscraper</summary>
+    <description lang="en_gb">cloudscraper</description>
+    <disclaimer lang="en_gb" />
+    <language />
+    <platform>all</platform>
+    <license />
+    <forum />
+    <website />
+    <email />
+    <source />
+  </extension>
+</addon><addon id="script.module.requests-toolbelt" name="requests-toolbelt" version="1.0.0" provider-name="Ian Cordasco, Cory Benfield">
+	<requires>
+		<import addon="script.module.requests" version="2.0.1" />
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en_GB">A utility belt for advanced users of python-requests</summary>
+		<description lang="en_GB">Packed for KODI from https://pypi.org/project/requests-toolbelt/</description>
+		<platform>all</platform>
+		<language />
+		<license>Apache Software License (Apache 2.0)</license>
+		<forum />
+		<website />
+		<source>https://toolbelt.readthedocs.io/</source>
+		<email />
+		<assets>
+			<icon>resources/icon.png</icon>
+		</assets>
+	</extension>
 </addon><addon id="service.subtitles.opensubtitles_by_opensubtitles" name="OpenSubtitles.com by OpenSubtitles" version="5.3.9b" provider-name="amet, opensubtitles, juokelis, opensubtitlesdev">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />

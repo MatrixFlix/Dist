@@ -9,7 +9,7 @@ from resources.lib.handler.requestHandler import cRequestHandler
 from resources.lib.comaddon import progress, VSlog, siteManager, isMatrix
 from resources.lib.parser import cParser
 from resources.lib.packer import cPacker
-from resources.lib.util import Quote
+from resources.lib.util import Quote, urlHostName
 from resources.lib import random_ua
 
 UA = random_ua.get_pc_ua()
@@ -148,11 +148,12 @@ def showHosters():
                 cHosterGui().showHoster(oGui, oHoster, sHosterUrl, sThumb)
 
             else:   
-                sHosterUrl = getHosterIframe(url, sUrl)   
-                from urllib.parse import urlparse
-                sOrigin = sHosterUrl.split('referer=')[1]
-                sOrigin = f"{urlparse(sOrigin).scheme}://{urlparse(sOrigin).netloc}"
-                sHosterUrl = f'{sHosterUrl}&origin={sOrigin}'
+                sHosterUrl = getHosterIframe(url, sUrl) 
+                if 'referer=' in sHosterUrl:  
+                    from urllib.parse import urlparse
+                    sOrigin = sHosterUrl.split('referer=')[1]
+                    sOrigin = f"{urlparse(sOrigin).scheme}://{urlparse(sOrigin).netloc}"
+                    sHosterUrl = f'{sHosterUrl}&origin={sOrigin}'
 
                 oHoster = cHosterGui().checkHoster(sHosterUrl)
                 if oHoster:
@@ -251,6 +252,29 @@ def getHosterIframe(url, referer):
     referer = url
     if 'channel' in url:
          referer = url.split('channel')[0]
+
+    if 'new Clappr' in sHtmlContent:
+        try:
+            Referer =  url
+            oRequestHandler = cRequestHandler(url)
+            oRequestHandler.addHeaderEntry('Referer', Referer)
+            sHtmlContent5 = oRequestHandler.request() 
+            flink = re.findall(r'''source\s*:\s*["']?(.+?)['"]?\,''', str(sHtmlContent5), re.DOTALL)[0]
+            if flink == "m3u8Url":
+                channelKey = re.findall(r'''var channelKey\s*=\s*["'](.+?)['"]''', str(sHtmlContent5), re.DOTALL)[0]
+                server_lookup = f"https://{urlHostName(url)}/server_lookup.php?channel_id={channelKey}"
+
+                oRequestHandler = cRequestHandler(server_lookup)
+                oRequestHandler.addHeaderEntry('Referer', Referer)
+                resp = oRequestHandler.request(jsonDecode=True)
+                serverKey = resp.get("server_key")
+
+                server = re.findall(r'''serverKey\s*\+\s*["'](.+?)['"]\s*\+\s*serverKey''', str(sHtmlContent5), re.DOTALL)[0]
+                fname = re.findall(r'''channelKey\s*\+\s*["'](.+?)['"]''', str(sHtmlContent5), re.DOTALL)[0]
+                return f"https://{serverKey}{server}{serverKey}/{channelKey}{fname}"
+        
+        except:
+            pass
 
     sPattern = '(\s*eval\s*\(\s*function(?:.|\s)+?{}\)\))'
     aResult = re.findall(sPattern, sHtmlContent)
