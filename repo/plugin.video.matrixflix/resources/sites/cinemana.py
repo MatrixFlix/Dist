@@ -29,7 +29,7 @@ SERIE_AR = (f'{URL_MAIN}watch=category/مسلسلات-عربية/', 'showSeries'
 SERIE_TR = (f'{URL_MAIN}watch=category/مسلسلات-تركية/', 'showSeries')
 SERIE_ASIA = (f'{URL_MAIN}watch=category/مسلسلات-اسيوية/', 'showSeries')
 SERIE_HEND = (f'{URL_MAIN}watch=category/مسلسلات-هندية/', 'showSeries')
-RAMADAN_SERIES = (f'{URL_MAIN}watch=category/مسلسلات-رمضان-2024/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}watch=category/مسلسلات-رمضان-2025/', 'showSeries')
 
 SPORT_WWE = (f'{URL_MAIN}watch=category/مصارعة-حرة/', 'showMovies')
 

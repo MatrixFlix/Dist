@@ -31,7 +31,7 @@ MOVIE_GENRES = (URL_MAIN, 'moviesGenres')
 SERIE_TR = (f'{URL_MAIN}genre/turkish-series/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}genre/english-series/', 'showSeries')
 SERIE_AR = (f'{URL_MAIN}genre/arabic-series/', 'showSeries')
-RAMADAN_SERIES = (f'{URL_MAIN}genre/ramadan2024', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}genre/ramadan2025', 'showSeries')
 SERIE_GENRES = (URL_MAIN, 'seriesGenres')
 
 REPLAYTV_PLAY = (f'{URL_MAIN}genre/plays/', 'showMovies')

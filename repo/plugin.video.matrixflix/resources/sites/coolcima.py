@@ -36,6 +36,7 @@ SERIE_HEND_AR = (f'{URL_MAIN}category/مسلسلات-هندي-مدبلجة/', 's
 SERIE_LATIN = (f'{URL_MAIN}category/مسلسلات-لاتينية/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/مسلسلات-اجنبي/', 'showSeries')
 KID_CARTOON = (f'{URL_MAIN}category/مسلسلات-كرتون-مترجمة/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات-رمضان-2025/', 'showSeries')
 
 DOC_SERIES = (f'{URL_MAIN}genre/وثائقي', 'showSeries')
 SPORT_WWE = (f'{URL_MAIN}category/عروض-مصارعة-مترجمة/', 'showMovies')
@@ -58,6 +59,9 @@ def load():
 
     oOutputParameterHandler.addParameter('siteUrl', 'http://venom/')
     oGui.addDir(SITE_IDENTIFIER, 'showSeriesSearch', addons.VSlang(30079), 'search.png', oOutputParameterHandler)
+
+    oOutputParameterHandler.addParameter('siteUrl', RAMADAN_SERIES[0])
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'رمضان', 'rmdn.png', oOutputParameterHandler)
 
     oOutputParameterHandler.addParameter('siteUrl', MOVIE_EN[0])
     oGui.addDir(SITE_IDENTIFIER, 'showMovies', 'أفلام أجنبية', 'agnab.png', oOutputParameterHandler)

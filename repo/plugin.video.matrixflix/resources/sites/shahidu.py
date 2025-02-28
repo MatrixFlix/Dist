@@ -24,7 +24,7 @@ MOVIE_ASIAN = (f'{URL_MAIN}category/افلام-اسيوية', 'showMovies')
 MOVIE_TURK = (f'{URL_MAIN}category/افلام-تركية', 'showMovies')
 MOVIE_GENRES = (True, 'moviesGenres')
 
-RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات-رمضان-2024', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات-رمضان-2025', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/مسلسلات-اجنبي', 'showSeries')
 SERIE_AR = (f'{URL_MAIN}category/مسلسلات-عربي', 'showSeries')
 SERIE_HEND = (f'{URL_MAIN}category/مسلسلات-هندية', 'showSeries')

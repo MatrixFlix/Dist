@@ -27,7 +27,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2025.02.15" provider-name="MatrixFlix Media">
+</addon><addon id="plugin.video.matrixflix" name="MatrixFlix" version="2025.02.28" provider-name="MatrixFlix Media">
     <requires>
 
         <trycatch>

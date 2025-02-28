@@ -260,7 +260,7 @@ class cHosterGui:
                             'wishfast', 'fviplions', 'egtpgrvh', 'mdy48tn97', 'embedwish', 'fsdcmo.sbs', 'anime4low', 'cdnwish-down', 'heavenlyvideo', 'strwish',
                             'flaswish', 'streamzid', 'cimawish', 'egopxutd', 'obeywish', 'trgsfjll', 'mdbekjwqa', 'uqloads', 'm3lomatik', 'cdnwish', 'ma2d',
                             'mohahhda', 'asnwish', 'jodwish', 'cinemathek', 'swhoi', 'dancima', 'warda', 'gsfqzmqu', 'swdyu', 'cinemabest.online', 'zidwish',
-                            'wishonly', 'playerwish', 'katomen', 'hlswish', 'swishsrv', 'iplayerhls', 'hlsflast', '4yftwvrdz7'] if x in sHostName), None)
+                            'wishonly', 'playerwish', 'katomen', 'hlswish', 'swishsrv', 'iplayerhls', 'hlsflast', '4yftwvrdz7', 'eb8gfmjn71'] if x in sHostName), None)
         if streamwish:
             return self.getHoster('streamwish')
 
@@ -274,13 +274,13 @@ class cHosterGui:
         filelions = next((x for x in ['filelions', 'ajmidyadfihayh', 'alhayabambi', 'bazwatch', 'cilootv', 'motvy55', 'bazlions', 'lylxan',
                                 'fdewsdc.sbs', '5drama.vip', 'cdnlion-down', 'demonvideo', 'zidlions', 'vidhide', 'streamfile', 'vidnow', 'tuktukcinema29.buzz',
                                 'gsfomqu', 'codeda', 'ma3refa.store', 'coolciima', 'nejma', 'cinmabest.site', 'zidhide', 'dhtpre', '6sfkrspw4u',
-                                'peytonepre', 'ryderjet'] if x in sHostName), None)
+                                'peytonepre', 'ryderjet', 'e4xb5c2xnz'] if x in sHostName), None)
         if filelions:
             return self.getHoster("filelions")
 
         # Vidguard Clone
         vidguard = next((x for x in ['vidguard', 'fertoto', 'vgembed', 'vgfplay', 'vembed', 'vid-guard', 'jetload', 'embedv', 'fslinks', 'bembed', 'listeamed',
-                                     'gsfjzmqu', '6tnutl8knw'] if x in sHostName), None)
+                                     'gsfjzmqu', '6tnutl8knw', 'dhmu4p2hkp'] if x in sHostName), None)
         if vidguard:
             return self.getHoster("vidguard")
 
@@ -291,14 +291,14 @@ class cHosterGui:
 
         # Filemoon Clone
         filemoon = next((x for x in ['filemoon', 'moonmov', 'allviid', 'all-vid', 'techradar', 'albrq', 'kerapoxy', 'kinoger', 'smdfs40r', '81u6xl9d',
-                                     '1azayf9w', 'ghbrisk', 'bf0skv'] if x in sHostName), None)
+                                     '1azayf9w', 'ghbrisk', 'bf0skv', '8mhlloqo', '222i8x', 'l1afav'] if x in sHostName), None)
         if filemoon:
             return self.getHoster("filemoon")
 
         # Voe Clone
         voe = next((x for x in ['voe', 'kathleenmemberhistory', 'timberwoodanotia', 'stevenimaginelittle', 'availedsmallest', 'monorhinouscassaba', 'jamiesamewalk',
                                 'graceaddresscommunity', 'shannonpersonalcost', 'michaelapplysome','brucevotewithin', 'robertplacespace', 'jamessoundcost',
-                                'robertordercharacter', 'maxfinishseveral'] if x in sHostName), None)
+                                'robertordercharacter', 'maxfinishseveral', 'chuckle-tube'] if x in sHostName), None)
         if voe:
             return self.getHoster("voe")
 

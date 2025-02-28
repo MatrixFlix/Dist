@@ -28,7 +28,7 @@ MOVIE_TURK = (f'{URL_MAIN}category/%d8%a7%d9%84%d8%a7%d9%81%d9%84%d8%a7%d9%85/%d
 KID_MOVIES = (f'{URL_MAIN}category/الافلام/افلام-انيميشن/', 'showMovies')
 
 SERIE_TR = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%aa%d8%b1%d9%83%d9%8a%d8%a9/', 'showSeries')
-RAMADAN_SERIES = (f'{URL_MAIN}category/المسلسلات/رمضان-2024/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/المسلسلات/رمضان-2025/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a%d8%a9/', 'showSeries')
 SERIE_AR = (f'{URL_MAIN}category/%d8%a7%d9%84%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa/%d9%85%d8%b3%d9%84%d8%b3%d9%84%d8%a7%d8%aa-%d8%b9%d8%b1%d8%a8%d9%8a%d8%a9/', 'showSeries')
 ANIM_NEWS = (f'{URL_MAIN}category/المسلسلات/مسلسلات-انيميشن/', 'showSeries')
@@ -85,8 +85,8 @@ def load():
     oOutputParameterHandler.addParameter('siteUrl', REPLAYTV_NEWS[0])
     oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'برامج تلفزيونية', 'brmg.png', oOutputParameterHandler)
 
-    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category/رمضان-2023/')
-    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'رمضان 2023', 'rmdn.png', oOutputParameterHandler)
+    oOutputParameterHandler.addParameter('siteUrl', f'{URL_MAIN}category/المسلسلات/رمضان-2024/')
+    oGui.addDir(SITE_IDENTIFIER, 'showSeries', 'رمضان 2024', 'rmdn.png', oOutputParameterHandler)
 
     oGui.setEndOfDirectory()
  
@@ -365,16 +365,17 @@ def showServer():
     sUrl = oInputParameterHandler.getValue('siteUrl')
     sMovieTitle = oInputParameterHandler.getValue('sMovieTitle')
     sThumb = oInputParameterHandler.getValue('sThumb')
-    host = sUrl.split('/')[2]
-    URL_MAIN = f'https://{host}'
 
-    oParser = cParser() 
-    oRequest = cRequestHandler(sUrl)
-    cook = oRequest.GetCookies()
-    hdr = {'User-Agent' : UA,'Accept-Encoding' : 'gzip','cookie' : cook,'host' : host,'referer' : URL_MAIN}
-    St=requests.Session()
-    data = St.get(sUrl,headers=hdr)
-    data = data.content.decode('utf8')  
+    oParser = cParser()
+    oRequestHandler = cRequestHandler(sUrl)
+    cook = oRequestHandler.GetCookies()
+    oRequestHandler.addHeaderEntry('User-Agent', UA)
+    oRequestHandler.addHeaderEntry('Referer', sUrl.split('/watching/')[0].encode('utf-8'))
+    oRequestHandler.addHeaderEntry('Cookie', cook.encode('utf-8'))
+    oRequestHandler.addHeaderEntry('sec-fetch-dest', 'empty'.encode('utf-8'))
+    oRequestHandler.addHeaderEntry('sec-fetch-mode', 'cors'.encode('utf-8'))
+    oRequestHandler.addHeaderEntry('x-requested-with', 'XMLHttpRequest')
+    data = oRequestHandler.request()
 
     if 'adilbo' in data:
         data = decode_page(data)
@@ -429,7 +430,7 @@ def showServer():
             sId = aEntry[1]
 
             sTitle = 'server '
-            siteUrl = f'{URL_MAIN}/wp-content/themes/Cima%20Now%20New/core.php?action=switch&index={sIndex}&id={sId}'
+            siteUrl = f'{URL_MAIN}wp-content/themes/Cima%20Now%20New/core.php?action=switch&index={sIndex}&id={sId}'
             hdr = {'User-Agent' : UA,'referer' : URL_MAIN}
             params = {'action':'switch','index':sIndex,'id':sId}                
             St=requests.Session()

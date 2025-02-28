@@ -33,7 +33,7 @@ MOVIE_TURK = (f'{URL_MAIN}category/أفلام/1-افلام-تركى-turkish-film
 MOVIE_HI = (f'{URL_MAIN}category/أفلام/افلام-هندي-indian-movies/list/recent/', 'showMovies')
 KID_MOVIES = (f'{URL_MAIN}category/افلام-كرتون/', 'showMovies')
 
-RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات/1-مسلسلات-رمضان-2024/list/', 'showSeries')
+RAMADAN_SERIES = (f'{URL_MAIN}category/مسلسلات/مسلسلات-رمضان-2025/list/', 'showSeries')
 
 SERIE_AR = (f'{URL_MAIN}category/مسلسلات/13-مسلسلات-عربيه-arabic-series/list/', 'showSeries')
 SERIE_EN = (f'{URL_MAIN}category/مسلسلات/6-series-english-مسلسلات-اجنبي/list/', 'showSeries')

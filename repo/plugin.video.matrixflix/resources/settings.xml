@@ -74,7 +74,7 @@
         <!-- <setting type="sep"/>
         <setting label="31203" type="ipaddress" id="ipaddress" default="127.0.0.1" enable="true"/> -->
         <setting type="sep"/>
-        <setting label="RapidAPI" type="text" id="rapidapi" default="984f10912dmshaceff47250b6702p16b934jsn6f3aa12866f3" enable="true"/>
+        <setting label="RapidAPI" type="text" id="rapidapi" default="a8526713f4msh6c534adaf2cee09p19de27jsn5c26b8677531" enable="true"/>
 
         <!--parametres invisibles -->
         <setting id="ZT" type="text" label="" default="" visible="false"/>

@@ -15,15 +15,7 @@ class cHoster(iHoster):
         api_call = self._url
         SubTitle = ''
         if ('sub.info' in self._url):
-            subUrl = self._url.split('sub.info=')[1]
-            oRequestHandler = cRequestHandler(subUrl)
-            oRequestHandler.addHeaderEntry('Host', 'rest.opensubtitles.org')
-            oRequestHandler.addHeaderEntry('X-User-Agent', 'trailers.to-UA')
-            oRequestHandler.addHeaderEntry('X-Requested-With', 'XMLHttpRequest')
-            oRequestHandler.addHeaderEntry('User-Agent', UA)
-            subHtmlContent = oRequestHandler.request(jsonDecode=True)
-
-            SubTitle = [item['SubDownloadLink'].replace(".gz", "").replace("download/", "download/subencoding-utf8/") for item in subHtmlContent]
+            SubTitle = self._url.split('sub.info=')[1]
             api_call = self._url.split('?sub.info=')[0] 
 
         if api_call:
